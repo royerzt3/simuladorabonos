@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=edge" />
+
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <link href="~/favicon.ico" rel="shortcut icon" />
+    <title>Inicio</title>
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="~/css/modal.css">
+    <link rel="stylesheet" type="text/css" href="~/css/simulador.css">
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/variables.css" rel="stylesheet" />
+    <link href="~/css/loader.css" rel="stylesheet" />
+    <style>
+        /* Hide page by default */
+        html {
+            display: none;
+        }
+    </style>
+</head>
+
+<body onload="handleBackButton()">
+
+    <div class="pageHome">
+        <div class="clear"></div>
+
+        <div id="tituloVista" class="titulo Vista_62">
+            <div class="ruta">
+                <a href="~/Home/Index">Inicio</a> |
+                <a href="~/Home/Administrador">Administrador</a> |
+                <a href="~/Home/Parametros" id="rutaSimulador">Parametros</a>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="contSecc">
+
+            <div class="titV">Parámetros de evaluación</div>
+            <div class="texto">Inserta, actualiza y consulta las variables que necesites con los valores que elijas.</div>
+            <div class="blanco borderBoton">
+                <div class="divFlex">
+                    <div>Utiliza un <strong>archivo de Excel</strong> para modificar las variables que necesites.</div>
+                    <div class="">
+                        <input type="file" id="cargaArchivo" class="inputfile carga " accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                        <label for="cargaArchivo" class="btnAgregaFoto "><span>Selecciona otro archivo </span></label>
+                    </div>
+                </div>
+                <div class="divDato ">
+                    <div class="clear">&nbsp;</div>
+                    <div class="w300">
+                        <strong>Tu archivo cargado</strong>
+                        <div class="archivo ">
+                            <div><img src="~/img/icoAdjuntar1.svg" class="icoAdjuntar"></div>
+                            <div id="nombreArchivoExcel">archivodepruebaconnombrelargo.xls</div>
+                            <div><img src="~/img/delete.svg" id="imgCargarArchivoExcel"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="blanco divDato">
+                <div class="f14 tLeft">Tu archivo se ha <strong>cargado correctamente.</strong> Visualiza los datos de cada línea dando clic a las <span class="txtV">pestañas</span> correspondiente.</div>
+                <div class="menuTabs">
+                </div>
+            </div>
+        </div>
+        <!-- Fin conSecc -->
+    </div>
+    <!-- Fin page -->
+    <div class="load" id="cargando" style="z-index: 1060; display: none;">
+        <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalCancelarParam" class="modal">
+        <div class="cuadro cuadroM1">
+            <a href="#" class="simplemodal-close btnCerrar">Cerrar</a>
+            <div class="txtModal">No se guardara la información cargada</div>
+            <div class="contModal">
+                <div class="btnCenter1">
+                    <a href="#" class="btnA btnB simplemodal-close">
+                        <div></div>Cancelar
+                    </a>
+                    <a href="#" class="btnA simplemodal-close modalBtnAceptar">
+                        <div></div>Aceptar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="clear"></div><br>
+    </div>
+    <div id="modalGuardarParam" class="modal">
+        <div class="cuadro cuadroCh">
+            <a href="#" class="simplemodal-close btnCerrar"><img src="~/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <br>
+            <div class="txtModal">Se guardo correctamente la información <br>de variables<br><br></div>
+        </div>
+        <div class="clear"></div><br>
+    </div>
+
+    <div id="modalErrorMenu" class="modal">
+        <div class="cuadro cuadroM1">
+            <a href="#" id="btnCerrarLogout" class="simplemodal-close btnCerrar"><img src="/SimuladorAbonos/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <br />
+            <div>
+                <br>
+                <span style="font-size:18px; text-align:center!important"> No tiene permiso para ver este menú </span>
+                <br><br>
+
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        if (self == top) {
+            // Everything checks out, show the page.
+            document.documentElement.style.display = 'block';
+        } else {
+            top.location = localStorage.getItem('urlR');
+        }
+    </script>
+</body>
+
+</html>
+
+<script type="text/javascript" src="~/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="~/js/jquery.dropkick.js"></script>
+<script type="text/javascript" src="~/js/content_height.js"></script>
+<script type="text/javascript" src="~/js/jquery-ui.js"></script>
+<script type="text/javascript" src="~/js/jquery.simplemodal.js"></script>
+<script type="text/javascript" src="~/js/custom-file-input.js"></script>
+<script src="~/js/owl.carousel.js"></script>
+<script type="text/javascript" src="~/js/jquery.datetimepicker.full.js"></script>
+<script src="~/js/variables.js"></script>
+<script src="~/js/sweetalert2.min.js"></script>

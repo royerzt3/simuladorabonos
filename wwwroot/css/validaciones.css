@@ -1,0 +1,38 @@
+﻿#field {
+    margin-left: .5em;
+    float: left
+}
+
+#field, label {
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: small
+}
+
+br {
+    clear: both
+}
+
+input {
+    border: 1px solid #000;
+    margin-bottom: .5em;
+}
+
+input.error {
+    border: 1px solid red;
+}
+
+textarea.error {
+    border: 1px solid red !important;
+}
+
+label.error {
+    width: 100%;
+    align-content: center;
+}
+
+label.valid {
+    display: block;
+    width: 16px;
+    height: 16px
+}

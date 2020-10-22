@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title </title>
+    <style>
+        /* Hide page by default */
+        html {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+
+    <script>
+        if (self == top) {
+                // Everything checks out, show the page.
+                document.documentElement.style.display = 'block';
+            } else {
+                top.location = "https://authns.desadsi.gs/nidp/jsp/logoutSuccess_latest.jsp";
+        }
+    </script>
+
+</body>
+</html>

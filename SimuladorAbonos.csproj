@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <SonarQubeTestProject>false</SonarQubeTestProject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>KeyFrontRentabilidad.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>SimuladorAbonos.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>SimuladorAbonos.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
+
+    <PackageReference Include="System.ServiceModel.Http" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Librerias\actualizausuario-master\ActualizaUsuario.csproj" />
+    <ProjectReference Include="..\..\Librerias\bibliotecasimulador-master\BibliotecaSimulador\BibliotecaSimulador.csproj" />
+    <ProjectReference Include="..\..\Librerias\Credito.Core\Credito.Core.csproj" />
+    <ProjectReference Include="..\..\Librerias\factoressmmc-master\LogicaSimulador.csproj" />
+    <ProjectReference Include="..\..\Librerias\migracionsimulacioneventos-master\MigracionSimulacionEventos\MigracionSimulacionEventos.csproj" />
+    <ProjectReference Include="..\..\Librerias\TaskEventosRentabilidad\TaskEventosRentabilidad.csproj" />
+    <ProjectReference Include="..\..\Librerias\validacionestasasmercadeo-master\ValidacionesTasasMercadeo\ValidacionesTasasMercadeo.csproj" />
+  </ItemGroup>
+
+
+  <Target Name="SetJFrogProperties" BeforeTargets="DownloadDependencies;PrepareForBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <Message Text="Setting JFrog properties" />
+    <!--Build name property-->
+    <CreateProperty Condition=" '$(BuildName)' == '' " Value="$(MSBuildProjectName)">
+      <Output TaskParameter="Value" PropertyName="BuildName" />
+    </CreateProperty>
+    <!--Build number property-->
+    <CreateProperty Condition=" '$(BuildNumber)' == '' " Value="$([System.DateTime]::UtcNow.Ticks)">
+      <Output TaskParameter="Value" PropertyName="BuildNumber" />
+    </CreateProperty>
+    <!--Build flags-->
+    <CreateProperty Value="--build-name=$(BuildName) --build-number=$(BuildNumber)">
+      <Output TaskParameter="Value" PropertyName="BuildFlags" />
+    </CreateProperty>
+    <!--Output path pattern fix, use this property to upload all the artifacts in build OutputPath-->
+    <CreateProperty Value="$([System.String]::Copy('$(OutputPath)').Replace('\','\\'))">
+      <Output TaskParameter="Value" PropertyName="ArtifatsPatternPath" />
+    </CreateProperty>
+  </Target>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+  
+
+
+</Project>

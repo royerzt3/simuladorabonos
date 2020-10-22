@@ -1,0 +1,20 @@
+﻿.advertenciaVariable {
+    background-color: #fff176 !important;
+}
+
+.variableNoValida {
+    background-color: #fff176 !important;
+}
+
+.variableNoEncontrada {
+    background-color: #ef5350 !important;
+    color: white !important;
+}
+
+#imgCargarArchivoExcel {
+    cursor: pointer;
+}
+
+.familiaNoValida {
+    background-color: #ff7043 !important;
+}

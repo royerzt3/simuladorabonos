@@ -1,0 +1,35 @@
+
+
+Familia 
+
+enviar la primera null y con opción 0 
+
+con inserción 
+
+
+Update MEXCREBD.TACRLPEDIDOCIFRASCONTROL set FNTASANORMALSIVA  = 1  ,FNTASAPUNTUALSIVA = 1                
+where  FIPAIS=  1 and    FICANAL =  1 and FISUCURSAL=  1 and  FINOPEDIDO  =  1;     
+
+Update Rcredito.TACIFRASCONTROL set FNTASANORMALSIVA  = 1,FNTASAPUNTUALSIVA = 1 where  FIPAIS=  1 and FICANAL =  1                  
+and FISUCURSAL=  1  and FINOPEDIDO  =  1;   
+
+
+  IDictionary<string, string> openWith = new Dictionary<string, string>();
+                openWith.Add("grant_type", BibliotecaSimulador.AutentificacionSimulador.General.G_type);
+                openWith.Add("client_id", BibliotecaSimulador.AutentificacionSimulador.General.Client_ID);
+                openWith.Add("client_secret", BibliotecaSimulador.AutentificacionSimulador.General.Client_Secret);
+                openWith.Add("redirect_uri", BibliotecaSimulador.AutentificacionSimulador.General.redirect_url);
+                openWith.Add("code", code);
+
+                foreach (KeyValuePair<string, string> dtoValor in openWith)
+                {
+                    formData.Add(new KeyValuePair<string, string>(dtoValor.Key, dtoValor.Value));
+                }
+				
+				Update MEXCREBD.TACRLPEDIDOCIFRASCONTROL set FNTASANORMALSIVA  =0.729296,FNTASAPUNTUALSIVA = 0.623205 where  FIPAIS=  1 and    FICANAL =  1and FISUCURSAL=  100 and  FINOPEDIDO  = 960315 
+
+		
+0.729296	0.623205
+0.72930	    0.62321
+
+Update MEXCREBD.TACRLPEDIDOCIFRASCONTROL set FNTASANORMALSIVA  =0.729296,FNTASAPUNTUALSIVA = 0.623205 where  FIPAIS=  1 and    FICANAL =  1and FISUCURSAL=  100 and  FINOPEDIDO  = 960315 

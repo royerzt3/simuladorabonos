@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<style>
+    /* Hide page by default */
+    html {
+        display: none;
+    }
+</style>
+
+<script>
+        if (self == top) {
+            // Everything checks out, show the page.
+            document.documentElement.style.display = 'block';
+        } else {
+            top.location = localStorage.getItem('urlR');
+        }
+</script>

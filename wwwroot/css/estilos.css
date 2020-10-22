@@ -1,0 +1,230 @@
+@import url('menu.css');
+@import url('fonts.css');
+@import url('forms.css');
+@import url('modal.css');
+@import url('calendario.css');
+@import url('secciones.css');
+@import url('menuTabs.css');
+@import url('jquery.datetimepicker.css');
+
+/* general */
+*{ margin: 0px; padding: 0px; box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;}
+.tLeft 		{ text-align: left 		!important; }
+.tCenter 	{ text-align: center 	!important; }
+.tRight 	{ text-align: right 	!important; text-align: -webkit-right;}
+.fRight 	{ float: right 			!important; }
+.fLeft		{ float: left 			!important; }
+.tJustify 	{text-align: justify !important;}
+strong{font-family: 'Avenir_Next_Demi_Bold';}
+.cursor{ cursor: pointer;}
+.clear{ clear: both;}
+a {text-decoration: none;}
+a.liga {color: #5fac98;
+    text-decoration: underline;
+    font-family: 'AvenirNextLTPro-Medium';}
+p{ margin-bottom: 30px;}
+/* scroll */
+*::-webkit-scrollbar { width: 6px; }
+*::-webkit-scrollbar-track { background-color: #afafaf; }
+*::-webkit-scrollbar-thumb { background-color: #6ead3b; }
+.scroll { overflow-x: auto; }
+.scroll::-webkit-scrollbar {height: 5px;}
+.scroll::-webkit-scrollbar-track {background-color: #afafaf;}
+
+.desac{color:#ccc; cursor: none; pointer-events: none;filter: opacity(50%);-webkit-filter: opacity(50%);}
+.pRelative{position: relative;}
+table {border-collapse: collapse;border-spacing: 0;}
+.obliga{color: #5fac98;    font-family: 'Avenir_Next_Demi_Bold';}
+html, body{
+	font-family: 'Avenir_Next_Regular';
+	background-color:#ffffff;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 12px;
+	color: #2d2926;;
+	min-width: 700px;
+	height: 100%;
+}
+.page{margin-bottom: 60px;    min-width: 700px;}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #6ead3b;   
+	position: sticky;position: -webkit-sticky;top: 0;z-index: 1000;background-color: #ffffff;
+}
+
+.header > div:nth-child(1){width:50px; }
+.header > div:nth-child(2){width:45%; }
+.header > div:nth-child(3){width:50%; }
+
+
+.header > div.headerMenu {padding: 0px 15px;}
+.header > div.headerUser {justify-content: flex-end;padding: 0px  5px 0px 0px;}
+img#imgLogo {
+    padding: 3px 0px 3px 0px;
+    height: 41px;
+}
+.headerMenu a img{ width: 21px;}
+div.pic {
+    display: block;
+    position: relative;
+    width: 38px;
+    height: 38px;
+    margin: 0 0 0 10px;
+    background: #FFFFFF no-repeat center center;
+    border: solid 1px #666666;
+    border-radius: 50%;
+    background-size: 80%;
+}
+.user-menu a img{width: 10px;}
+.headerUser {display: flex;align-items: center;}	
+.user-menu {border-right: 1px solid #ccc;
+    padding: 10px 10px;}
+.name {color: #000;font-size: 12px;    line-height: 17px; text-align: right;}
+.alerta {
+    background-color: red;
+    color: #fff;
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+    right: 17px;
+}
+.fecha {
+    display: flex;
+    padding: 10px 0px;
+    width: 62px;
+    text-align: right;
+    justify-content: center;
+}
+.fecha > div:nth-child(1){    width: 23px;}
+.fecha > div:nth-child(2){}
+
+/*Titulo*/
+.titulo {
+    padding: 10px 2% 10px 15px;
+    background-color: #fff;
+    font-size: 24px;
+    color: #43413B;
+    font-weight: 800;
+    text-align: left;
+    margin-bottom: 15px;
+    /* border-bottom: 1px solid #ccc; */
+    box-shadow: 0px 0px 4px 0px rgba(179, 178, 178, 0.98);
+    /* border-radius: 10px; */
+    position: sticky;
+    width: 100%;
+    /* height: 200px; */
+    top: 53px;
+    z-index: 100;
+}
+.titulo .ruta {
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+        padding: 1px 0px 0px 0px;
+}
+.titulo .ruta a {color: #7E7E7E;text-decoration: none;}
+.titulo .ruta a:last-child {font-family: 'Avenir_Next_Demi_Bold'; color: #000;}
+
+.intro {
+    width: 65%;
+    margin: auto;
+    color: #6ead3b;
+    font-size: 4rem;
+    font-family: 'Avenir_Next_Demi_Bold';margin-top: 3%;    text-align: center;
+}
+.intro img{width: 70%; margin-left: 15%;}
+.divGrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: -1%;
+    margin-right: -1%;align-items: stretch;
+}
+.divCol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: inherit;
+    text-align: left;
+}
+.divCol > .col4 { width: 23%; margin: 15px 1%;}
+.divCol > .col1 {
+    width: 100%;
+    margin: 15px 1%;
+}
+.divCol > .col3, .divGrow > .col3  {width: 31.33%;margin: 15px 1%;}
+.w65 .divCol > .col3  {width: 31.33%;margin: 15px 1%;}
+.divCol > .col6 {
+    width: 64.66%;
+    margin: 15px 1%;
+}
+
+.divCol > .col2 { width: 48%; margin: 10px 1%; }
+.divCol > .col21 { width: 45%; margin: 15px 1%; }
+.divCol > .col02 {
+    width: 2%;
+    margin: 21px 1% 15px 1%;
+}
+
+.col3 .gris{    height: calc(100% - 60px); }
+
+.gris .divGrisCont{    height: calc(94% - 60px); }
+.w25{width: 25%;margin: 15px 1%;}
+.w31{width: 31%;margin: 0px 1%;}
+.w65{width: 65%;margin: 0px 1%;}
+.w75{width: 71%;margin: 0px 1%;}
+.w80{width: 88% !important;}
+.divFlex {
+    display: flex;
+    align-items: center;
+    width: 644px;
+    margin: auto;
+}
+a.buscar1 {
+    border: 1px solid #6ead3a;
+    padding: 5px;
+    border-radius: 3px;
+}
+.divFlex > div:nth-child(2){width: 230px; margin-left: 30px;}
+.tblCotizador3 tr td:nth-child(12){min-width: 105px;}
+@media screen and (max-width: 1024px) { 
+.divCol5 >.col5 { width: 23%;}
+}
+
+@media screen and (max-width: 950px) { 
+.divCol > .col3, .divGrow > .col3 { width: 48%;}
+.divCol > .col4, .divGrow > .col4 { width: 48%;}
+.divCol5 > .col5, .divGrow > .col5 { width: 48%;}
+.gris .divGrisCont {height: calc(94% - 33px);}
+.divCol > .col6 {
+    width: 98%;
+    margin: 15px 1%;
+}
+.divCol > .col21 {
+    width: 48%;
+    margin: 15px 1%;
+}
+}
+@media screen and (max-width:800px) {
+.intro { font-size: 2.5em;}
+}
+@media screen and (max-width:700px) {
+div.name{display: none;}
+.divCol2 > .col2, .divGrow > .col2 { width: 98%;}
+.divCol3 > .col3, .divGrow > .col3 { width: 98%; }
+.divCol4 > .col4, .divGrow > .col4 { width: 98%; }
+.divCol5 > .col5, .divGrow > .col5 { width: 98%; }
+}
+@media screen and (max-width:500px) {
+div.title h1 {font-size: 22px;line-height: 24px;}
+div.pic {width: 35px;height: 35px;}
+
+
+}

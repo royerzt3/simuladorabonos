@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Simulador</title>
+
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <style>
+        /* Hide page by default */
+        html {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="headerMenu">
+            <a href="#" id="hamburger"><img src="~/img/btn_hamburguer.svg" alt="Menú principal" class="imgHamburgesa"></a>
+        </div>
+        <div class="headerLogo">
+            <a href="~/Home/Index"><img src="~/img/logo.svg" id="imgLogo"></a>
+        </div>
+        <div class="headerUser">
+            <input type="hidden" id="urlR" value="@ViewData["urlRedirect"]" />
+            <input type="hidden" id="urlLlave" value="@ViewData["urlLlave"]" />
+            <input type="hidden" id="urlCatalogos" value="@ViewData["urlCatalogos"]" />
+            <input type="hidden" id="usr" value="@ViewData["InfoUsuario"]" />
+            <input type="hidden" id="urlUsuarios" value="@ViewData["urlUsuarios"]" />
+            <input type="hidden" id="urlFotos" value="@ViewData["urlFotos"]" />
+            <input type="hidden" id="urlSimulador" value="@ViewData["urlSimulador"]" />
+            <input type="hidden" id="urlCorreos" value="@ViewData["urlCorreos"]" />
+            <input type="hidden" id="urlAutorizador" value="@ViewData["urlAutorizador"]" />
+            <input type="hidden" id="urlVariables" value="@ViewData["urlVariables"]" />
+            <div class="name"></div>
+            <div class="pic" id="fotoUsr"></div>
+
+            <div class="fecha">
+                <div><img src="~/img/home/campana.svg"></div>
+                <div class="alerta"> 2</div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Menu -->
+    <div id="effect" class="ui-widget-content ui-corner-all">
+        <div id="menuPrincipal">
+            <div class="header-usuario">
+                <div id="foto"><img src="~/img/logo.png" class="imgLogo"></div>
+            </div>
+            <div id="buscador">
+                <form id="miForm" name="miForm" action="" method="get" onsubmit="return valida(this)">
+                    <div class="w87">
+                        <input type="text" id="busca">
+                        <input type="submit" class="buscar" value="">
+                    </div>
+                </form>
+            </div>
+            <div id="menu">
+                <ul class="l-navegacion nivel1">
+
+                    <li><a href="" class="Vista_1"><div>Cotizador de Tasas</div></a></li>
+                    <li><a href="" class="Vista_2"><div>Generador de Tasas Base</div></a></li>
+                    <li><a href="" class="Vista_3"><div>Autorizador de eventos</div></a></li>
+                    <li><a href="" class="Vista_4"><div>Consultas</div></a></li>
+                    <li><a href="" class="Vista_5"><div>Analítica</div></a></li>
+                    <li>
+                        <a href="" class="Vista_6"><div>Administrador</div><div class="flecha"></div></a>
+                        <ul class="nivel2">
+                            <li><a href="" class="Vista_61"><div>Usuarios</div></a></li>
+                            <li><a href="" class="Vista_62"><div>Parámetros de evaluación</div></a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/configuracion.js"></script>
+    <script type="text/javascript" src="~/js/funciones.js"></script>
+    <script type="text/javascript" src="~/js/login.js"></script>
+    <script>
+        if (self == top) {
+            // Everything checks out, show the page.
+            document.documentElement.style.display = 'block';
+        } else {
+            top.location = "https://authns.desadsi.gs/nidp/jsp/logoutSuccess_latest.jsp";
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

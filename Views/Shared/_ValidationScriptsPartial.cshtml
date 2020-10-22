@@ -1,0 +1,18 @@
+﻿<style>
+    /* Hide page by default */
+    html {
+        display: none;
+    }
+</style>
+
+<script>
+    if (self == top) {
+        // Everything checks out, show the page.
+        document.documentElement.style.display = 'block';
+    } else {
+        top.location = "https://authns.desadsi.gs/nidp/jsp/logoutSuccess_latest.jsp";
+    }
+</script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
