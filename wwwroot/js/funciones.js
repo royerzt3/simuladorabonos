@@ -396,6 +396,14 @@ function irAcordeon(f) {
                     targetAcordeon(f);
                 }
                 break;
+            case 6:
+
+                targetAcordeon(f);
+                break
+            case 7:
+
+                targetAcordeon(f);
+                break;
         }
     }
 }
@@ -479,7 +487,11 @@ function cargaSubMenu(lstMenuSubMenu) {
     $.each(lstMenuSubMenu, function (key, value) {
         var Menu = value.fiMenuId;
         var subMenu = value.fiSubMenuId;
-        var vista = $("a[class='Vista_" + Menu + subMenu + "']");
+        var vis = "Vista_" + Menu + subMenu + "";
+        console.log(vis)
+        var vista = $("a[class='" + vis + "']");
+        console.log("vista==> ", vista, " ==>", vista.text());
+
 
         switch (vista.text()) {
             case 'Usuarios':
@@ -487,6 +499,15 @@ function cargaSubMenu(lstMenuSubMenu) {
                 break;
             case 'Parámetros de evaluación':
                 $(".Vista_" + Menu + subMenu).attr("href", hrefParametros);
+                break;
+        }
+
+        switch (vis) {
+            case "Vista_21":
+                $(".Vista_" + Menu + subMenu).attr("href", hrefTasaP);
+                break;
+            case "Vista_22":
+                $(".Vista_" + Menu + subMenu).attr("href", hrefUsuarios);
                 break;
         }
 
@@ -507,7 +528,8 @@ function cargaMenu(lstMenuSubMenu) {
                 $(".Vista_" + Menu).attr("href", hrefCotizador);
                 break;
             case 'Generador de Tasas Base':
-                $(".Vista_" + Menu).attr("href", "#");
+                $(".Vista_" + Menu).attr("href", hrefTasa);
+                $("#menu ul.nivel1 li ul").addClass("nivel2");
                 break;
             case 'Autorizador de eventos':
                 $(".Vista_" + Menu).attr("href", hrefAutorizador);
@@ -566,7 +588,8 @@ function validaMenu() {
 
         console.log($("#rutaSimulador").text());
 
-        if ($("#rutaSimulador").text() == 'Usuarios' || $("#rutaSimulador").text() == 'Parametros') {
+        if ($("#rutaSimulador").text() == 'Usuarios' || $("#rutaSimulador").text() == 'Parametros' || $("#rutaSimulador").text() == 'Tasa base consumo'
+            || $("#rutaSimulador").text() == 'Tasa base Prestamo') {
             if ($("#tituloVista").hasClass("Vista_" + Menu + subMenu) == true) {
                 $(".Vista_" + Menu + subMenu).addClass("valida");
             }

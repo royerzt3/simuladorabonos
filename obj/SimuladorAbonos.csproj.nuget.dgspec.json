@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Front\\simuladorabonos-master\\SimuladorAbonos.csproj": {}
+    "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Front\\simuladorabonos\\SimuladorAbonos.csproj": {}
   },
   "projects": {
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Front\\simuladorabonos-master\\SimuladorAbonos.csproj": {
+    "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Front\\simuladorabonos\\SimuladorAbonos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Front\\simuladorabonos-master\\SimuladorAbonos.csproj",
+        "projectUniqueName": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Front\\simuladorabonos\\SimuladorAbonos.csproj",
         "projectName": "SimuladorAbonos",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Front\\simuladorabonos-master\\SimuladorAbonos.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Front\\simuladorabonos-master\\obj\\",
+        "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Front\\simuladorabonos\\SimuladorAbonos.csproj",
+        "packagesPath": "e:\\Users\\B180794\\.nuget\\packages\\",
+        "outputPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Front\\simuladorabonos\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "e:\\Users\\B180794\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,26 +27,26 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\Credito.Core\\Credito.Core.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\Credito.Core\\Credito.Core.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\Credito.Core\\Credito.Core.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\Credito.Core\\Credito.Core.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj"
               }
             }
           }
@@ -113,359 +113,31 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj": {
-      "version": "1.0.0",
+    "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\Credito.Core\\Credito.Core.csproj": {
       "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj",
-        "projectName": "ActualizaUsuario",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\ActualizaUsuario.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\actualizausuario-master\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "System.Data.SqlClient": {
-              "target": "Package",
-              "version": "[4.8.1, )"
-            },
-            "System.ServiceModel.Http": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "dotNetRDF": {
-              "target": "Package",
-              "version": "[2.5.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj",
-        "projectName": "BibliotecaSimulador",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "EPPlus": {
-              "target": "Package",
-              "version": "[4.5.3.3, )"
-            },
-            "NETStandard.Library": {
-              "target": "Package",
-              "version": "[2.0.3, )"
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.3, )"
-            },
-            "Open-XML-SDK": {
-              "target": "Package",
-              "version": "[2.9.0, )"
-            },
-            "System.Data.SqlClient": {
-              "target": "Package",
-              "version": "[4.8.0, )"
-            },
-            "System.IO": {
-              "target": "Package",
-              "version": "[4.3.0, )"
-            },
-            "System.IO.Packaging": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "System.ServiceModel.Duplex": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "System.ServiceModel.Http": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "System.ServiceModel.NetTcp": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "System.ServiceModel.Security": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\Credito.Core\\Credito.Core.csproj": {
-      "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\Credito.Core\\Credito.Core.csproj",
+        "projectUniqueName": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\Credito.Core\\Credito.Core.csproj",
         "projectName": "Credito.Core",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\Credito.Core\\Credito.Core.csproj"
+        "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\Credito.Core\\Credito.Core.csproj"
       },
       "frameworks": {
         "net40": {}
       }
     },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj": {
+    "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj",
-        "projectName": "LogicaSimulador",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\LogicaSimulador.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\factoressmmc-master\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "EPPlus": {
-              "target": "Package",
-              "version": "[4.5.3.3, )"
-            },
-            "ExcelFinancialFunctions": {
-              "target": "Package",
-              "version": "[2.4.1, )"
-            },
-            "Microsoft.AspNetCore.Http.Features": {
-              "target": "Package",
-              "version": "[3.0.0, )"
-            },
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[1.1.0, )"
-            },
-            "Microsoft.Extensions.Logging.Log4Net.AspNetCore": {
-              "target": "Package",
-              "version": "[3.0.3, )"
-            },
-            "System.IO.Packaging": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj",
-        "projectName": "MigracionSimulacionEventos",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "EPPlus": {
-              "target": "Package",
-              "version": "[4.5.3.2, )"
-            },
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[1.1.1, )"
-            },
-            "SharpZipLib": {
-              "target": "Package",
-              "version": "[1.2.0, )"
-            },
-            "System.Data.SqlClient": {
-              "target": "Package",
-              "version": "[4.8.0, )"
-            },
-            "System.ServiceModel.Http": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
-            "System.ServiceModel.Primitives": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj",
+        "projectUniqueName": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj",
         "projectName": "TaskEventosRentabilidad",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\TaskEventosRentabilidad\\obj\\",
+        "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\TaskEventosRentabilidad.csproj",
+        "packagesPath": "e:\\Users\\B180794\\.nuget\\packages\\",
+        "outputPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\TaskEventosRentabilidad\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "e:\\Users\\B180794\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -478,11 +150,11 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\bibliotecasimulador-master\\BibliotecaSimulador\\BibliotecaSimulador.csproj"
               },
-              "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj": {
-                "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj"
+              "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj": {
+                "projectPath": "e:\\Users\\B180794\\Documents\\Archivos 2020\\transformacion\\Mercadeo\\CodigosGit\\Librerias\\migracionsimulacioneventos-master\\MigracionSimulacionEventos\\MigracionSimulacionEventos.csproj"
               }
             }
           }
@@ -510,69 +182,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj",
-        "projectName": "ValidacionesTasasMercadeo",
-        "projectPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\ValidacionesTasasMercadeo.csproj",
-        "packagesPath": "e:\\Users\\ppastrana\\.nuget\\packages\\",
-        "outputPath": "e:\\Users\\ppastrana\\Documents\\Ale\\Codigo30-09-2020 v3.1\\Ultima Version\\Librerias\\validacionestasasmercadeo-master\\ValidacionesTasasMercadeo\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "e:\\Users\\ppastrana\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[1.1.1, )"
-            },
-            "System.Data.SqlClient": {
-              "target": "Package",
-              "version": "[4.8.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

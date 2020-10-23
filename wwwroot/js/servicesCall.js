@@ -66,7 +66,8 @@ function servicesCargaArchivo(url, data, metodo, isJson) {
     if (isJson == 1) {
         _formData.append("files", data[0]);
         _formData.append("fiCanalId", data[1]);
-        _formData.append("fiTipoTiendaId", data[2]);
+        _formData.append("fiTipoTiendaId", data[2])
+             _formData.append("fiPaisId", data[3]);
     } else {
 
         _formData.append("anexo",data);

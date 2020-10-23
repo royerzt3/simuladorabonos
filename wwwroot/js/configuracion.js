@@ -2,7 +2,10 @@
     localStorage.removeItem('urlLlave');
     localStorage.setItem('urlLlave', $("#urlLlave").val());
 } 
-
+if ($("#urlEventosP").val() != "") {
+    localStorage.removeItem('urlEventosP');
+    localStorage.setItem('urlEventosP', $("#urlEventosP").val());
+} 
 if ($("#urlR").val() != "") {
     localStorage.removeItem('urlR');
     localStorage.setItem('urlR', $("#urlR").val());
@@ -47,6 +50,7 @@ const urlAutorizacion = localStorage.getItem('urlAutorizador');
 const urlEnvioCorreo = localStorage.getItem('urlCorreos');   
 const urlVariables = localStorage.getItem('urlVariables');  
 const urlSimulador = localStorage.getItem('urlSimulador');
+const urlEventosP = localStorage.getItem('urlEventosP');
 
 //Vistas
 //const pathProyecto = '/SimuladorAbonos/Home/';
@@ -59,6 +63,9 @@ let pathNameHomeAutorizador = pathProyecto +'Autorizador/';
 let pathNameHomeAdmin = pathProyecto +'Administrador/';
 let pathNameHomeUsuarios = pathProyecto + 'Usuarios/';
 let pathNameHomeParametros = pathProyecto + 'Parametros/';
+let pathNameHomeTasa = pathProyecto + 'TasaBase/';
+let pathNameHomeTasaP = pathProyecto + 'TasaBasep/';
+let pathNameHomeTasaC = pathProyecto + 'TasaBaseC/';
 let pathNameHomeLogout = pathProyecto + 'LogoutLlaveM/'
 let pathNameHomeError = pathProyecto + 'ErrorUsuario/'
 let pathNameHomeIndex = pathProyecto;
@@ -70,6 +77,10 @@ let hrefAdministrador = `${originSimuladorLogin}${pathNameHomeAdmin}`;
 let hrefUsuarios = `${originSimuladorLogin}${pathNameHomeUsuarios}`;
 let hrefParametros = `${originSimuladorLogin}${pathNameHomeParametros}`;
 let hrefIndex = `${originSimuladorLogin}${pathNameHomeIndex}`;
+let hrefTasa = `${originSimuladorLogin}${pathNameHomeTasa}`;
 let hrefLogout = `${originSimuladorLogin}${pathNameHomeLogout}`;
 let hrefError = `${originSimuladorLogin}${pathNameHomeError}`;
+
+let hrefTasaC = `${originSimuladorLogin}${pathNameHomeTasaC}`;
+let hrefTasaP = `${originSimuladorLogin}${pathNameHomeTasaP}`;
 
