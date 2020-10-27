@@ -228,3 +228,9 @@ div.pic {width: 35px;height: 35px;}
 
 
 }
+
+.misDatos {
+    max-height: 450px;
+    overflow: auto;
+    width: 100%;
+}
