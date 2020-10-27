@@ -6,3 +6,5 @@ Dll
 .sonarlint/
 .sonarqube/
 SimuladorAbonos.ruleset
+[Oo]bj/
+[Bb]in/
