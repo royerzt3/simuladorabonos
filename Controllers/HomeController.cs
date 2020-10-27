@@ -63,17 +63,35 @@ namespace SimuladorAbonos.Controllers
 
                             this._log.WriteInfo("Usuario: " + Usuario + " Empresa: " + Empresa);
 
-                            dtoUsuario = await usuarioDao.ValidaUsuarioAsync(Usuario, Empresa);
+                            dtoUsuario = await usuarioDao.ValidaUsuarioAsync(Usuario, Empresa);///validr
                             if (dtoUsuario != null)
                             {
-                                IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
-                                String IP = Convert.ToString(localIPs[1]);
-                                CookieOptions option = new CookieOptions();
-                                option.Expires = DateTime.Now.AddDays(1);
-                                HttpContext.Response.Cookies.Append("clientIP", IP, option);
-                                HttpContext.Session.SetString(SessionUsuario, Usuario);
-                                HttpContext.Session.SetString(SessionEmpresa, Empresa);
-                                return RedirectToAction("Index");
+                                respuesta = usuarioDao.GeneraObjUsuarioAlta(dtoSesion);
+                                if (respuesta)
+                                {
+                                    HttpContext.Session.SetString(SessionUsuario, Usuario);
+                                    HttpContext.Session.SetString(SessionEmpresa, Empresa);
+                                    string StrSessionToken = HttpContext.Session.GetString(SessionToken);
+                                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Token : " + StrSessionToken, _log);
+
+                                    if (Usuario != null && Empresa != null)
+                                    {
+                                        IPAddress[] localIPs = Dns.GetHostAddresses(Dns.GetHostName());
+                                        String IP = Convert.ToString(localIPs[1]);
+                                        CookieOptions option = new CookieOptions();
+                                        option.Expires = DateTime.Now.AddDays(1);
+                                        HttpContext.Response.Cookies.Append("clientIP", IP, option);
+                                        return RedirectToAction("Index");
+                                    }
+                                    else
+                                    {
+                                        return RedirectToAction($"ErrorUsuario");
+                                    }
+                                }
+                                else
+                                {
+                                    return RedirectToAction($"ErrorUsuario");
+                                }
                             }
                             else
                             {
@@ -187,6 +205,10 @@ namespace SimuladorAbonos.Controllers
                                 case "urlVariables":
                                     ViewData["urlVariables"] = valor.Value;
                                     break;
+                                case "urlEventosP":
+                                    ViewData["urlEventosP"] = valor.Value;
+                                    break;
+
                                 default:
                                     break;
                             }
@@ -219,13 +241,10 @@ namespace SimuladorAbonos.Controllers
                 this._log.WriteInfo("Método: Administrador.");
                 if (dto == null)
                 {
-
                     return RedirectToAction("Logout");
-
                 }
                 else
                 {
-
                     string StrEtiquetaTituloInicio = this.Config.GetValue<string>("Etiquetas:Vistas:0:General:TituloInicio");
                     string StrEtiquetaTituloAdmin = this.Config.GetValue<string>("Etiquetas:Vistas:0:General:TituloAdministrador");
                     string StrEtiquetaTituloUsuario = this.Config.GetValue<string>("Etiquetas:Vistas:1:Administrador:TituloUsuarios");
@@ -235,7 +254,6 @@ namespace SimuladorAbonos.Controllers
                     ViewData["TituloUsuarios"] = StrEtiquetaTituloUsuario;
                     ViewData["TituloParametros"] = StrEtiquetaTituloParametros;
                     return View();
-
                 }
             }
 
@@ -245,6 +263,8 @@ namespace SimuladorAbonos.Controllers
                 return RedirectToAction("Error");
             }
         }
+   
+
 
         public IActionResult Cotizador()
         {
@@ -414,6 +434,60 @@ namespace SimuladorAbonos.Controllers
             {
                 this._log.WriteError(e);
                 return View();
+            }
+        }
+
+        public IActionResult TasaBase()
+        {
+            var dto = HttpContext.Session.GetString(SessionToken);
+            try
+            {
+                this._log.WriteInfo("Método: TasaBase.");
+                if (dto == null)
+                {
+                    return RedirectToAction("Logout");
+                }
+                else
+                {
+                    string StrEtiquetaTituloInicio = this.Config.GetValue<string>("Etiquetas:Vistas:0:General:TituloInicio");
+                    string StrEtiquetaTituloAdmin = this.Config.GetValue<string>("Etiquetas:Vistas:0:General:TituloAdministrador");
+                    string StrEtiquetaTituloTasaBasePrestamos  = this.Config.GetValue<string>("Etiquetas:Vistas:1:TasaBase:TituloTasaBasePrestamos");
+                    string StrEtiquetaTituloTasaBaseConsumo = this.Config.GetValue<string>("Etiquetas:Vistas:1:TasaBase:TituloTasaBaseConsumo");
+                    ViewData["TituloInicio"] = StrEtiquetaTituloInicio;
+                    ViewData["TituloAdministrador"] = StrEtiquetaTituloAdmin;
+                    ViewData["TituloTasaBasePrestamos"] = StrEtiquetaTituloTasaBasePrestamos;
+                    ViewData["TituloTasaBaseConsumo"] = StrEtiquetaTituloTasaBaseConsumo;
+                    return View();
+                }
+            }
+
+            catch (Exception e)
+            {
+                this._log.WriteError(e);
+                return RedirectToAction("Error");
+            }
+        }
+
+        public IActionResult TasaBasep()
+        {
+            var dtoUsuario = HttpContext.Session.GetString(SessionToken);
+
+            try
+            {
+                this._log.WriteInfo("Método: TasaBaseP.");
+                if (dtoUsuario == null)
+                {
+                    return RedirectToAction("Logout");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                this._log.WriteError(e);
+                return RedirectToAction("Error");
             }
         }
 

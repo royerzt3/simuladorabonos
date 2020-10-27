@@ -33,13 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Librerias\actualizausuario-master\ActualizaUsuario.csproj" />
-    <ProjectReference Include="..\..\Librerias\bibliotecasimulador-master\BibliotecaSimulador\BibliotecaSimulador.csproj" />
-    <ProjectReference Include="..\..\Librerias\Credito.Core\Credito.Core.csproj" />
-    <ProjectReference Include="..\..\Librerias\factoressmmc-master\LogicaSimulador.csproj" />
-    <ProjectReference Include="..\..\Librerias\migracionsimulacioneventos-master\MigracionSimulacionEventos\MigracionSimulacionEventos.csproj" />
-    <ProjectReference Include="..\..\Librerias\TaskEventosRentabilidad\TaskEventosRentabilidad.csproj" />
-    <ProjectReference Include="..\..\Librerias\validacionestasasmercadeo-master\ValidacionesTasasMercadeo\ValidacionesTasasMercadeo.csproj" />
+    <ProjectReference Include="..\..\Librerias\validacionestasasmercadeo\ValidacionesTasasMercadeo\ValidacionesTasasMercadeo.csproj" />
   </ItemGroup>
 
 

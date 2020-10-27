@@ -42,6 +42,10 @@ $(document).ready(function () {
                 $("#menu ul.nivel1 li ul").removeClass("nivel2");
                 $("div").removeClass("flecha");
             }
+            if ($(this).text() == 'TasaBase') {
+                $("#menu ul.nivel1 li ul").removeClass("nivel2");
+                $("div").removeClass("flecha");
+            }
         }
 
     });
@@ -69,13 +73,21 @@ $(document).ready(function () {
         Principal();
 
     }
-    if (window.location.pathname.includes("Cotizador")) {
+    if (window.location.pathname.includes("Cotizador") ) {
 
         validaMenu(); 
         cotizadorPrincipal();
         irAcordeon();
   
     }
+    if (window.location.pathname.includes("TasaBasep")) {
+
+        validaMenu();
+        eventoPrestPrincipal();
+        irAcordeon();
+
+    }
+
 
 });
 

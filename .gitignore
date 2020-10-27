@@ -1,5 +1,8 @@
 .vs
-[Oo]bj/Debug/
-[Oo]bj/Release/
+[Oo]bj
 [Bb]in
+.config
 Dll
+.sonarlint/
+.sonarqube/
+SimuladorAbonos.ruleset

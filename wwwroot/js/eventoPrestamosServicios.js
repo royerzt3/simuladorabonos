@@ -38,37 +38,209 @@
             });
     });
 }
-function callServiceProductos(objProducto) {
+function callServiceTipoEven() {
+    limpiarCombo("idTipoEnvio");
 
-    var productoIdd = 0;
-    var opc;
-    var idProducto;
-    var strDescProducto;
+    var idEventTipo;
+    var strDecEventoTipo;
 
-    var data = servicesCallMethod(urlCatalogos +'getTipoProducto', null, GET, true).then(objJson => {
+    var data = servicesCallMethod(urlCatalogos + 'getMTiposEvento', null, POST, true).then(objJson => {
         objJson.json().then(objSM => {
-            var select = document.getElementById("idCompTipoProd");
-            $.each(objSM.respuesta.lstRespuestaTipoProducto, function (key, value) {
-                idProducto = value.fiTipoProductoId;
-                strDescProducto = value.fcDescripcion;
-                $.each(objProducto, function (key, value) {
-                    if (value == idProducto) {
-                        var option = document.createElement("option");
-                        var varDescOpction = document.createTextNode(strDescProducto);
-                        option.appendChild(varDescOpction);
-                        option.setAttribute("value", idProducto);
-                        select.appendChild(option);
-                    }
-                })
+            var select = document.getElementById("idTipoEnvio");
+
+            var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona Tipo de envío");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", -1);
+            select.appendChild(option);
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                
+                idEventTipo = value.fiEventTipo;
+                if (idEventTipo != 2) {
+                    strDecEventoTipo = value.fcDecEventoTipo;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDecEventoTipo);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idEventTipo);
+                    select.appendChild(option);
+                }
+                
+                
+
             });
-            if (ObjSelectProducto != undefined) {
-                ObjSelectProducto.dispose();
+            if (ObjTipoEnvio != undefined) {
+                ObjTipoEnvio.dispose();
             }
-            ObjSelectProducto = new Dropkick("#idCompTipoProd");
-            ObjSelectProducto.refresh();
+            ObjTipoEnvio = new Dropkick("#idTipoEnvio");
+            ObjTipoEnvio.refresh();
         });
     });
 }
+function callServicePaises() {
+    limpiarCombo("idCompPaises");
+
+    var idPais;
+    var strDescPais;
+
+    var data = servicesCallMethod(urlCatalogos + 'getMPais', null, POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompPaises");
+
+            var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona país");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", 0);
+            select.appendChild(option);
+
+            $.each(objSM.respuesta, function (key, value) {
+                
+                if (value.fiStatus == 1) {
+                    idPais = value.fiPais;
+                    strDescPais = value.fcDesLarga;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDescPais);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idPais);
+                    select.appendChild(option);
+                }
+               
+            });
+            if (ObjPaises != undefined) {
+                ObjPaises.dispose();
+            }
+            ObjPaises = new Dropkick("#idCompPaises");
+            ObjPaises.refresh();
+        });
+    });
+}
+
+function callServiceTipoCliente( idPaisSelct) {
+    limpiarCombo("idCompTipoDeCliente");
+    var idTipoCliente;
+    var strDescCliente;
+    var peticion = {
+        pais: parseInt(idPaisSelct),
+        producto: 2
+    }
+    console.log(peticion)
+    var data = servicesCallMethod(urlCatalogos + 'getMTipoCliente', JSON.stringify(peticion), POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompTipoDeCliente");
+
+            var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona tipo de cliente");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", 0);
+            select.appendChild(option);
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                    idTipoCliente = value.fiTipoClienteId;
+                    strDescCliente = value.fcDescCliente;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDescCliente);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idTipoCliente);
+                    select.appendChild(option);
+                
+
+            });
+            if (ObjTiposCl != undefined) {
+                ObjTiposCl.dispose();
+            }
+            ObjTiposCl = new Dropkick("#idCompTipoDeCliente");
+            ObjTiposCl.refresh();
+        });
+    });
+}
+function callServicePeriodos(idPaisSelct) {
+    limpiarCombo("idCompPeriodo");
+    var idSubProducto;
+    var strDesSubProducto;
+    var peticion = {
+        pais: parseInt(idPaisSelct)
+    }
+    console.log(peticion)
+    var data = servicesCallMethod(urlCatalogos + 'getMPeriodos', JSON.stringify(peticion), POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompPeriodo");
+
+            var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona perido");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", 0);
+            select.appendChild(option);
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                idSubProducto = value.fiPeriodo;
+                strDesSubProducto = value.fcPeriodoDesc;
+
+                var option = document.createElement("option");
+                var varDescOpction = document.createTextNode(strDesSubProducto);
+                option.appendChild(varDescOpction);
+                option.setAttribute("value", idSubProducto);
+                select.appendChild(option);
+
+
+            });
+            if (objPeridos != undefined) {
+                objPeridos.dispose();
+            }
+            objPeridos = new Dropkick("#idCompPeriodo");
+            objPeridos.refresh();
+        });
+    });
+}
+
+
+function callServicePromociones(idPaisSelct) {
+    limpiarCombo("idCompPromocion");
+    var idSubProducto;
+    var strDesSubProducto;
+    var peticion = {
+        pais: parseInt(idPaisSelct),
+        producto: 4
+    }
+    console.log(peticion)
+    var data = servicesCallMethod(urlCatalogos + 'getMPromocionesConsumo', JSON.stringify(peticion), POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompPromocion");
+
+            var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona promoción");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", 0);
+            select.appendChild(option);
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                    idSubProducto = value.fiSubProducto;
+                strDesSubProducto = value.fiDesSubProducto;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDesSubProducto);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idSubProducto);
+                    select.appendChild(option);
+                
+
+            });
+            if (objPromos != undefined) {
+                objPromos.dispose();
+            }
+            objPromos = new Dropkick("#idCompPromocion");
+            objPromos.refresh();
+        });
+    });
+}
+
+
 
 async function callServiceFamiliaProducto(idProd) {
 
@@ -410,6 +582,38 @@ function callSelectPromociones(_productoID) {
     });
 
 
+}
+
+function callServiceProductos(objProducto) {
+
+    var productoIdd = 0;
+    var opc;
+    var idProducto;
+    var strDescProducto;
+
+    var data = servicesCallMethod(urlCatalogos + 'getTipoProducto', null, GET, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompTipoProd");
+            $.each(objSM.respuesta.lstRespuestaTipoProducto, function (key, value) {
+                idProducto = value.fiTipoProductoId;
+                strDescProducto = value.fcDescripcion;
+                $.each(objProducto, function (key, value) {
+                    if (value == idProducto) {
+                        var option = document.createElement("option");
+                        var varDescOpction = document.createTextNode(strDescProducto);
+                        option.appendChild(varDescOpction);
+                        option.setAttribute("value", idProducto);
+                        select.appendChild(option);
+                    }
+                })
+            });
+            if (ObjSelectProducto != undefined) {
+                ObjSelectProducto.dispose();
+            }
+            ObjSelectProducto = new Dropkick("#idCompTipoProd");
+            ObjSelectProducto.refresh();
+        });
+    });
 }
 
 function callSelectTipoMercadeo() {

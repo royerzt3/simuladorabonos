@@ -23,12 +23,12 @@ namespace SimuladorAbonos.Models
                 && dtoSesion.InformacionUsuario.FcEmpresa != null)
             {
                 if (dtoSesion.InformacionUsuario.FiEmpleado > 0 && dtoSesion.InformacionUsuario.FiPerfilId >= 0 && dtoSesion.InformacionUsuario.FcNombre != string.Empty
-                 && dtoSesion.InformacionUsuario.FcCelular != string.Empty && dtoSesion.InformacionUsuario.FcCelular != null
+                && dtoSesion.InformacionUsuario.FcCorreo != string.Empty && dtoSesion.InformacionUsuario.FcCelular != string.Empty && dtoSesion.InformacionUsuario.FcCelular != null
                     && dtoSesion.InformacionUsuario.FcEmpresa != string.Empty && dtoSesion.FcFamilias != string.Empty && dtoSesion.FcProductos != string.Empty && dtoSesion.FiMercadeo >= 0)
                 {
                     if (Convert.ToString(dtoSesion.InformacionUsuario.FiEmpleado).Length <= 8 && dtoSesion.InformacionUsuario.FcNombre.Length <= 200)
                     {
-                        if (Regex.IsMatch(dtoSesion.InformacionUsuario.FcNombre.Trim(), expValidaletras) 
+                        if (Regex.IsMatch(dtoSesion.InformacionUsuario.FcNombre.Trim(), expValidaletras) && Regex.IsMatch(dtoSesion.InformacionUsuario.FcCorreo, expValidaEmail)
                             && Regex.IsMatch(dtoSesion.InformacionUsuario.FcCelular, expValidaCelular))
                         {
                             return true;
