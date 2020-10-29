@@ -1,5 +1,4 @@
 let strValorPropuesto = null;
-let _strIdInputThis;
 let strInput;
 const POST = "POST";
 const GET = "GET";
@@ -11,7 +10,6 @@ let strIdConsumoProd = "1";
 let strDescfamiliaConsumo = "C";
 const intPaisID = 2;
 const strVigencia = "0";
-let intEngancheValor = 10;
 let strIdUsuario;
 let blnConfirmacion;
 let regex = /^[0-9,$]*$/;
@@ -126,24 +124,6 @@ let objProductoSap = [];
 let strDescCortaProd;;
 
 
-function sendCallServiceSap(event) {
-
-    var code = (event.keyCode ? event.keyCode : event.which);
-
-    if (code == '13') {
-
-        $("#checktodos").removeAttr("checked");
-        strCadenaSkus = $('#idSkus').val();
-
-        if (strCadenaSkus != "") {
-            console.log(strCadenaSkus);
-            callServiceSkus(strCadenaSkus);
-
-        } else {
-            mostrarModalMensaje(1, "Es necesario proporcionar un SKU para realizar la búsqueda");
-        }
-    }
-}
 
 jQuery.extend(jQuery.expr[':'], {
     focusable: function (el, index, selector) {
@@ -463,12 +443,7 @@ function eventoPrestPrincipal() {
         }
            
 
-     /*   var LstSkusBase = [];
-        LstSkusBase = obtieneSkusSimulacionBase();
-        console.log("Listas Sku");
-        console.log(JSON.stringify(LstSkusBase));*/
-
-        //mostrarModalMensaje(1, "Es necesario seleccionar un producto");
+   
 
     });
     $("#idBtnDatosComplem").click(function () {
@@ -496,12 +471,7 @@ function eventoPrestPrincipal() {
         }
 
 
-        /*   var LstSkusBase = [];
-           LstSkusBase = obtieneSkusSimulacionBase();
-           console.log("Listas Sku");
-           console.log(JSON.stringify(LstSkusBase));*/
-
-        //mostrarModalMensaje(1, "Es necesario seleccionar un producto");
+     
 
     });
     //Elimina registro de la tabla Cotizacion
@@ -515,11 +485,7 @@ function eventoPrestPrincipal() {
     });
 
 
-    $('#idGuardarEvent').click(function (e) {
-
-        fnObtieneSimulacion();
-
-    });
+   
 
     //Carga de la Imagen de Justificacion
     $('#carga01').change(function (e) {
@@ -762,246 +728,8 @@ function evtChangeSelect2(e) {
 
 
 
-//TipoCotizacion 
-function generaSimulacionTipoMercadeo(objSimulacionBasexSku) {
-
-    
-    strPlazosValidos = $('#idPlazos').select2("val");
-
-    if (strPlazosValidos == null ) {
-        mostrarModalMensaje(1,"Es necesario proporcionar un plazo para generar una simulación");
-    } else {   
-        
-        var ObjPlazos = strPlazosValidos.toString().split(',')        
-        console.log("Arreglo plazos " + ObjPlazos);
-
-        intIdTipoProducto = $('#idCompTipoProd option:selected').attr('value');
-        intIdTipoMercadeo = $('#idTipoMercadeo option:selected').attr('value');        
-        strIdTipoCliente = $('#idComTipoClt option:selected').attr('value');
-        intIdPeriodicidad = parseInt($('#idComPeriodicidad option:selected').attr('value'));
-        dblApoyoEkt = $("#IdApoyoEkt").val();
-
-        if (dblApoyoEkt == "") {
-            dblApoyoEkt = 0;
-        }
-
-        intIdFamilia = $('#idCompFamiliaProd option:selected').attr('value');
-
-
-        $.each(objProductoSap, function (key, value) {
-
-            if (intIdFamilia == value.IdFamilia) {
-
-                strDescFamilia = value.DescCorta;
-            }
-        });
-
-        if (intIdTipoProducto == strIdConsumoProd) {
-
-            strDescFamilia = strDescfamiliaConsumo;
-        }
-
-        let objPeticionSimulacionBase = {
-            IdProducto: parseInt(intIdTipoProducto),
-            DescProducto: strDescFamilia,
-            IdTipoCliente: strIdTipoCliente,
-            IdPeriodicidad: intIdPeriodicidad,
-            IdFamilia: parseInt(intIdFamilia),
-            ApoyoEkt: parseFloat(dblApoyoEkt),
-            LstSimulacionTasaBase: [],
-            LstPlazos: []
-        }
-
-        objPeticionSimulacionBase.LstSimulacionTasaBase = objSimulacionBasexSku;
-        objPeticionSimulacionBase.LstPlazos = ObjPlazos;
-        console.log(JSON.stringify(objPeticionSimulacionBase));
-        obtieneSimulacionBase(intIdTipoMercadeo, objPeticionSimulacionBase);
-
-    }
-}
 
 //Genera la tabla productos
-function generaTablaSku(LstSkus) {
-
-    var dataTable;
-    var i = 1;
-
-    $("#tBSkus").empty();
-
-    intIdTipoProducto = $('#idCompTipoProd option:selected').attr('value');
-
-    if (intIdTipoProducto == strIdPrestamosProd) {
-
-        intEngancheValor = 0;
-    } else {
-        intEngancheValor = 10;
-    }
-
-    $.each(LstSkus, function (key, value) {
-
-        dataTable += '<tr class="valorTblSku">' +
-            '<td id="tdChk' + i + '" style="width:2%;">' + '<input type="checkbox" name="grupo1" id="chkSku' + i + '" class="alone checkM" /><label for="chkSku' + i +'">&nbsp;</label>' + '</td>' +
-            '<td id="tdSku' + i + '">' + value.sku + '</td>' +
-            '<td id="tdDesc' + i + '" style="text-align:left;">' + value.descripcion + '</td>' +
-            '<td id="tdPrecioD' + i + '">' + value.precioDe + '</td>' +           
-            '<td id="tdPrecioA' + i + '" contenteditable="true"> ' + '<input type="text" id="idPrecioA" value ="' + value.precioA + '" style="text-align:center"  onkeypress="return ValidaSoloNumeros(event)">' + ' </td>' +
-            '<td id="tdEnganche' + i + '" contenteditable="true"> ' + '<input type="text" id="idEnganche" value ="' + intEngancheValor + '" style="text-align:center"  onkeypress="return ValidaSoloNumeros(event)">' + ' </td>' +
-            '<td>' + '<a class="eliminarSku"><img src="/SimuladorAbonos/img/delete.svg"></a>' + '</td>' +
-            '</tr>';
-        ++i;
-    })
-
-    $("#tBSkus").append(dataTable);
-}
-
-//Llena Seccion 3 - Cotizacion por Tipo Mercadeo
-function generaTablaCotizacion(intIdTipoMercadeo, objSM) {
-
-    $("#tBCotizar").empty();
-
-    var dataTable = "";
-    var idVal;
-    var primerRecorrido = 0;
-    var i = 1;
-    resCotizacion = objSM.respuesta;
-    //Tipo Abono Puntual
-    if (intIdTipoMercadeo == strMercadeoAbono) {
-
-        $("#thTasaAct").addClass("theadTasaPuntual");
-        $.each(objSM.respuesta, function (key, value) {
-
-            strSku = value.sku;
-            dblPrecioD = value.precioDe;
-            dblPrecioA = value.precioA;
-            dblEnganche = value.enganche;
-
-            if (value.lstSimulacionsku.length > 0) {
-
-                $.each(value.lstSimulacionsku, function (key, value) {
-                    idVal = "iValorProp" + i;
-                    if (primerRecorrido == key) {
-
-                        dataTable += '<tr class="valorSM">' +
-                            '<td id="tdSku' + i + '">' + strSku + '</td>' +
-                            '<td id="tdPrecD' + i + '">' + dblPrecioD + '</td>' +
-                            '<td id="tdPrecA' + i + '">' + dblPrecioA + '</td>' +
-                            '<td id="tdEngch' + i + '">' + dblEnganche + '</td>' +
-                            '<td id="tdPlazo' + i + '">' + value.plazo + '</td>' +
-                            '<td id="tdAboPA' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboPP' + i + '">' + '<input type="text" id="' + idVal + '" class="simulaD"  onkeydown="sendCotizacion(event)" tabindex="' + i + '">' + '</td > ' +
-                            '<td id="tdAboN' + i + '">' + value.abonoNormal + '</td>' +
-                            '<td id="tdUltmA' + i + '">' + value.ultimoAbono + '</td>' +
-                            '<td id="tdDescT' + i + '">' + value.descuentoTasa + '</td>' +
-                            '<td id="tdTasaP' + i + '" class="">' + value.tasaPuntual + '</td>' +
-                            '<td id="tdTiR' + i + '">' + value.tir + '</td>' +
-                            '<td id="tdVpN' + i + '">' + value.vpn + '</td>' +
-                            '<td>' + '<a class="eliminarF"><img src="/SimuladorAbonos/img/delete.svg"></a>' + '</td>' +
-                            '</tr>';
-
-                    } else {
-
-                        dataTable += '<tr class="valorSM">' +
-                            '<td id="tdSku' + i + '">' + strSku + '</td>' +
-                            '<td id="tdPrecD' + i + '">' + dblPrecioD + '</td>' +
-                            '<td id="tdPrecA' + i + '">' + dblPrecioA + '</td>' +
-                            '<td id="tdEngch' + i + '">' + dblEnganche + '</td>' +
-                            '<td id="tdPlazo' + i + '">' + value.plazo + '</td>' +
-                            '<td id="tdAboPA' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboPP' + i + '">' + '<input type="text" id="' + idVal + '" class="simulaD"  onkeydown="sendCotizacion(event)" tabindex="' + i + '">' + '</td > ' +
-                            '<td id="tdAboN' + i + '">' + value.abonoNormal + '</td>' +
-                            '<td id="tdUltmA' + i + '">' + value.ultimoAbono + '</td>' +
-                            '<td id="tdDescT' + i + '">' + value.descuentoTasa + '</td>' +
-                            '<td id="tdTasaP' + i + '" class="">' + value.tasaPuntual + '</td>' +
-                            '<td id="tdTiR' + i + '">' + value.tir + '</td>' +
-                            '<td id="tdVpN' + i + '">' + value.vpn + '</td>' +
-                            '<td>' + '<a class="eliminarF"><img src="/SimuladorAbonos/img/delete.svg"></a>' + '</td>' +
-                            '</tr>';
-                    }
-
-                    ++i;
-                })
-            }
-            if (value.lstMensajesdeExcepcion.length > 0) {
-
-                var strAdvertencias = "";
-                value.lstMensajesdeExcepcion.forEach(element => strAdvertencias += "*" + element + "<br>");
-                mostrarModalMensaje(1, strAdvertencias);
-            }
-        })
-
-    } else if (intIdTipoMercadeo == strMercadeoTasa) {
-        //Tasa Puntual 
-        $("#thTasaAct").removeClass("theadTasaPuntual");
-        $('.thTasaProp').html(" ");
-        $('.thTasaProp').html("Tasa puntual propuesta %");
-        $.each(objSM.respuesta, function (key, value) {
-
-            strSku = value.sku;
-            dblPrecioD = value.precioDe;
-            dblPrecioA = value.precioA;
-            dblEnganche = value.enganche;
-
-            if (value.lstSimulacionsku.length > 0) {
-
-                $.each(value.lstSimulacionsku, function (key, value) {
-                    idVal = "iValorProp" + i;
-     
-                   
-                    if (primerRecorrido == key) {
-
-                        dataTable += '<tr class="valorSM">' +
-                            '<td id="tdSku' + i + '">' + strSku + '</td>' +
-                            '<td id="tdPrecD' + i + '">' + dblPrecioD + '</td>' +
-                            '<td id="tdPrecA' + i + '">' + dblPrecioA + '</td>' +
-                            '<td id="tdEngch' + i + '">' + dblEnganche + '</td>' +
-                            '<td id="tdPlazo' + i + '">' + value.plazo + '</td>' +
-                            '<td id="tdAboPA' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboPP' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboN' + i + '">' + value.abonoNormal + '</td>' +
-                            '<td id="tdUltmA' + i + '">' + value.ultimoAbono + '</td>' +
-                            '<td id="tdDescT' + i + '">' + value.descuentoTasa + '</td>' +
-                            '<td id="tdTasaAct' + i + '">' + value.tasaPuntual + '</td>' +
-                            '<td id="tdTasaP' + i + '">' + '<input type="text"  id="' + idVal + '" class="simulaD"  onkeydown="sendCotizacion(event)" tabindex="' + i + '">' + '</td>' +
-                            '<td id="tdTiR' + i + '">' + value.tir + '</td>' +
-                            '<td id="tdVpN' + i + '">' + value.vpn + '</td>' +
-                            '<td>' + '<a class="eliminarF"><img src="/SimuladorAbonos/img/delete.svg"></a>' + '</td>' +
-                            '</tr>';
-
-                    } else {
-
-                      
-                        dataTable += '<tr class="valorSM">' +
-                            '<td id="tdSku' + i + '">' + strSku + '</td>' +
-                            '<td id="tdPrecD' + i + '">' + dblPrecioD + '</td>' +
-                            '<td id="tdPrecA' + i + '">' + dblPrecioA + '</td>' +
-                            '<td id="tdEngch' + i + '">' + dblEnganche + '</td>' +
-                            '<td id="tdPlazo' + i + '">' + value.plazo + '</td>' +
-                            '<td id="tdAboPA' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboPP' + i + '">' + value.abonoPuntual + '</td>' +
-                            '<td id="tdAboN' + i + '">' + value.abonoNormal + '</td>' +
-                            '<td id="tdUltmA' + i + '">' + value.ultimoAbono + '</td>' +
-                            '<td id="tdDescT' + i + '">' + value.descuentoTasa + '</td>' +
-                            '<td id="tdTasaAct' + i + '">' + value.tasaPuntual  + '</td>' +
-                            '<td id="tdTasaP' + i + '">' + '<input type="text"  id="' + idVal + '" class="simulaD"  onkeydown="sendCotizacion(event)" tabindex="' + i + '">' + '</td>' +
-                            '<td id="tdTiR' + i + '">' + value.tir + '</td>' +
-                            '<td id="tdVpN' + i + '">' + value.vpn + '</td>' +
-                            '<td>' + '<a class="eliminarF"><img src="/SimuladorAbonos/img/delete.svg"></a>' + '</td>' +
-                            '</tr>';
-                    }
-                    ++i;
-                })
-            }
-            if (value.lstMensajesdeExcepcion.length > 0) {
-
-                var strAdvertencias = "";
-                value.lstMensajesdeExcepcion.forEach(element => strAdvertencias += "*" + element + "<br>");
-                mostrarModalMensaje(1, strAdvertencias);
-            }
-        })
-    }
-
-    $("#tBCotizar").append(dataTable);
-}
 
 
 function validaSelects(idForm) {
@@ -1025,377 +753,6 @@ function validaSelects(idForm) {
 }
 
 
-async function fnObtieneSimulacion(opc) {
-
-    console.log("TipoMercadeo: " + intIdTipoMercadeo);
-    var LstSimulacionMercadeo = [];
-    var tempSku = "";
-    var sku;
-    var precioDe = "";
-    var precioA = "";
-    var enganche = "";
-    var plazo = "";
-    var abonoPuntualActual = "";
-    var abonoPropuesto = "";
-    var tasaPuntual = "";
-    var abononormal = "";
-    var ultimoabono = "";
-    var descTasas = "";
-    var tir = "";
-    var vpn = "";
-
-    intIdTipoProducto = $('#idCompTipoProd option:selected').attr('value');
-    //intIdFamilia = $('#idCompFamiliaProd option:selected').attr('value');
-
-    var blnValidaCarga = validaTipodeEnvioSucursales();
-
-    $.each(objProductoSap, function (key, value) {
-
-        if (intIdFamilia == value.IdFamilia) {
-            strDescFamilia = value.DescCorta;
-        }
-
-    });
-
-    if (intIdTipoProducto == strIdConsumoProd) {
-        strDescFamilia = strDescfamiliaConsumo;
-    }
-
-    console.log("DescripcionCorta Familia :. " + strDescFamilia);
-
-    strIdTipoCliente = $('#idComTipoClt option:selected').attr('value');
-    intIdPeriodicidad = parseInt($('#idComPeriodicidad option:selected').attr('value'));
-    dblApoyoEkt = $("#IdApoyoEkt").val();
-
-    if (dblApoyoEkt == "") {
-
-        dblApoyoEkt = 0;
-    }
-
-    $('#tblSM tbody tr').each(function () {
-
-        sku = $(this).find('td').eq(0).text();
-
-        if (tempSku == "") {
-            precioDe = $(this).find('td').eq(1).text();
-            precioA = $(this).find('td').eq(2).text();
-            enganche = $(this).find('td').eq(3).text();
-            plazo = $(this).find('td').eq(4).text();
-            abonoPuntualActual = $(this).find('td').eq(5).text();
-
-            if (intIdTipoMercadeo == "3") {
-
-                abonoPropuesto = $(this).find('td').eq(6).find('input[type="text"]').val();
-                tasaPuntual = $(this).find('td').eq(10).text();
-            }
-            else {
-
-                tasaPuntual = $(this).find('td').eq(11).find('input[type="text"]').val();
-                abonoPropuesto = $(this).find('td').eq(6).text();
-            }
-           
-            abononormal = $(this).find('td').eq(7).text();
-            ultimoabono = $(this).find('td').eq(8).text();
-            descTasas = $(this).find('td').eq(9).text();
-            tir = $(this).find('td').eq(11).text();
-            vpn = $(this).find('td').eq(12).text();
-
-
-            tempSku = sku;
-            var filaAbonoPuntual = {
-                Sku: sku,
-                PrecioD: parseFloat(precioDe),
-                PrecioA: parseFloat(precioA),
-                Descuento: 0,
-                Enganche: parseFloat(enganche),
-                IdProducto: parseInt(intIdTipoProducto),
-                DescFamilia: strDescFamilia,                
-                IdTipoCliente: strIdTipoCliente,
-                IdPeriodicidad: intIdPeriodicidad,                
-                IdFamilia: intIdFamilia,
-                ApoyoEkt: parseFloat(dblApoyoEkt),
-                LstPlazosAbonos: [],
-                LstPlazosTasa: []
-            };
-
-            var filaSimulacion = {
-                sku: sku,
-                precioDe: parseFloat(precioDe),
-                precioA: parseFloat(precioA),
-                enganche: parseFloat(enganche),
-                plazosTasas: []
-            };
-
-            filaSimulacion.plazosTasas.push({
-                plazo: plazo,
-                abonoPuntualActual: parseFloat(abonoPuntualActual),
-                abonoPuntualPropuesto: parseFloat(abonoPropuesto),
-                abonoNormal: parseFloat(abononormal),
-                ultimoAbono: parseFloat(ultimoabono),
-                descuentoTasa: parseFloat(descTasas),
-                tasaPuntal: parseFloat(tasaPuntual),
-                tir: parseFloat(tir),
-                vpn: parseFloat(vpn)
-            });
-
-
-            if (intIdTipoMercadeo == strMercadeoAbono) {
-
-                filaAbonoPuntual.LstPlazosAbonos.push({ AbonoPuntual: parseFloat(abonoPropuesto), Plazo: parseFloat(plazo) });
-
-            }
-            else {
-                filaAbonoPuntual.LstPlazosTasa.push({ TasaPropuesta: parseFloat(tasaPuntual), Plazo: parseFloat(plazo) });
-            }
-
-            LstSimulacionMercadeo.push(filaAbonoPuntual);
-            listaSku.push(filaSimulacion);
-
-        } else {
-
-            if (tempSku == sku) {
-
-                tempSku = sku;
-
-                if (intIdTipoMercadeo == strMercadeoAbono) {
-
-                    enganche = $(this).find('td').eq(3).text();
-                    plazo = $(this).find('td').eq(4).text();
-                    abonoPuntualActual = $(this).find('td').eq(5).text();
-                    abonoPropuesto = $(this).find('td').eq(6).find('input[type="text"]').val();
-                    abononormal = $(this).find('td').eq(7).text();
-                    ultimoabono = $(this).find('td').eq(8).text();
-                    descTasas = $(this).find('td').eq(9).text();
-                    tasaPuntual = $(this).find('td').eq(10).text();
-                    tir = $(this).find('td').eq(11).text();
-                    vpn = $(this).find('td').eq(12).text();
-                }
-                else {
-
-                    enganche = $(this).find('td').eq(3).text();
-                    plazo = $(this).find('td').eq(4).text();
-                    abonoPuntualActual = $(this).find('td').eq(5).text();
-                    
-                    abonoPropuesto = $(this).find('td').eq(6).text();
-                    abononormal = $(this).find('td').eq(7).text();
-                    ultimoabono = $(this).find('td').eq(8).text();
-                    descTasas = $(this).find('td').eq(9).text();
-                    tasaPuntual = $(this).find('td').eq(10).find('input[type="text"]').val();
-                    tir = $(this).find('td').eq(11).text();
-                    vpn = $(this).find('td').eq(12).text();
-                }wq
-
-                var index = LstSimulacionMercadeo.find(x => x.Sku === sku);
-                var indexPlazosTasas = listaSku.find(x => x.sku === sku);
-
-                console.log("Index:. " + index);
-
-                console.log("IndexPlazosTaas:. " + indexPlazosTasas);
-
-                listaSku[listaSku.indexOf(indexPlazosTasas)].plazosTasas.push({
-                    plazo: plazo,
-                    abonoPuntualActual: parseFloat(abonoPuntualActual),
-                    abonoPuntualPropuesto: parseFloat(abonoPropuesto),
-                    abonoNormal: parseFloat(abononormal),
-                    ultimoAbono: parseFloat(ultimoabono),
-                    descuentoTasa: parseFloat(descTasas),
-                    tasaPuntal: parseFloat(tasaPuntual),
-                    tir: parseFloat(tir),
-                    vpn: parseFloat(vpn)
-                });
-
-
-                if (intIdTipoMercadeo == strMercadeoAbono) {
-
-                    LstSimulacionMercadeo[LstSimulacionMercadeo.indexOf(index)].LstPlazosAbonos.push({ AbonoPuntual: parseFloat(abonoPropuesto), Plazo: parseFloat(plazo) });
-                }
-                else {
-
-                    LstSimulacionMercadeo[LstSimulacionMercadeo.indexOf(index)].LstPlazosTasa.push({ TasaPropuesta: parseFloat(tasaPuntual), Plazo: parseFloat(plazo) });
-                }
-
-            } else {
-
-                precioDe = $(this).find('td').eq(1).text();
-                precioA = $(this).find('td').eq(2).text();
-                enganche = $(this).find('td').eq(3).text();
-                plazo = $(this).find('td').eq(4).text();
-
-                if (intIdTipoMercadeo == strMercadeoAbono) {
-
-                    abonoPropuesto = $(this).find('td').find('input[type="text"]').val();
-                    tasaPuntual = $(this).find('td').eq(10).text();
-                }
-                else {
-                    tasaPuntual = $(this).find('td').eq(11).find('input[type="text"]').val();
-                    abonoPropuesto = $(this).find('td').eq(6).text();
-                }
-
-
-                abonoPuntualActual = $(this).find('td').eq(5).text();
-                abononormal = $(this).find('td').eq(7).text();
-                ultimoabono = $(this).find('td').eq(8).text();
-                descTasas = $(this).find('td').eq(9).text();
-                tir = $(this).find('td').eq(11).text();
-                vpn = $(this).find('td').eq(12).text();
-
-                filaSimulacion = {
-                    sku: sku,
-                    precioDe: parseFloat(precioDe),
-                    precioA: parseFloat(precioA),
-                    enganche: parseFloat(enganche),
-                    plazosTasas: []
-                };
-
-                tempSku = sku;
-                filaAbonoPuntual = {
-                    Sku: sku,
-                    PrecioD: parseFloat(precioDe),
-                    PrecioA: parseFloat(precioA),
-                    Descuento: 0,
-                    Enganche: parseFloat(enganche),
-                    IdProducto: parseInt(_strIdProducto),
-                    DescFamilia: strDescFamilia,                   
-                    IdTipoCliente: strIdTipoCliente,
-                    IdPeriodicidad: intIdPeriodicidad,
-                    IdFamilia: intIdFamilia,
-                    ApoyoEkt: parseFloat(dblApoyoEkt),
-                    LstPlazosAbonos: [],
-                    LstPlazosTasa: []
-                };
-
-                filaSimulacion.plazosTasas.push({
-                    plazo: plazo,
-                    abonoPuntualActual: parseFloat(abonoPuntualActual),
-                    abonoPuntualPropuesto: parseFloat(abonoPropuesto),
-                    abonoNormal: parseFloat(abononormal),
-                    ultimoAbono: parseFloat(ultimoabono),
-                    descuentoTasa: parseFloat(descTasas),
-                    tasaPuntal: parseFloat(tasaPuntual),
-                    tir: parseFloat(tir),
-                    vpn: parseFloat(vpn)
-                });
-
-                if (intIdTipoMercadeo == strMercadeoAbono) {
-
-                    filaAbonoPuntual.LstPlazosAbonos.push({ AbonoPuntual: parseFloat(abonoPropuesto), Plazo: parseFloat(plazo) });
-                }
-                else {
-                    filaAbonoPuntual.LstPlazosTasa.push({ TasaPropuesta: parseFloat(tasaPuntual), Plazo: parseFloat(plazo) });
-                }
-
-                LstSimulacionMercadeo.push(filaAbonoPuntual);
-                listaSku.push(filaSimulacion);
-            }
-        }
-
-    });
-
-    console.log(JSON.stringify(requestSM));
-
-    console.log('Lista Skus: ' + JSON.stringify(listaSku));
-
-    var validaDatosRequeridos = validaInputs();
-
-    if (validaDatosRequeridos == true) {
-
-        strTituloEvento = $('#idTituloEvent').val();
-        strJustificacionEvt = $('#idJistificacionEvent').val();
-        dtmFechaInicioEvt = $('#filter-date').val();
-        dtmFechaFinalizacionEvt = $('#filter-date1').val();
-        strTipoEnvio = $('#idTipoEnvio option:selected').attr('value');
-        strTipoTienda = $('#idTipoTiendas option:selected').attr('value');
-        intIdCanal = $('#idCompCanales').val();
-        intIdPromociones = $('#idPromociones').val();        
-        dtmFechaActual = obtenerFechaActual();
-
-        var blnFechasValidas = validaFechasMenoresMayores();
-
-        console.log("UsuarioId :. " + strIdUsuario);
-
-        if (blnFechasValidas == true) {
-
-            var simulacion = {
-                ProductoId: parseInt(intIdTipoProducto),
-                TipoDistribucion: parseInt(strTipoEnvio),
-                PaisId: intPaisID,
-                CanalId: parseInt(intIdCanal),
-                TipoTiendasId: parseInt(strTipoTienda),
-                Descripcion: strTituloEvento,
-                FechaIni: dtmFechaInicioEvt,
-                FechaFin: dtmFechaFinalizacionEvt,
-                Usuario: strIdUsuario.toString(),
-                Fecha: dtmFechaActual
-            }
-
-            if (strRutaImgJustificacion == undefined) {
-                listaSku = [];
-                mostrarModalMensaje(1, "La imagen no pudo cargarse");
-                strRutaImgJustificacion = " ";
-            } 
-
-            if (LstSimulacionMercadeo == "") {
-                listaSku = [];
-                mostrarModalMensaje(1, "Tu solicitud no puede ser procesada, es necesario generar una cotización");
-            } 
- 
-                if (strTipoEnvio == "1") {
-
-                    console.log(JSON.stringify(requestSM));
-
-                    requestSM = {
-                        TipoMercadeo: parseInt(intIdTipoMercadeo),
-                        IdTipoPromocion: intIdPromociones,
-                        Anexo: strRutaImgJustificacion,
-                        Observaciones: strJustificacionEvt,
-                        Simulacion: simulacion,
-                        Sucursales: strSucursales,
-                        LstSimulacionMercadeo: LstSimulacionMercadeo
-                    }
-
-                    if (strTipoCargaSucursal == "1") {
-
-                        if (lstSucursales == undefined || lstSucursales == "") {
-                            listaSku = [];
-                            mostrarModalMensaje(1, "Tu solicitud no puede ser procesada, es necesario cargar el archivo de sucursales");
-                            blnCargaCorrecta = false;
-
-                        } else {
-                            lstSucursales = strSucursales;
-                            guardarSimulacion(requestSM, listaSku);
-                          
-                        }
-
-
-                    }
-
-                } else {
-
-                    lstSucursales = "0";
-                    requestSM = {
-                        TipoMercadeo: parseInt(intIdTipoMercadeo),
-                        IdTipoPromocion: intIdPromociones,
-                        Anexo: strRutaImgJustificacion,
-                        Observaciones: strJustificacionEvt,
-                        Simulacion: simulacion,
-                        Sucursales: strSucursales,
-                        LstSimulacionMercadeo: LstSimulacionMercadeo
-                    }
-
-                    guardarSimulacion(requestSM, listaSku);
-
-                }
-
-        } else {
-            listaSku = [];
-            mostrarModalMensaje(1, "La fecha inicio no puede ser mayor a la fecha final");
-        }
-             
-    } else {
-        listaSku = [];
-        mostrarModalMensaje(1, "Tu solicitud no puede ser procesada, es necesario llenar los campos obligatorios")
-    }
-}
 
 
 
@@ -1431,142 +788,7 @@ function callFunction(intIdTipoMercadeo, objProductoASimular, objIdProductoASimu
     objCondicionesCotizar.push(strDescFamilia);
 
 
-    switch (intIdTipoMercadeo) {
-
-        case strMercadeoAbono:
-            calculaCotizacionAbono(objCondicionesCotizar,objProductoASimular, objIdProductoASimular);
-            break;
-        case strMercadeoTasa:
-            calculaCotizacionTasa(objCondicionesCotizar,objProductoASimular, objIdProductoASimular);
-            break;
-    }
-}
-
-function calculaCotizacionAbono(objCondicionesCotizar,objProductoASimular, objIdCampos) {
-
-    var objJson = {
-        PrecioA: parseFloat(objProductoASimular[2]),
-        Enganche: parseFloat(objProductoASimular[3]),
-        Descuento: 0,
-        IdProducto: parseInt(objCondicionesCotizar[0]),
-        DescProducto: objCondicionesCotizar[5],
-        idTipoCliente: objCondicionesCotizar[2],
-        IdPeriodicidad: parseInt(objCondicionesCotizar[3]),
-        AbonoPuntual: parseFloat(objProductoASimular[13]),
-        Plazo: parseInt(objProductoASimular[4]),
-        TasaPuntualP: parseFloat(objProductoASimular[10]),
-        ApoyoEkt: parseFloat(objCondicionesCotizar[4]),
-        IdFamilia: parseInt(objCondicionesCotizar[1])
-    }
-    
-    console.log("Valores de obJSON :. " + (JSON.stringify(objJson)));
-
-    var data = servicesCallMethod(urlSimulador +"getSimulacionAbono", JSON.stringify(objJson), POST, true).then(objJson => {
-        objJson.json().then(objSM => {
-            console.log(objSM) 
-
-            intErrorEnTasa = objSM.respuesta.tasaValida;    
-
-            if (intErrorEnTasa == 1) {
-
-                $('#' + objIdCampos[10] + '').addClass("validaTasa");
-                
-            } else {
-
-                $('#' + objIdCampos[10] + '').removeClass("validaTasa");
-            }            
-
-            $('#' + objIdCampos[7] + '').text(objSM.respuesta.abonoNormal);
-            $('#' + objIdCampos[8] + '').text(objSM.respuesta.ultimoAbono);
-            $('#' + objIdCampos[9] + '').text(parseFloat(objSM.respuesta.descuentoTasa));
-            $('#' + objIdCampos[10] + '').text(objSM.respuesta.tasaPuntual);
-            $('#' + objIdCampos[11] + '').text(parseFloat(objSM.respuesta.tir));
-            $('#' + objIdCampos[12] + '').text(parseFloat(objSM.respuesta.vpn));
-
-            if (objSM.respuesta.lstMensajesdeValidacion.length > 0) {
-                var strAdvertencias = "";
-                objSM.respuesta.lstMensajesdeValidacion.forEach(element => strAdvertencias += "*" + element + ". <br>");
-                intObjTemporalOnFocus = indexFocusGeneral;
-                mostrarModalMensaje(1,strAdvertencias);
-            }
-            $canfocus.eq(indexFocusGeneral).focus();                         
-        })
-    })
-        .catch(objJson => {
-            objJson.json().then(json => {
-                window.console.log(json);
-                $('#' + objIdCampos[6] + '').find('input[type="text"]').val('');
-                mostrarModalMensaje(1, json.errorMessage)
-            })
-        });
-
-    objProductoASimular = [];
-    objIdProductoASimular = [];
-}
-
-function calculaCotizacionTasa(objCondicionesCotizar, objProductoASimular, objIdCampos) {
-
-    console.log("Valores de Arreglo :. " + objProductoASimular);
-
-    var objJson = {
-        PrecioA: parseFloat(objProductoASimular[2]),
-        Enganche: parseFloat(objProductoASimular[3]),
-        Descuento: 0,
-        IdProducto: parseInt(objCondicionesCotizar[0]),
-        DescProducto: objCondicionesCotizar[5],
-        idTipoCliente: objCondicionesCotizar[2],
-        IdPeriodicidad: parseInt(objCondicionesCotizar[3]),
-        AbonoPuntual: parseFloat(objProductoASimular[5]),
-        Plazo: parseInt(objProductoASimular[4]),
-        TasaPuntualP: parseFloat(objProductoASimular[14]),
-        ApoyoEkt: parseFloat(objCondicionesCotizar[4]),
-        IdFamilia: parseInt(objCondicionesCotizar[1])
-    }
-    console.log("Valores de obJSON :. " + (JSON.stringify(objJson)));
-
-    var data = servicesCallMethod(urlSimulador +"getSimulacionTasa", JSON.stringify(objJson), POST, true).then(objJson => {
-        objJson.json().then(objSM => {
-            console.log(objSM)
-
-            intErrorEnTasa = objSM.respuesta.tasaValida;
-
-            if (intErrorEnTasa == 1) {
-
-                $('#' + objIdCampos[11] + '').addClass("validaTasa");
-                $('#' + objIdCampos[11] + '').find('input[type="text"]').addClass("validaTasa");
-                intErrorEnTasaMin = 1;
-            } else {
-
-                $('#' + objIdCampos[11] + '').removeClass("validaTasa");
-                $('#' + objIdCampos[11] + '').find('input[type="text"]').removeClass("validaTasa");
-            }
-
-            $('#' + objIdCampos[6] + '').text(objSM.respuesta.abonoPuntual);
-            $('#' + objIdCampos[7] + '').text(objSM.respuesta.abonoNormal);
-            $('#' + objIdCampos[8] + '').text(objSM.respuesta.ultimoAbono);
-            $('#' + objIdCampos[9] + '').text(parseFloat(objSM.respuesta.descuentoTasa));
-            $('#' + objIdCampos[12] + '').text(parseFloat(objSM.respuesta.tir));
-            $('#' + objIdCampos[13] + '').text(parseFloat(objSM.respuesta.vpn));
-
-            if (objSM.respuesta.lstMensajesdeValidacion.length > 0) {
-                var strAdvertencias="";
-                objSM.respuesta.lstMensajesdeValidacion.forEach(element => strAdvertencias += element + "<br>");     
-                intObjTemporalOnFocus = indexFocusGeneral;
-                mostrarModalMensaje(1,strAdvertencias);
-            }
-            $canfocus.eq(indexFocusGeneral).focus();            
-        })
-    })
-        .catch(objJson => {
-            objJson.json().then(json => {
-                window.console.log(json);
-                $('#' + objIdCampos[11] + '').find('input[type="text"]').val('');
-                mostrarModalMensaje(1, json.errorMessage)
-            })
-        });
-
-    objProductoASimular = [];
-    objIdProductoASimular = [];
+   
 }
 
 
@@ -1654,42 +876,6 @@ function envioCorreos(objetoCadena, lstSimulacion, LstMsjExcepcion) {
             console.log(objSM);
         })
     });
-}
-
-function obtieneSkusSimulacionBase() {
-
-    var strSku;
-    var dblPreciode;
-    var dblPrecioa;
-    var dblEnganche;
-
-    LstSimulacionBase = [];
-
-    $('#tblSkus tbody tr').each(function () {
-       
-        if ($(this).find('td').eq(0).find("input:checkbox.checkM").prop('checked')) {
-
-            strSku = $(this).find('td').eq(1).text();
-            dblPreciode = $(this).find('td').eq(3).text();
-            dblPrecioa = $(this).find('td').eq(4).find('input[type="text"]').val();
-            dblEnganche = $(this).find('td').eq(5).find('input[type="text"]').val();
-
-            var filaSku = {
-                Sku: strSku,
-                PrecioDe: parseFloat(dblPreciode),
-                PrecioA: parseFloat(dblPrecioa),
-                Enganche: parseFloat(dblEnganche)
-            }
-            LstSimulacionBase.push(filaSku);
-        } 
-    });
-
-   
-    console.log("Valores para generar peticion base");
-    console.log(JSON.stringify(LstSimulacionBase));
-
-    return LstSimulacionBase;
-
 }
 
 function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complementoIII) {
@@ -1807,22 +993,6 @@ function validaFechasMenoresMayores() {
 }
 
 
-function validaSeleccionPlazos() {
-
-    strPlazosValidos = $('#idPlazos').select2("val");
-
-    if (strPlazosValidos == null) {
-
-        mostrarModalMensaje(1, "Es necesario proporcionar un plazo para generar una simulación");
-
-        return false;
-
-    } else {
-
-        return true;
-    }
-
-}
 
 function validaRegistrosVacios(intIdTipoMercadeo) {
 
@@ -2042,7 +1212,7 @@ function cargarArchivo(objetoInputFile) {
     let files = objetoInputFile.files;
     let uriVariablesId = "";
     if (files.length > 0) {
-        uriVariablesId = `${urlEventosP}/${metodo}/${idUsrLogin}`;
+        uriVariablesId = `${urlEventosP}/${metodo}/${idUsrLogin}/${_strIdPromocion}`;
         const formVariables = new FormData();
         formVariables.append("file", files[0]);
         servicesVariables(uriVariablesId, formVariables, POST, true)
@@ -2051,28 +1221,33 @@ function cargarArchivo(objetoInputFile) {
                     case 200:
                         respuesta.json().then(objetoJson => {
                             objetoExcel = objetoJson;
-                            if (objetoJson.respuesta.tipoTasaM.length > 0) {
-                                $('.divDato').show();
-                                pintarTabla(objetoJson.respuesta.tipoTasaM, false);
-                                if (objetoJson.respuesta.esValido == false) {
-                                    $('.btnA.guardar').unbind('click').css('cursor', 'not-allowed');
-                                    $('#modalGuardarParam').find(".txtModal").html("").html("<div><h4>Alguna o algunas familias no se encontraron en la base de datos, por favor de validar las familias con sistemas</h4></div>");
-                                    $('#modalGuardarParam').modal({
-                                        focus: true,
-                                        persist: true,
-                                    });
+                            try {
+                                if (objetoJson.respuesta.tipoTasaM.length > 0) {
+                                    $('.divDato').show();
+                                    $('#idBtnSalir').hide();
+                                    pintarTabla(objetoJson.respuesta.tipoTasaM, false);
+                                    if (objetoJson.respuesta.esValido == false) {
+                                        $('.btnA.guardar').unbind('click').css('cursor', 'not-allowed');
+                                        $('#modalGuardarParam').find(".txtModal").html("").html("<div><h4>Alguna o algunas familias no se encontraron en la base de datos, por favor de validar las familias con sistemas</h4></div>");
+                                        $('#modalGuardarParam').modal({
+                                            focus: true,
+                                            persist: true,
+                                        });
+                                    }
                                 }
-                            } else {
+                            } catch (e) {
                                 $('#modalGuardarParam').find(".txtModal").html("").html("<div>El archivo no tiene el formato requerido. Favor de revisarlo</div>");
                                 $('#modalGuardarParam').modal({
                                     focus: true,
                                     persist: true,
                                     onClose: () => {
-                                        window.location.replace(hrefParametros);
+                                        window.location.replace(hrefTasaP);
                                     }
                                 });
-
                             }
+
+
+                            
                         });
                         break;
                     default:
@@ -2083,7 +1258,7 @@ function cargarArchivo(objetoInputFile) {
                                 focus: true,
                                 persist: true,
                                 onClose: () => {
-                                    window.location.replace(hrefParametros);
+                                    window.location.replace(hrefTasaP);
                                 }
                             });
                         });
@@ -2100,7 +1275,7 @@ function cargarArchivo(objetoInputFile) {
                                 focus: true,
                                 persist: true,
                                 onClose: () => {
-                                    window.location.replace(hrefParametros);
+                                    window.location.replace(hrefTasaP);
                                 }
                             });
                         } else {
@@ -2110,7 +1285,7 @@ function cargarArchivo(objetoInputFile) {
                                 focus: true,
                                 persist: true,
                                 onClose: () => {
-                                    window.location.replace(hrefParametros);
+                                    window.location.replace(hrefTasaP);
                                 }
                             });
                         }
@@ -2118,8 +1293,6 @@ function cargarArchivo(objetoInputFile) {
             });
     }
 }
-
-
 
 function pintarTabla(objetoJson, verValidacion) {
     let divTabsClass = document.getElementsByClassName('menuTabs');
@@ -2287,4 +1460,21 @@ function evtMenuTabs(evt) {
     tab.removeClass('active');
     $('.contTab').hide();
     $(".contTab[contTab='" + tab.attr('tabs') + "']").show();
+}
+
+function evtClickGuardarYEnviarVariables(evt) {
+    let btnGuardar = $(this);
+    btnGuardar.prop('disabled', true);
+    deshabilitarBotonGuardar();
+    validarYGuardarDatos(objetoExcel.respuesta.productosFamilias);
+}
+
+function evtCancelar(evt) {
+    $('#modalCancelarParam').modal({
+        onShow: () => {
+            $(".btnA.simplemodal-close.modalBtnAceptar").on("click", () => {
+                window.location.replace(hrefTasaP);
+            });
+        }
+    });
 }
