@@ -22,48 +22,17 @@ let indexFocusGeneral;
 let intObjTemporalOnFocus;
 let modalMsje;
 let LstMsjExcepcion;
-
-let $selectPLazosValidos;
 let intIdTipoProducto;
-let intIdFamilia;
-let strDescFamilia;
 let intIdCanal;
 let strIdTipoCliente;
-let intIdPeriodicidad;
-let strPlazosValidos;
-let intIdPromociones;
-let dblApoyoEkt;
 let intIdTipoMercadeo;
-
-//Tabla Cotizacion por tipo Mercadeo
-let strSku;
-let dblPrecioD;
-let dblPrecioA;
-let dblEnganche;
-let strIdInput;
-let intErrorEnTasa;
-let intErrorEnTasaMin;
-let LstSimulacionBase;
-let objValoresTbl = [];
-let objIdValoresTbl = [];
-let resCotizacion = [];
-
 //SecCión 4 Enviar Evento
-let strTituloEvento;
-let strJustificacionEvt;
 let strRutaImgJustificacion = "";
-let dtmFechaInicioEvt;
-let dtmFechaFinalizacionEvt;
-let dtmFechaSimulacion;
-let dtmFechaActual;
 let strIdCanal;
-let strTipoEnvio;
 let strTipoTienda;
-let strDescCanal;
 let lstSucursales;
 let strIntersectsucursales;
 let strExceptSucursales; 
-//let blnConfirmarEnvioSucursal;
 let strTipoCargaSucursal;
 let strSucursales;
 let blnCargaCorrecta;
@@ -77,7 +46,6 @@ let _intPrimerProducto = 0;
 let _intIdCanal;
 let _intIdTipoTienda;
 let _intTipoMercadeo = 0;
-//let dblApoyoEkt = 0;
 let _strIdFamilia;
 let _intIdPeriodo;
 
@@ -87,8 +55,6 @@ var ObjSelect = undefined;
 var ObjProducto = undefined;
 
 
-//var ObjCliente = undefined;
-var _strPrecioA = null;
 var objSimulacion = [];
 var GrupoCanal = null;
 var _strIdProducto = null;
@@ -111,17 +77,9 @@ var _strFechaInicio = null;
 var _strFechaFin = null;
 var _strIdTipoEnvio = null;
 var _strIdListaSuc = null;
-
+var _jsonDatosExcel = null;
 //End Nuevos Datos 
-var _strRutaImg;
-var valJustificacion;
 
-var valtitulo;
-var objSendSimulacion = [];
-var _strMensajeModal;
-let objProductoSap = [];
-
-let strDescCortaProd;;
 
 
 
@@ -131,61 +89,6 @@ jQuery.extend(jQuery.expr[':'], {
     }
 });
 
-function sendCotizacion(event) {
-
-    var code = (event.keyCode ? event.keyCode : event.which);
-    intIdTipoMercadeo = $('#idTipoMercadeo option:selected').attr('value');
-
-    if (code == '13') {
-        event.preventDefault();
-        strIdInput = event.target.id;
-        strValorPropuesto = $('#' + strIdInput + '').val();
-        console.log(strIdInput);
-
-        if (intIdTipoMercadeo == strMercadeoAbono) {
-
-            if (!regex.exec(strValorPropuesto)) {
-                mostrarModalMensaje(1, "Solo números");
-                $('#' + strIdInput + '').val("");
-                return false;
-            }
-        }
-        
-
-        objIdProductoASimular = [];
-        objProductoASimular = [];
-
-        $(event.target).parents("tr").find("td:not(:last-child)").each(function () {
-
-            objIdProductoASimular.push($(this).attr('id'));
-            objProductoASimular.push($(this).html());
-
-        });
-
-        //intIdTipoMercadeo = $('#idTipoMercadeo option:selected').attr('value');
-        if (strValorPropuesto !== "") {
-
-            objProductoASimular.push(strValorPropuesto);
-
-            callFunction(intIdTipoMercadeo, objProductoASimular, objIdProductoASimular);
-
-        } else {
-
-            if (intIdTipoMercadeo == strMercadeoAbono) {
-                mostrarModalMensaje(1, "Es necesario proporcionar un abono");
-            } else {
-                mostrarModalMensaje(1, "Es necesario proporcionar una tasa");
-            }
-
-        }
-
-        // Get all focusable elements on the page
-        $canfocus = $(':focusable');
-        indexFocusGeneral = $canfocus.index(document.activeElement) + 1;
-        if (indexFocusGeneral >= $canfocus.length) indexFocusGeneral = 1;
-    }
-}
-
 
 function eventoPrestPrincipal() {
 
@@ -194,7 +97,7 @@ function eventoPrestPrincipal() {
     //Mios
     $('#idBtnDatosComplem').hide();
     $('#idGuardarEvent').hide();
-    
+    $('#archivoTasas').hide();
     //
     $('#divRadioBtnCategoria').hide();
     $('#idTextAreaCargaSucursales').hide();
@@ -290,11 +193,6 @@ function eventoPrestPrincipal() {
         callServicePaises();
         callServiceTipoEven();
         iniciarSelec();
-       // callServiceProductos(ProductoID);
-        //callServiceFamiliaProducto(_strIdProducto, LstObjProductoFamilia);
-        //callServicePeriodos(ProductoID);
-        //callServicesUsuarioProducto(GrupoCanal);
-        //callServicesCondicionesCotizar(_strIdProducto);
     } else {
         mostrarModalMensaje(1, "La información del Usuario no se cargo correctamente");
     }
@@ -323,11 +221,7 @@ function eventoPrestPrincipal() {
          
          
         }
-     
-        //$("#tBSkus").empty();
-       // $("#checktodos").removeAttr("checked");
-       // callServiceFamiliaProducto(_strIdProducto);
-       // callSelectTipoClte(parseInt(_strIdProducto));
+
 
     });
 
@@ -382,48 +276,9 @@ function eventoPrestPrincipal() {
         _strIdProducto = $('#idCompTipoProd option:selected').attr('value');
         $("#tBSkus").empty();
         $("#checktodos").removeAttr("checked");
-        //callServiceFamiliaProducto(_strIdProducto);
         callSelectTipoClte(parseInt(_strIdProducto));
 
     });
-
-
-    
-    $("#idCompFamiliaProd").change(function () {
-        _strIdProducto = $('#idCompTipoProd option:selected').attr('value');
-        $("#tBSkus").empty();
-        $("#checktodos").removeAttr("checked");
-        var _strIdFamilia = $('#idCompFamiliaProd option:selected').attr('value');
-        callSelectPlazos(_strIdProducto, _strIdFamilia);
-
-    });
-
-    $("#radioSKU, #radioCategoria").change(function () {
-        if ($("#radioSKU").is(":checked")) {
-            var strCadenaSkus = $('#idSkus').val();
-            console.log(strCadenaSkus);
-        }
-        else if ($("#radioCategoria").is(":checked")) {
-            $('#div2').show();
-        }
-
-    });
-
-    $("#idBuscarSkus").click(function () {
-
-        var strCadenaSkus = $('#idSkus').val();
-        $("#checktodos").removeAttr("checked");
-
-        if (strCadenaSkus != "") {
-            console.log(strCadenaSkus);
-            callServiceSkus(strCadenaSkus);
-         
-        } else {
-            mostrarModalMensaje(1, "Es necesario proporcionar un SKU para realizar la búsqueda"); 
-        }
-        
-    });
-
     $("#idBtnValidarDatosG").click(function () {
         _strIdPaises = $('#idCompPaises option:selected').attr('value');
         _strIdTipoCliente = $('#idCompTipoDeCliente option:selected').attr('value');
@@ -441,9 +296,6 @@ function eventoPrestPrincipal() {
             irAcordeon(6);
             $('#idBtnDatosComplem').show();
         }
-           
-
-   
 
     });
     $("#idBtnDatosComplem").click(function () {
@@ -454,7 +306,29 @@ function eventoPrestPrincipal() {
         _strIdTipoEnvio = $('#idTipoEnvio option:selected').attr('value');
         _strIdListaSuc = $('#idPreviewSucursales').val();
         var _strIdListaSuc1 = $('#idCargaMSucursales').val();
-      
+
+        var _dtoSplit = _strIdListaSuc1.split(",");
+        var _pocisi = 0;
+        var _dtoSplit1 = _dtoSplit.filter(onlyUnique);
+        _dtoSplit = _dtoSplit1;
+        var _nCadenaSuc = "";
+        if (_strIdListaSuc1 != "") {
+            for (var i = 0; i < _dtoSplit.length; i++) {
+                if (parseInt(_dtoSplit[i])) {
+                    if (_dtoSplit[i].length >= 3) {
+                        _nCadenaSuc += _dtoSplit[i];
+                        _nCadenaSuc += ","
+                    }
+                  
+                }
+            }
+        }
+        if (_nCadenaSuc.length > 0) {
+            _nCadenaSuc = _nCadenaSuc.substring(0, _nCadenaSuc.length - 1)
+        }
+        $('#idCargaMSucursales').val(_nCadenaSuc)
+
+        _strIdListaSuc1 = _nCadenaSuc;
         if (_strTitulo == "")
             mostrarModalMensaje(1, "Es necesario ingresar Titulo");
         else if (_strFechaInicio == "")
@@ -463,10 +337,11 @@ function eventoPrestPrincipal() {
             mostrarModalMensaje(1, "Es necesario seleccionar una fecha final");
         else if (_strIdTipoEnvio == -1)
             mostrarModalMensaje(1, "Es necesario seleccionar un tipo de envio ");
-        else if (_strIdListaSuc == "" && _strIdListaSuc1=="")
+        else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined) )&& _strIdTipoEnvio == 0)
             mostrarModalMensaje(1, "Es necesario ingresar sucursales");
         else {
             irAcordeon(7);
+            $('#archivoTasas').show();
           //  $('#idGuardarEvent').show();
         }
 
@@ -484,30 +359,9 @@ function eventoPrestPrincipal() {
         $("#checktodos").removeAttr("checked");
     });
 
+  
 
-   
-
-    //Carga de la Imagen de Justificacion
-    $('#carga01').change(function (e) {
-
-        //$("#carga01").val('');
-
-        var urlCargaImg = urlSimulador +"anexo/usuario/" + idUsrLogin;
-        var formImg = $("#carga01").prop("files")[0];
-
-        servicesCargaArchivoImg(urlCargaImg, formImg, POST, true).then(objJson => {
-            objJson.json().then(objSM => {
-                console.log(objSM)
-                strRutaImgJustificacion = objSM.respuesta.ruta;
-
-            });
-        })
-
-        console.log(strRutaImgJustificacion);
-    });
-
-
-    $("#rdCargaArchivo, #rdSeleccionManual, #rdSeleccionTerritorio").change(function () {
+      $("#rdCargaArchivo, #rdSeleccionManual, #rdSeleccionTerritorio").change(function () {
         if ($("#rdCargaArchivo").is(":checked")) {
             $('#idTextAreaCargaSucursales').hide();
             $('#idSelectTerritorio').hide();
@@ -515,6 +369,7 @@ function eventoPrestPrincipal() {
             $('#idTipoTiendas').parent().show();
             $("#idDivCargaSucursales").show();
             $("#idTextAreaViewSucursales").show();
+            $('#idCargaMSucursales').val('');
         }
         else if ($("#rdSeleccionManual").is(":checked")) {   
             $('#idTextAreaCargaSucursales').show();
@@ -523,6 +378,7 @@ function eventoPrestPrincipal() {
             $('#idSelectTerritorio').hide();
             $('#idTextAreaViewTerritorioSucursales').hide();
             $("#idTextAreaViewSucursales").hide();
+       
         }
         else if ($('#rdSeleccionTerritorio').is(":checked")) {
             $('#idTipoTiendas').parent().hide();
@@ -612,8 +468,7 @@ function eventoPrestPrincipal() {
         $('#fileLabel').text("Examinar");
        
     });
-
-   
+       
     $('#idPreviewSucursales').prop('readonly', true);
 
 
@@ -631,107 +486,12 @@ function eventoPrestPrincipal() {
         blnConfirmacion = false;
     });
 
-    //$("#idConfimacionEnvio").click(function e() {
-
-    //    console.log("Cadena de Sucursales Validas despues del servicio " + strIntersectsucursales);
-    //    if (strIntersectsucursales != "") {
-    //        blnConfirmarEnvioSucursal = true;
-    //    } else {
-    //        blnConfirmarEnvioSucursal = false;
-    //    }
-        
-    //});
-
-    //$("#idBtnCancelarEnvio").click(function e() {
-
-    //    blnConfirmarEnvioSucursal = false;
-    //});
 
 }
-
-/* Seleccionar Checkbox*/
-$("#checktodos").change(function () {
-    $("input:checkbox.checkM").prop('checked', $(this).prop("checked"));
-});
-
-//1.- Datos a Cotizar
-async function callServicesUsuarioProducto(canalId) {
-
-    try {
-
-        callServiceCanales(canalId);
-        callServicesTipoEnvio();
-        callServicesTipoTienda();
-
-    } catch (e) {
-        return console.log(e.message);
-    }
-
-}
-
-//2.- Condiciones a cotizar
-async function callServicesCondicionesCotizar(objResultServices) {
-
-
-
-        try {
-            callSelectTipoClte(objResultServices);
-            callSelectPeriodicidad();
-            callSelectPromociones(objResultServices);
-            callSelectTipoMercadeo();
-
-        } catch (e) {
-
-        }
-    
-}
-
 
 let elementosSelectM;
 
-function evtChangeSelect2(e) {
-    elementosSelectM = $('#idPlazos').select2("val");
-    if (elementosSelectM) {
-        var indiceValorBuscado = elementosSelectM.findIndex((e) => e === '-1' || e === '-2');
-        if (indiceValorBuscado >= 0) {
-            let valorVariable = elementosSelectM[indiceValorBuscado];
-            if (valorVariable === '-1') {
-                $('#idPlazos').find('option').prop('selected', true);
-                $('#idPlazos').find('option[value="-1"]').removeAttr("selected");
-                $('#idPlazos').find('option[value="-1"]').text("Quitar todo").val("-2");
-                $('#idPlazos').select2('destroy');
-                $('#idPlazos').select2({
-                    width: '115%',
-                    placeholder: 'Selecciona un plazo',
-                    language: "es",
-                });
-                $('#idPlazos').trigger("change");
-                console.log(indiceValorBuscado);
-            } else if (valorVariable === '-2') {
-                $('#idPlazos').find('option').removeAttr("selected");
-                $('#idPlazos').find('option[value="-2"]').text("Seleccionar Todo").val("-1");
-                $('#idPlazos').val(null);
-                $('#idPlazos').select2('destroy');
-                $('#idPlazos').select2({
-                    width: '115%',                    
-                    placeholder: 'Selecciona un plazo',
-                    language: "es",
-                });
-                $('#idPlazos').trigger('change');
-            }
-        }
-    }
-}
-
-
-
-
-
-
-
 //Genera la tabla productos
-
-
 function validaSelects(idForm) {
 
     idForm.validate({
@@ -750,132 +510,6 @@ function validaSelects(idForm) {
         },
     });
 
-}
-
-
-
-
-
-function callFunction(intIdTipoMercadeo, objProductoASimular, objIdProductoASimular) {
-
-    intIdTipoProducto = $('#idCompTipoProd option:selected').attr('value');
-    intIdFamilia = $('#idCompFamiliaProd option:selected').attr('value');
-    strIdTipoCliente = $('#idComTipoClt option:selected').attr('value');
-    intIdPeriodicidad = parseInt($('#idComPeriodicidad option:selected').attr('value'));
-    dblApoyoEkt = $("#IdApoyoEkt").val();
-
-    if (dblApoyoEkt == "") {
-        dblApoyoEkt = 0;
-    }
-
-    $.each(objProductoSap, function (key, value) {
-        if (intIdFamilia == value.IdFamilia) {
-            strDescFamilia = value.DescCorta;
-        }
-    });
-
-    if (intIdTipoProducto == strIdConsumoProd) {
-
-        strDescFamilia = strDescfamiliaConsumo;
-    }
-
-    var objCondicionesCotizar = [];
-    objCondicionesCotizar.push(intIdTipoProducto);
-    objCondicionesCotizar.push(intIdFamilia);
-    objCondicionesCotizar.push(strIdTipoCliente);
-    objCondicionesCotizar.push(intIdPeriodicidad);
-    objCondicionesCotizar.push(dblApoyoEkt);
-    objCondicionesCotizar.push(strDescFamilia);
-
-
-   
-}
-
-
-function guardarSimulacion(requestSimulacion, lstSimulacion) {
-
-    var data = servicesCallMethod(urlSimulador + 'EnviarSimulacion', JSON.stringify(requestSimulacion), POST, true).then(objJson => {
-        switch (objJson.status) {
-            case 200:
-                objJson.json().then(objSM => {
-
-                    var intFolioSimulacion = objSM.respuesta.folioSimulacion;
-                    var intNumeroDeSolicitud = objSM.respuesta.numSolicitud;
-                    if (objSM.respuesta.lstMensajesExcepcion.length > 0) {
-                        LstMsjExcepcion = objSM.respuesta.lstMensajesExcepcion;
-                    } else {
-                        LstMsjExcepcion = [];
-                    }                   
-                    mostrarModalMensaje(4, "Tu solicitud con el folio", intFolioSimulacion, "ha sido enviada para autorización.", "Te avisaremos cuando su estatus cambie.");
-                    EnviaCorreoCadena(intFolioSimulacion, intNumeroDeSolicitud, lstSimulacion, LstMsjExcepcion);
-                })
-                break;
-            case 500:
-                objJson.json().then(objSM => {
-                    var strmensajeError = objSM.mensaje;
-                    mostrarModalMensaje(1, strmensajeError, "La simulación no se puede generar");
-                })
-                break;
-            default:
-                break;
-        }
-    })
-        .catch(objJson => {
-            objJson.json().then(json => {
-                window.console.log(json);
-                var strmensajeError = json.mensaje;
-                mostrarModalMensaje(1, strmensajeError, "La simulación no se puede generar");
-            })
-        });
-}
-
-function EnviaCorreoCadena(intFolioSimulacion, intNumeroDeSolicitud, lstSimulacion,LstMsjExcepcion) {
-
-
-    strTipoEnvio = $('#idTipoEnvio option:selected').text();
-    strDescCanal = $('#idCompCanales option:selected').text();
-    dtmFechaInicioEvt = $('#filter-date').val();
-    dtmFechaFinalizacionEvt = $('#filter-date1').val();
-
-    var objJson = {
-        Usuario: strIdUsuario.toString(),
-        Folio: intFolioSimulacion.toString(),
-        Vigencia: strVigencia,
-        Producto: intIdTipoProducto,
-        TipoEnvio: strTipoEnvio,
-        Canal: strDescCanal,
-        FechaInicio: dtmFechaInicioEvt,
-        FechaFin: dtmFechaFinalizacionEvt,
-        Solicitud: intNumeroDeSolicitud.toString()
-    }
-    console.log(JSON.stringify(objJson));
-    var data = servicesCallMethod(urlEnvioCorreo + "ValidaCadenas/ValidaParametrosC/", JSON.stringify(objJson), POST, true).then(objJson => {
-        objJson.json().then(objSM => {
-            console.log(objSM);
-            envioCorreos(objSM, lstSimulacion, LstMsjExcepcion);
-        })
-    });
-}
-
-function envioCorreos(objetoCadena, lstSimulacion, LstMsjExcepcion) {
-    console.log(objetoCadena)
-
-    strTituloEvento = $('#idTituloEvent').val();
-    let objetoPeticion = {
-        Cadena: objetoCadena.cadena,
-        Descripcion: strTituloEvento,
-        Sucursales: lstSucursales,
-        listaSku: lstSimulacion,
-        LstMensajesExcepcion: LstMsjExcepcion
-    }
-    console.log(JSON.stringify(objetoPeticion));
-
-    var data = servicesCallMethod(urlEnvioCorreo + "EnvioMail/EnviarCorreo/", JSON.stringify(objetoPeticion), POST, true).then(objJson => {
-        objJson.json().then(objSM => {
-            console.log("Envio de Correos - Ok")
-            console.log(objSM);
-        })
-    });
 }
 
 function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complementoIII) {
@@ -992,8 +626,6 @@ function validaFechasMenoresMayores() {
     return true;
 }
 
-
-
 function validaRegistrosVacios(intIdTipoMercadeo) {
 
     strInput = null;
@@ -1037,36 +669,6 @@ function validaRegistrosVacios(intIdTipoMercadeo) {
     }
 }
 
-function eliminaRegistrosVacios(intIdTipoMercadeo) {
-
-    strInput = " ";
-
-    switch (intIdTipoMercadeo) {
-
-        case strMercadeoTasa:
-
-            $('#tblSM tbody tr').each(function () {
-                strInput = $(this).find('td').eq(11).find('input[type="text"]').val();
-                if (strInput == "") {
-                    $(this).closest('tr').remove();
-                    blnConfirmacion = true;
-                }
-            });
-            break;
-
-        case strMercadeoAbono:
-
-            $('#tblSM tbody tr').each(function () {
-                strInput = $(this).find('td').eq(6).find('input[type="text"]').val();
-                if (strInput == "") {
-                    $(this).closest('tr').remove();
-                    blnConfirmacion = true;
-                }
-            });
-            break;
-    }
-}
-
 function obtenerFechaActual() {
 
     var fecha = new Date();
@@ -1080,46 +682,6 @@ function obtenerFechaActual() {
     var fechaActual = (yyyy + '-' + (('' + MM).length < 2 ? '0' : '') + MM + '-' + (('' + dd).length < 2 ? '0' : '') + dd + ' ' + fecha.getHours() + ':' + ('0' + (fecha.getMinutes())).slice(-2) + ':' + fecha.getSeconds())
 
     return fechaActual;
-}
-
-
-function generaSimulacionPropuesta(strValorPropuesto, objValoresTbl, objIdValoresTbl) {
-
-
-    if (strValorPropuesto == undefined) {
-
-        objProductoASimular = objValoresTbl;
-        objIdProductoASimular = objIdValoresTbl;
-        _intPrimerProducto = 1;
-        strValorPropuesto = "";
-    }
-    if (_intPrimerProducto == 1) {
-
-        if (strValorPropuesto != "" && strValorPropuesto != undefined) {
-            objProductoASimular.push(strValorPropuesto);
-            callFunction(intIdTipoMercadeo);
-            _intPrimerProducto = 0;
-        }
-        console.log("Simular: " + objProductoASimular);
-        console.log("Ids :. " + objIdProductoASimular);
-        objProductoASimular = objValoresTbl;
-        objIdProductoASimular = objIdValoresTbl;
-
-    } else {
-
-        if (strValorPropuesto != "" && strValorPropuesto != null) {
-            objProductoASimular.push(strValorPropuesto);
-
-            callFunction(intIdTipoMercadeo);
-            _intPrimerProducto = 0;
-        }
-
-        objProductoASimular = objValoresTbl;
-        objIdProductoASimular = objIdValoresTbl;
-        console.log("Productos :. " + objProductoASimular);
-        console.log("Ids :. " + objIdProductoASimular);
-    }
-
 }
 
 function ValidaSoloNumeros(e) {
@@ -1175,18 +737,6 @@ async function invocaCargaSucursalesManual() {
         listaSku = [];
         var strMsjeMSucursal = "Las siguientes sucursales no corresponden al canal o tipo tienda seleccionados, es necesario modificar su petición";
         mostrarModalMensaje(3, strExceptSucursales, strMsjeMSucursal);
-
-        //if (blnConfirmarEnvioSucursal) {
-        //    console.log("Confirmar envio modal de advertencia" + blnConfirmarEnvioSucursal);
-        //    strSucursales = strIntersectsucursales;
-        //    blnCargaCorrecta = true;
-        //    console.log("Validacion Proceso de carga correcto: " + blnCargaCorrecta)
-        //} else {
-        //    listaSku = [];
-        //    mostrarModalMensaje(1, "Tu solicitud no puede ser procesada, es necesario proporcionar las sucursales de destino");
-        //    blnCargaCorrecta = false;
-        //    console.log("Validacion Proceso de carga incorrecto: " + blnCargaCorrecta)
-        //}
     } else if (strExceptSucursales == undefined) {
         listaSku = [];
         blnCargaCorrecta = false;
@@ -1202,8 +752,6 @@ async function invocaCargaSucursalesManual() {
 
     return blnCargaCorrecta;
 }
-
-
 
 //Nueva implementacion qui 
 
@@ -1222,27 +770,58 @@ function cargarArchivo(objetoInputFile) {
                         respuesta.json().then(objetoJson => {
                             objetoExcel = objetoJson;
                             try {
-                                if (objetoJson.respuesta.tipoTasaM.length > 0) {
+                                if (objetoJson.respuesta.archivo.length > 0) {
                                     $('.divDato').show();
                                     $('#idBtnSalir').hide();
-                                    pintarTabla(objetoJson.respuesta.tipoTasaM, false);
-                                    if (objetoJson.respuesta.esValido == false) {
-                                        $('.btnA.guardar').unbind('click').css('cursor', 'not-allowed');
-                                        $('#modalGuardarParam').find(".txtModal").html("").html("<div><h4>Alguna o algunas familias no se encontraron en la base de datos, por favor de validar las familias con sistemas</h4></div>");
+                                    pintarTabla(objetoJson.respuesta.archivo, false);
+                                    _jsonDatosExcel = objetoJson.respuesta.archivo;
+                                    var cadenModal = "";
+
+                                    if (objetoJson.respuesta.datosencero[0].contador > 0 || objetoJson.respuesta.datosencero[1].contador > 0) {
+                                        cadenModal += "<div><h4>Alguna tasas son menores o iguales a 0, por favor de validar.</h4></div><br>";
+                                 
+                                    }
+                                    if (objetoJson.respuesta.valAbonos[0].cadena.length > 0 || objetoJson.respuesta.valAbonos[1].cadena.length > 0) {
+                                         var texos ="";
+                                         cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>Algunas tasas no son el mismo abono normal  y el ultimo abono </h4>";
+                                        if (objetoJson.respuesta.valAbonos[0].cadena.length > 0) {
+                                             for (var i = 0; i < objetoJson.respuesta.valAbonos[0].cadena.length; i++) {
+                                                 cadenModal += objetoJson.respuesta.valAbonos[0].cadena[i];
+                                                 cadenModal += "<br>"
+                                             }
+                                         }
+                                        if (objetoJson.respuesta.valAbonos[1].cadena.length > 0) {
+                                             for (var i = 0; i < objetoJson.respuesta.valAbonos[1].cadena.length; i++) {
+                                                 cadenModal += objetoJson.respuesta.valAbonos[1].cadena[i];
+                                                 cadenModal += "<br>"
+                                             }
+                                         }
+
+                                         cadenModal += "</div>";
+                                    }
+                                    if (objetoJson.respuesta.mamen.length > 0) {
+                                       
+                                        for (var i = 0; i < objetoJson.respuesta.mamen.length; i++) {
+                                            cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>" + objetoJson.respuesta.mamen[i]+" </h4></div>";
+                                            cadenModal += "<br>"
+                                        }
+                                    }
+
+                                    if (cadenModal != "") {
+                                        $('#modalGuardarParam').find(".txtModal").html("").html(cadenModal);
                                         $('#modalGuardarParam').modal({
                                             focus: true,
                                             persist: true,
-                                        });
+                                        })
                                     }
+
                                 }
                             } catch (e) {
+                                _jsonDatosExcel = null;
                                 $('#modalGuardarParam').find(".txtModal").html("").html("<div>El archivo no tiene el formato requerido. Favor de revisarlo</div>");
                                 $('#modalGuardarParam').modal({
                                     focus: true,
                                     persist: true,
-                                    onClose: () => {
-                                        window.location.replace(hrefTasaP);
-                                    }
                                 });
                             }
 
@@ -1252,7 +831,7 @@ function cargarArchivo(objetoInputFile) {
                         break;
                     default:
                         respuesta.text().then(objetoJson => {
-
+                            _jsonDatosExcel = null;
                             $('#modalGuardarParam').find(".txtModal").html("").html('<div>Estatus error:'+ error.status+ ' ' +error.statusText + ' Recurso no encontrado: '+ error.url +'</div>');
                             $('#modalGuardarParam').modal({
                                 focus: true,
@@ -1269,6 +848,7 @@ function cargarArchivo(objetoInputFile) {
                 error.text()
                     .then(objeto => {
                         if (objeto.length > 0) {
+                            _jsonDatosExcel = null;
                             let jsonObjeto = JSON.parse(objeto);
                             $('#modalGuardarParam').find(".txtModal").html("").html('<div>Estatus error:' + error.status + ' ' + jsonObjeto.errorMessage + '</div>');
                             $('#modalGuardarParam').modal({
@@ -1279,6 +859,7 @@ function cargarArchivo(objetoInputFile) {
                                 }
                             });
                         } else {
+                            _jsonDatosExcel = null;
                             $('#modalGuardarParam').find(".txtModal").html("").html('<div>Estatus error:' + error.status + ' ' + error.statusText + ' Recurso no encontrado: ' + error.url + '</div>');
 
                             $('#modalGuardarParam').modal({
@@ -1342,24 +923,16 @@ function pintarTabla(objetoJson, verValidacion) {
         let tbody = document.createElement('tbody');
         let trCabecera = document.createElement('tr');
         thead.appendChild(trCabecera);
-        /*let thPlazo = document.createElement('th');
-        let textoTdPlazo = document.createTextNode("Sku");
-        thPlazo.appendChild(textoTdPlazo);
-        trCabecera.appendChild(thPlazo);*/
+        
         let plazos;
         plazos = element.variablesCabeceras.map((value, index, array) => {
             let thVariables = document.createElement('th');
             let textoTdVariables = document.createTextNode(value.cDescripcion);
-            /*if (parseInt(value.fiVariableId) === 0) {
-                thVariables.setAttribute("class", "advertenciaVariable");
-            }*/
+         
             thVariables.appendChild(textoTdVariables);
             trCabecera.appendChild(thVariables);
 
-          /*  value.variablesV.forEach((ele, n, obj) => {
-                console.log(ele)
-            }
-            )*/
+     
             return value.variablesV.map((value, index, array) => value.valor);
         });
         table.appendChild(tbody);
@@ -1368,11 +941,13 @@ function pintarTabla(objetoJson, verValidacion) {
         var valorInial = element.variablesCabeceras.length;
         var valorFinal = element.variablesCabeceras[0].variablesV.length;
 
-        //var nuevoArre [valorInial][valorFinal] = null;
         for (var a1 = 0; a1 < valorFinal; a1++) {
             let trPlazo = document.createElement('tr');
             element.variablesCabeceras.forEach((value, index, array) => {
                 let tdVariable = document.createElement('td');
+                if (value.variablesV[a1].valor == 0) {
+                    tdVariable.style.background = "red";
+                }
                 let textTdVariable = document.createTextNode(value.variablesV[a1].valor);
                     tdVariable.appendChild(textTdVariable);
                     trPlazo.appendChild(tdVariable);
@@ -1381,58 +956,6 @@ function pintarTabla(objetoJson, verValidacion) {
 
         }
        
-       /* element.variablesCabeceras.map((value, index, array) => {
-            
-            if (index == 0) {
-                value.variablesV.forEach((ele, n, obj) => {
-                    if (n == 0) {
-                        let trPlazo = document.createElement('tr');
-                    }
-                    let tdPLazo = document.createElement('td');
-                    let textoTdPlazo = document.createTextNode(ele)
-                    tdPLazo.appendChild(textoTdPlazo);
-                    trPlazo.appendChild(tdPLazo);
-                    //console.log(ele)
-                }
-                )
-            }
-           
-         //   return value.variablesV.map((value, index, array) => value.valor);
-        });*/
-
-
-
-      /*  plazosNoRepetidos.forEach((ele, n, obj) => {
-            let trPlazo = document.createElement('tr');
-            let tdPLazo = document.createElement('td');
-            let textoTdPlazo = document.createTextNode(ele);
-            tdPLazo.appendChild(textoTdPlazo);
-            trPlazo.appendChild(tdPLazo);
-
-            variables = element.variablesCabeceras.map(function (task, index, array) {
-               // return task.variables.filter((task) => task.plazo == ele);
-            });
-          /*  variables.map((value, index, arra) => {
-                let tdVariable = document.createElement('td');
-                let textTdVariable = document.createTextNode(value[0].valor + (value[0].esPorcentaje ? "%" : ""));
-                if (verValidacion) {
-                    if (value[0].encontrado) {
-                        if (!value[0].esValido) {
-                            tdVariable.className = "variableNoValida";
-                        }
-                    } else {
-                        tdVariable.className = "variableNoEncontrada";
-                    }
-                }
-                tdVariable.appendChild(textTdVariable);
-                trPlazo.appendChild(tdVariable);
-            });
-
-            */
-         //   tbody.append(trPlazo);
-        //});
-
-
 
 
         divTabScroll.appendChild(table);
@@ -1465,8 +988,7 @@ function evtMenuTabs(evt) {
 function evtClickGuardarYEnviarVariables(evt) {
     let btnGuardar = $(this);
     btnGuardar.prop('disabled', true);
-    deshabilitarBotonGuardar();
-    validarYGuardarDatos(objetoExcel.respuesta.productosFamilias);
+    guardarEvento()
 }
 
 function evtCancelar(evt) {
@@ -1477,4 +999,58 @@ function evtCancelar(evt) {
             });
         }
     });
+}
+
+function guardarEvento() {
+    _strIdPaises = $('#idCompPaises option:selected').attr('value');
+    _strIdTipoCliente = $('#idCompTipoDeCliente option:selected').attr('value');
+    _strIdPeriodo = $('#idCompPeriodo option:selected').attr('value');
+    _strIdPromocion = $('#idCompPromocion option:selected').attr('value');
+    _strTitulo = $('#idTituloEvent').val();
+    _strFechaInicio = $('#filter-date').val();
+    _strFechaFin = $('#filter-date1').val();
+    _strIdTipoEnvio = $('#idTipoEnvio option:selected').attr('value');
+    _strIdListaSuc = $('#idPreviewSucursales').val();
+    var _strIdListaSuc1 = $('#idCargaMSucursales').val();
+
+
+    if (_strIdPaises == 0)
+        mostrarModalMensaje(1, "Es necesario seleccionar un país");
+    else if (_strIdTipoCliente == 0)
+        mostrarModalMensaje(1, "Es necesario seleccionar un tipo de cliente");
+    else if (_strIdPeriodo == 0)
+        mostrarModalMensaje(1, "Es necesario seleccionar un periodo");
+    else if (_strIdPromocion == 0)
+        mostrarModalMensaje(1, "Es necesario seleccionar una promocion");
+    else if (_strTitulo == "")
+        mostrarModalMensaje(1, "Es necesario ingresar Titulo");
+    else if (_strFechaInicio == "")
+        mostrarModalMensaje(1, "Es necesario seleccionar una fecha inicio");
+    else if (_strFechaFin == 0)
+        mostrarModalMensaje(1, "Es necesario seleccionar una fecha final");
+    else if (_strIdTipoEnvio == -1)
+        mostrarModalMensaje(1, "Es necesario seleccionar un tipo de envio ");
+    else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined)) && _strIdTipoEnvio == 0)
+        mostrarModalMensaje(1, "Es necesario ingresar sucursales");
+    else {
+        var _jsonPeticion =
+        {
+            idPais: _strIdPaises,
+            tipoCliente: _strIdTipoCliente,
+            idPeriodo: _strIdPeriodo,
+            idPromocion: _strIdPromocion,
+            titulo: _strTitulo,
+            fechaInicio: _strFechaInicio,
+            fechaFin: _strFechaFin,
+            idTipoEnvio: _strIdTipoEnvio,
+            sucursales: (_strIdListaSuc == "") ? _strIdListaSuc1 : _strIdListaSuc,
+            jsonArchivo: JSON.stringify(_jsonDatosExcel)
+        }
+        console.log("Json Peticion => ", _jsonPeticion)
+    }
+
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
 }
