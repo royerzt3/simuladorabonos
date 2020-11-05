@@ -36,6 +36,12 @@
     <ProjectReference Include="..\..\Librerias\validacionestasasmercadeo\ValidacionesTasasMercadeo\ValidacionesTasasMercadeo.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\js\AutorizadorEventosP.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
   <Target Name="SetJFrogProperties" BeforeTargets="DownloadDependencies;PrepareForBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
     <Message Text="Setting JFrog properties" />

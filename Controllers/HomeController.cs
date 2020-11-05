@@ -208,7 +208,9 @@ namespace SimuladorAbonos.Controllers
                                 case "urlEventosP":
                                     ViewData["urlEventosP"] = valor.Value;
                                     break;
-
+                                case "urlAutorizaP":
+                                    ViewData["urlAutorizaP"] = valor.Value;
+                                    break;
                                 default:
                                     break;
                             }
@@ -334,7 +336,29 @@ namespace SimuladorAbonos.Controllers
                 return RedirectToAction("Error");
             }
         }
-
+        public IActionResult AutorizaP()
+        {
+            var dtoUsrS = HttpContext.Session.GetString(SessionToken);
+            try
+            {
+                this._log.WriteInfo("Método: Autorizador Prestamos.");
+                if (dtoUsrS == null)
+                {
+                    return RedirectToAction("Logout");
+                }
+                else
+                {
+                    string StrEtiquetaTituloAutorizaP = this.Config.GetValue<string>("Etiquetas:Vistas:0:General:TituloAutorizaP");
+                    ViewData["TituloAutorizaP"] = StrEtiquetaTituloAutorizaP;
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                this._log.WriteError(e);
+                return RedirectToAction("Error");
+            }
+        }
         public IActionResult Usuarios()
         {
             Usuarios lstUsuario;

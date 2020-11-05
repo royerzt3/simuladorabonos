@@ -27,6 +27,10 @@ if ($("#urlAutorizador").val() != "") {
     localStorage.removeItem('urlAutorizador');
     localStorage.setItem('urlAutorizador', $("#urlAutorizador").val());
 } 
+if ($("#urlAutorizaP").val() != "") {
+    localStorage.removeItem('urlAutorizaP');
+    localStorage.setItem('urlAutorizaP', $("#urlAutorizaP").val());
+} 
 if ($("#urlCorreos").val() != "") {
     localStorage.removeItem('urlCorreos');
     localStorage.setItem('urlCorreos', $("#urlCorreos").val());
@@ -47,6 +51,7 @@ const urlFoto = localStorage.getItem('urlFotos');
 const urlCatalogos = localStorage.getItem('urlCatalogos');
 const urlUsuarios = localStorage.getItem('urlUsuarios'); 
 const urlAutorizacion = localStorage.getItem('urlAutorizador');
+const urlAutorizacionP = localStorage.getItem('urlAutorizaP');
 const urlEnvioCorreo = localStorage.getItem('urlCorreos');   
 const urlVariables = localStorage.getItem('urlVariables');  
 const urlSimulador = localStorage.getItem('urlSimulador');
@@ -59,7 +64,8 @@ let controllerLogin = new AbortController();
 let signalLogin = controllerLogin.signal;
 let originSimuladorLogin = window.location.origin;
 let pathNameHomeCotizador = pathProyecto+'Cotizador/';
-let pathNameHomeAutorizador = pathProyecto +'Autorizador/';
+let pathNameHomeAutorizador = pathProyecto + 'Autorizador/';
+let pathNameHomeAutorizaP = pathProyecto + 'AutorizaP/';
 let pathNameHomeAdmin = pathProyecto +'Administrador/';
 let pathNameHomeUsuarios = pathProyecto + 'Usuarios/';
 let pathNameHomeParametros = pathProyecto + 'Parametros/';
@@ -73,6 +79,7 @@ let pathNameHomeIndex = pathProyecto;
 
 let hrefCotizador = `${originSimuladorLogin}${pathNameHomeCotizador}`;
 let hrefAutorizador = `${originSimuladorLogin}${pathNameHomeAutorizador}`;
+let hrefAutorizaP = `${originSimuladorLogin}${pathNameHomeAutorizaP}`;
 let hrefAdministrador = `${originSimuladorLogin}${pathNameHomeAdmin}`;
 let hrefUsuarios = `${originSimuladorLogin}${pathNameHomeUsuarios}`;
 let hrefParametros = `${originSimuladorLogin}${pathNameHomeParametros}`;

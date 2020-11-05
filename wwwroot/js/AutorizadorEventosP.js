@@ -1,4 +1,11 @@
-﻿var ObjCorreo = {};
+﻿const POST = "POST";
+const GET = "GET";
+var ObjStatus = undefined;
+var ObjOrdena = undefined;
+var ObjUsuarios = undefined;
+var ObjTipoEnvio = undefined;
+let intObjTemporalOnFocus;
+var ObjCorreo = {};
 var ObjAutoRecha = {};
 var Usuario;
 var Folio;
@@ -16,12 +23,25 @@ var fiSimulacionIdGlobal;
 var valorMotvio;
 let contenidoSucursal;
 var ModalAutorizar;
-
-
+$("#filter-date").datetimepicker({
+    timepicker: false
+});
+$("#filter-date, #filter-date1").datetimepicker({
+    timepicker: false,
+    maxDate: "-0D"
+});
+$("#filter-date1").on('change', function () {
+    validaFechasMenoresMayores();
+});
 function Principal() {
     var object = JSON.parse(localStorage.getItem('objectUsr'));
     datos = JSON.parse(object);
+    obtStatusEven();
+    obtOdenamiento();
 
+    $('#idTipoEvento').hide();
+    $('#idUsuarios').hide();
+    $('#idRango').hide(); 
     consultaServicioAE(urlAutorizacion + "getFirmasPendientes?piUsuarioId=" + idUsrLogin, null, "GET", true, "application/json")
         .then(objJsonP => {
             switch (objJsonP.status) {
@@ -260,6 +280,7 @@ function printFrontFP(objFP) {
 
     $('.accordion > dd').hide();
     $('.modalAutorizado_view').on('click', evtbtnAutorizar);
+    $('.modalBuscar_view').on('click', evtbtnBuscar);
     $('.modalRechazo_view').on('click', evtbtnRechazarModal);
     $('.accordion > dt').on('click', evtClickdt);
     $('.btnA.simplemodal-close').on('click', evtRechazarEvento);
@@ -642,11 +663,283 @@ function validaciones() {
 }
 
 
+function obtStatusEven() {
+    limpiarCombo("idCompStatus");
+
+    var idStatus;
+    var strDescStatus;
+
+    var data = servicesCallMethod(urlCatalogos + 'getStatusEvento', null, POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompStatus");
+
+         
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                    idStatus = value.fistatus;
+                    strDescStatus = value.fcdesstatus;
+
+                    var option = document.createElement("option");
+                var varDescOpction = document.createTextNode(strDescStatus);
+                    option.appendChild(varDescOpction);
+                option.setAttribute("value", idStatus);
+                    select.appendChild(option);
+               
+
+            });
+            if (ObjStatus != undefined) {
+                ObjStatus.dispose();
+            }
+            ObjStatus = new Dropkick("#idCompStatus");
+            ObjStatus.refresh();
+        });
+    });
+}
+
+function obtUsuariosEven() {
+    limpiarCombo("idCompUsuario");
+
+    var idUsuario;
+    var strDescUsuario;
+
+    var data = servicesCallMethod(urlCatalogos + 'getUsers', null, POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompUsuario");
+
+
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                idUsuario = value.fiUsr;
+                strDescUsuario = value.fcNombre;
+
+                var option = document.createElement("option");
+                var varDescOpction = document.createTextNode(strDescUsuario);
+                option.appendChild(varDescOpction);
+                option.setAttribute("value", idUsuario);
+                select.appendChild(option);
+
+
+            });
+            if (ObjUsuarios != undefined) {
+                ObjUsuarios.dispose();
+            }
+            ObjUsuarios = new Dropkick("#idCompUsuario");
+            ObjUsuarios.refresh();
+        });
+    });
+}
+
+
+function obtTipoEven() {
+    limpiarCombo("idCompTipoEven");
+
+    var idTipoEven;
+    var strDescTipoEven;
+
+    var data = servicesCallMethod(urlCatalogos + 'getEvenTipo', null, POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompTipoEven");
+
+
+
+            $.each(objSM.respuesta, function (key, value) {
+                if (value.fiEventTipo != 2) {
+                    idTipoEven = value.fiEventTipo;
+                    strDescTipoEven = value.fcDecEventoTipo;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDescTipoEven);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idTipoEven);
+                    select.appendChild(option);
+
+
+                }
+                
+            });
+            if (ObjTipoEnvio != undefined) {
+                ObjTipoEnvio.dispose();
+            }
+            ObjTipoEnvio = new Dropkick("#idCompTipoEven");
+            ObjTipoEnvio.refresh();
+        });
+    });
+}
+
+function obtOdenamiento() {
+    limpiarCombo("idCompTipoOrdena");
+
+    var idFiltro;
+    var strDescFiltro;
+
+    var data = servicesCallMethod(urlCatalogos + 'getFiltroAutori', null, POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+            var select = document.getElementById("idCompTipoOrdena");
+
+            /*var option = document.createElement("option");
+            var varDescOpction = document.createTextNode("Selecciona Ordenamiento");
+            option.appendChild(varDescOpction);
+            option.setAttribute("value", 0);
+            select.appendChild(option);*/
+
+            $.each(objSM.respuesta, function (key, value) {
+
+                if (value.id != 1) {
+                    idFiltro = value.id;
+                    strDescFiltro = value.tipo;
+
+                    var option = document.createElement("option");
+                    var varDescOpction = document.createTextNode(strDescFiltro);
+                    option.appendChild(varDescOpction);
+                    option.setAttribute("value", idFiltro);
+                    select.appendChild(option);
+                }
+
+            });
+            if (ObjOrdena != undefined) {
+                ObjOrdena.dispose();
+            }
+            ObjOrdena = new Dropkick("#idCompTipoOrdena");
+            ObjOrdena.refresh();
+        });
+    });
+}
 
 
 
 
 
+function tipoOrdenamiento(even) {
+    var _tipoOrdena = $('#idCompTipoOrdena').val();
+    switch (_tipoOrdena) {
+        case "0":
+            $('#idUsuarios').hide();
+            $('#idTipoEvento').hide(); 
+            $('#idRango').hide(); 
+            break;
+        
+        case "2":
+            $('#idRango').show(); 
+            $('#idUsuarios').hide();
+            $('#idTipoEvento').hide();
+            break;
+        case "3":
+            $('#idUsuarios').show();
+            $('#idTipoEvento').hide();
+            $('#idRango').hide(); 
+            obtUsuariosEven();
+            break;
+        case "4":
+            $('#idTipoEvento').show();
+            $('#idUsuarios').hide();
+            $('#idRango').hide(); 
+            obtTipoEven();
+            break;
+    }
+}
 
 
+function evtbtnBuscar () {
+    var valFechaInicio = $('#filter-date').val();
+    var valFechaFin = $('#filter-date1').val();
+    console.log("Sevicio por fecha: ", valFechaInicio, " Final : ", valFechaFin)
+    return false;
+}
 
+function validaFechasMenoresMayores() {
+    try {
+        var valFechaInicio = $('#filter-date').val();
+        var valFechaFin = $('#filter-date1').val();
+
+        var fechI = valFechaInicio.split("/");
+        var diaI = fechI[2].split(" ");
+        var fechF = valFechaFin.split("/");
+        var diaF = fechF[2].split(" ");
+
+        fechI.push(diaI[0]);
+        fechF.push(diaF[0]);
+
+        var fechaInicio = fechI[1] + "-" + fechI[3] + "-" + fechI[0];
+        var fechaFin = fechF[1] + "-" + fechF[3] + "-" + fechF[0];
+
+        if (Date.parse(fechaInicio) > Date.parse(fechaFin)) {
+
+            mostrarModalMensaje(1, "La fecha inicio no puede ser mayor a la fecha final");
+            $('#filter-date1').val("");
+
+            return false;
+        }
+    } catch (e) {
+        return false;
+    }
+   
+
+    return true;
+}
+
+function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complementoIII) {
+
+    let modalMsje;
+
+    switch (tipo) {
+        case 1:
+            $('.txtMdNotificaciones ').html(mensaje);
+
+            if (complementoI != undefined) {
+                $('.txtMsjeII ').html('<strong> ' + complementoI + ' </strong>');
+            } else if (complementoII != undefined) {
+                $('.txtMsjeIII ').html(complementoII);
+            } else {
+                $('.txtMsjeII ').html('<strong> ' + " " + ' </strong>');
+                $('.txtMsjeIII ').html(" ");
+            }
+            modalMsje = $('#modalNotificaciones').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    if (intObjTemporalOnFocus) {
+                        $canfocus = $(':focusable');
+                        $canfocus.eq(intObjTemporalOnFocus).focus();
+                    }
+                    modalMsje.close();
+                }
+            });
+            break;
+        case 2:
+            $('.txtMsjeTbl ').html(mensaje);
+            modalMsje = $('#modalNotificacionTabla').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    modalMsje.close();
+                }
+            });
+            break;
+        case 3:
+            $('.txtMsjeSucI').html(mensaje);
+            $('.txtMsjeSuc').html(complementoI);
+            modalMsje = $('#modalNotificacionSucursales').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    modalMsje.close();
+                }
+            });
+            break;
+        case 4:
+            $('.txtModal').html(mensaje);
+            $('.txtMd').html('<strong> ' + complementoI + ' </strong>');
+            $('.txtModalC').html(complementoII);
+            $('.txtCh1').html(complementoIII);
+            modalMsje = $('#modalGuardar').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    window.location.replace(hrefIndex);
+                }
+            });
+            break;
+    }
+}

@@ -538,6 +538,9 @@ function cargaMenu(lstMenuSubMenu) {
             case 'Autorizador de eventos':
                 $(".Vista_" + Menu).attr("href", hrefAutorizador);
                 break;
+            case 'Autorizador de eventos Prestamos':
+                $(".Vista_" + Menu).attr("href", hrefAutorizaP);
+                break;
             case 'Consultas':
                 $(".Vista_" + Menu).attr("href", "#");
                 break;

@@ -17,7 +17,7 @@ namespace SimuladorAbonos.Models
 
         public List<KeyValuePair<string, string>> ObtieneUrl(string ambiente)
         {
-            string[] urls = new string[] { "urlLlaveM", "urlRedirect", "urlUsrInfo", "urlCatalogos", "urlUsuarios", "urlFotos", "urlSimulador", "urlCorreos", "urlAutorizador", "urlVariables", "urlEventosP" };
+            string[] urls = new string[] { "urlLlaveM", "urlRedirect", "urlUsrInfo", "urlCatalogos", "urlUsuarios", "urlFotos", "urlSimulador", "urlCorreos", "urlAutorizador", "urlVariables", "urlEventosP", "urlAutorizaP" };
             string sectionName = "Configuracion";
             List<KeyValuePair<string, string>> lstUrl = new List<KeyValuePair<string, string>>();
             try

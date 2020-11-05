@@ -1033,19 +1033,46 @@ function guardarEvento() {
     else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined)) && _strIdTipoEnvio == 0)
         mostrarModalMensaje(1, "Es necesario ingresar sucursales");
     else {
+        let uriVariablesId = "";
+        var metodo = "guardaEvento";
+            uriVariablesId = `${urlEventosP}/${metodo}`;
         var _jsonPeticion =
         {
-            idPais: _strIdPaises,
-            tipoCliente: _strIdTipoCliente,
-            idPeriodo: _strIdPeriodo,
-            idPromocion: _strIdPromocion,
-            titulo: _strTitulo,
-            fechaInicio: _strFechaInicio,
-            fechaFin: _strFechaFin,
-            idTipoEnvio: _strIdTipoEnvio,
-            sucursales: (_strIdListaSuc == "") ? _strIdListaSuc1 : _strIdListaSuc,
-            jsonArchivo: JSON.stringify(_jsonDatosExcel)
+            idPais: parseInt(_strIdPaises),
+            TipoTasaM: JSON.stringify(_jsonDatosExcel),
+            listasSuc: (_strIdListaSuc == "") ? _strIdListaSuc1 : _strIdListaSuc,
+            idTEvento: 0,
+            idUsuario: idUsrLogin,
+            NomEvento: _strTitulo,
+            FInicio: _strFechaInicio,
+            FFin: _strFechaFin,
+            TCliente: _strIdTipoCliente,
+            idPromocion: parseInt(_strIdPromocion),
+            idPeriodo: parseInt(_strIdPeriodo),
+            idTipoDeEnvio: parseInt(_strIdTipoEnvio),
         }
+        //var data = servicesCallMethod(urlCatalogos + "getProductos", JSON.stringify(strPeticion), POST, true).then(objJson => {
+        var data = servicesCallMethod(uriVariablesId, JSON.stringify(_jsonPeticion), POST, true).then(objJson => {
+            objJson.json().then(objSM => {
+
+                LstProductos = objSM.respuesta;
+
+                if (LstProductos.length > 0) {
+
+                    console.log(JSON.stringify(LstProductos));
+                    generaTablaSku(LstProductos);
+
+                    $('#idSkus').val('');
+
+                } else {
+                    mostrarModalMensaje(1, "Los Skus proporcionados no son validos");
+                }
+
+
+
+            });
+
+        });
         console.log("Json Peticion => ", _jsonPeticion)
     }
 

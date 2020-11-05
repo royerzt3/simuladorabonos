@@ -73,6 +73,23 @@ $(document).ready(function () {
         Principal();
 
     }
+    if (window.location.pathname.includes("AutorizaP")) {
+        validaMenu();
+        $('.simplemodal-close.btnCerrar').hide();
+        $('.tblModal').append(
+            '<tr><td class="txtModal"> Cargando Firmas Pendientes... <br><br></tr>' +
+            '<tr><td class="txtModal"><img src="/SimuladorAbonos/img/cargando.gif"><br><br></tr>'
+
+        );
+
+        modalFirmasPendientes = $('#modalAutorizado').modal({
+            focus: true,
+            persist: true,
+        });
+
+        Principal();
+
+    }
     if (window.location.pathname.includes("Cotizador") ) {
 
         validaMenu(); 
