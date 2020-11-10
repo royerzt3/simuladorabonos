@@ -32,7 +32,7 @@ let strIdCanal;
 let strTipoTienda;
 let lstSucursales;
 let strIntersectsucursales;
-let strExceptSucursales; 
+let strExceptSucursales;
 let strTipoCargaSucursal;
 let strSucursales;
 let blnCargaCorrecta;
@@ -66,7 +66,7 @@ var ObjPaises = undefined;
 var ObjTiposCl = undefined;
 var objPeridos = undefined;
 var objPromos = undefined;
-var ObjTipoEnvio  = undefined;
+var ObjTipoEnvio = undefined;
 var _strIdPaises = null;
 var _strIdTipoCliente = null;
 var _strIdPeriodo = null;
@@ -129,19 +129,19 @@ function eventoPrestPrincipal() {
 
         window.location.replace(hrefTasa);
     })
-    
+
 
     var objUsuario = JSON.parse(localStorage.getItem('objectUsr'));
     var usuarioInfo = JSON.parse(objUsuario);
     console.log(usuarioInfo);
 
-    var objTipoProducto = [];  
+    var objTipoProducto = [];
     var lstFamiliaId = usuarioInfo.LstUsuarioFamilia;
 
     $.each(usuarioInfo.InformacionUsuario, function (key, value) {
         if (key == strfiUsusarioId) {
             strIdUsuario = value;
-        }        
+        }
     });
 
 
@@ -215,11 +215,11 @@ function eventoPrestPrincipal() {
             callServicePromociones(_strIdPaises);
 
         } else {
-          
+
             iniciarSelec();
-         
-         
-         
+
+
+
         }
 
 
@@ -299,7 +299,7 @@ function eventoPrestPrincipal() {
 
     });
     $("#idBtnDatosComplem").click(function () {
-        
+
         _strTitulo = $('#idTituloEvent').val();
         _strFechaInicio = $('#filter-date').val();
         _strFechaFin = $('#filter-date1').val();
@@ -319,7 +319,7 @@ function eventoPrestPrincipal() {
                         _nCadenaSuc += _dtoSplit[i];
                         _nCadenaSuc += ","
                     }
-                  
+
                 }
             }
         }
@@ -337,16 +337,16 @@ function eventoPrestPrincipal() {
             mostrarModalMensaje(1, "Es necesario seleccionar una fecha final");
         else if (_strIdTipoEnvio == -1)
             mostrarModalMensaje(1, "Es necesario seleccionar un tipo de envio ");
-        else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined) )&& _strIdTipoEnvio == 0)
+        else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined)) && _strIdTipoEnvio == 0)
             mostrarModalMensaje(1, "Es necesario ingresar sucursales");
         else {
             irAcordeon(7);
             $('#archivoTasas').show();
-          //  $('#idGuardarEvent').show();
+            //  $('#idGuardarEvent').show();
         }
 
 
-     
+
 
     });
     //Elimina registro de la tabla Cotizacion
@@ -359,9 +359,9 @@ function eventoPrestPrincipal() {
         $("#checktodos").removeAttr("checked");
     });
 
-  
 
-      $("#rdCargaArchivo, #rdSeleccionManual, #rdSeleccionTerritorio").change(function () {
+
+    $("#rdCargaArchivo, #rdSeleccionManual, #rdSeleccionTerritorio").change(function () {
         if ($("#rdCargaArchivo").is(":checked")) {
             $('#idTextAreaCargaSucursales').hide();
             $('#idSelectTerritorio').hide();
@@ -371,14 +371,14 @@ function eventoPrestPrincipal() {
             $("#idTextAreaViewSucursales").show();
             $('#idCargaMSucursales').val('');
         }
-        else if ($("#rdSeleccionManual").is(":checked")) {   
+        else if ($("#rdSeleccionManual").is(":checked")) {
             $('#idTextAreaCargaSucursales').show();
             $('#idTipoTiendas').parent().show();
             $("#idDivCargaSucursales").hide();
             $('#idSelectTerritorio').hide();
             $('#idTextAreaViewTerritorioSucursales').hide();
             $("#idTextAreaViewSucursales").hide();
-       
+
         }
         else if ($('#rdSeleccionTerritorio').is(":checked")) {
             $('#idTipoTiendas').parent().hide();
@@ -386,7 +386,7 @@ function eventoPrestPrincipal() {
             $("#idTextAreaViewSucursales").hide();
             $('#idTextAreaCargaSucursales').hide();
             $("#idSelectTerritorio").show();
-            $('#idTextAreaViewTerritorioSucursales').show();         
+            $('#idTextAreaViewTerritorioSucursales').show();
         }
 
     });
@@ -435,7 +435,7 @@ function eventoPrestPrincipal() {
 
         let objCargaArchivo = [];
         objCargaArchivo.push(strFormData);
-      
+
         objCargaArchivo.push(parseInt(strIdCanal));
         objCargaArchivo.push(parseInt(strTipoTienda));
         objCargaArchivo.push(parseInt(strIdPais));
@@ -450,7 +450,7 @@ function eventoPrestPrincipal() {
                 if (lstSucursales == "") {
                     listaSku = [];
                     mostrarModalMensaje(1, "Las sucursales cargadas no corresponden al tipo de canal seleccionado", "Carga un nuevo archivo");
-                    
+
                 } else {
                     listaSku = [];
                     //$('#idTextAreaViewSucursales').show();
@@ -460,15 +460,15 @@ function eventoPrestPrincipal() {
                         mostrarModalMensaje(1, "Las siguientes sucursales no corresponden al tipo de canal seleccionado : ", lstSucursalesExcept);
                     }
                 }
-              
+
             });
         });
 
         $('#carga02').val('');
         $('#fileLabel').text("Examinar");
-       
+
     });
-       
+
     $('#idPreviewSucursales').prop('readonly', true);
 
 
@@ -588,7 +588,7 @@ function validaInputs() {
         messages: {
             nameTituloEvent: "Ingresa Título",
             fechaInicio: "Ingresa una fecha de Inicio del evento",
-            fechaFin: "Ingresa una fecha de Fin del evento"         
+            fechaFin: "Ingresa una fecha de Fin del evento"
         }
     });
     var form = $("#idCotizador");
@@ -599,7 +599,7 @@ function validaInputs() {
 }
 
 function validaFechasMenoresMayores() {
-    
+
     var valFechaInicio = $('#filter-date').val();
     var valFechaFin = $('#filter-date1').val();
 
@@ -615,13 +615,13 @@ function validaFechasMenoresMayores() {
     var fechaFin = fechF[1] + "-" + fechF[3] + "-" + fechF[0];
 
     if (Date.parse(fechaInicio) > Date.parse(fechaFin)) {
-        
+
         mostrarModalMensaje(1, "La fecha inicio no puede ser mayor a la fecha final");
         $('#filter-date1').val("")
         $("#idGuardarEvent").prop("disabled", true);
 
         return false;
-    } 
+    }
 
     return true;
 }
@@ -693,14 +693,14 @@ function ValidaSoloNumeros(e) {
 }
 
 let blnVerificaEnvioSucursales;
-async function validaTipodeEnvioSucursales(){
-   
+async function validaTipodeEnvioSucursales() {
+
     if ($("#rdCargaArchivo").is(":checked")) {
 
         console.log("Validacion Carga por Archivo de Sucursales");
         strTipoCargaSucursal = "1";
         strSucursales = $('#idPreviewSucursales').val();
-        lstSucursales = strSucursales;         
+        lstSucursales = strSucursales;
         return true;
     }
     else if ($("#rdSeleccionManual").is(":checked")) {
@@ -721,8 +721,8 @@ async function validaTipodeEnvioSucursales(){
             console.log(varResult);
             return true;
         }
-      
-  
+
+
     }
     else if ($('#rdSeleccionTerritorio').is(":checked")) {
 
@@ -779,30 +779,30 @@ function cargarArchivo(objetoInputFile) {
 
                                     if (objetoJson.respuesta.datosencero[0].contador > 0 || objetoJson.respuesta.datosencero[1].contador > 0) {
                                         cadenModal += "<div><h4>Alguna tasas son menores o iguales a 0, por favor de validar.</h4></div><br>";
-                                 
+
                                     }
                                     if (objetoJson.respuesta.valAbonos[0].cadena.length > 0 || objetoJson.respuesta.valAbonos[1].cadena.length > 0) {
-                                         var texos ="";
-                                         cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>Algunas tasas no son el mismo abono normal  y el ultimo abono </h4>";
+                                        var texos = "";
+                                        cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>Las siguientes tasas el ultimo abono es diferente a al Abono normal </h4>";
                                         if (objetoJson.respuesta.valAbonos[0].cadena.length > 0) {
-                                             for (var i = 0; i < objetoJson.respuesta.valAbonos[0].cadena.length; i++) {
-                                                 cadenModal += objetoJson.respuesta.valAbonos[0].cadena[i];
-                                                 cadenModal += "<br>"
-                                             }
-                                         }
+                                            for (var i = 0; i < objetoJson.respuesta.valAbonos[0].cadena.length; i++) {
+                                                cadenModal += objetoJson.respuesta.valAbonos[0].cadena[i];
+                                                cadenModal += "<br>"
+                                            }
+                                        }
                                         if (objetoJson.respuesta.valAbonos[1].cadena.length > 0) {
-                                             for (var i = 0; i < objetoJson.respuesta.valAbonos[1].cadena.length; i++) {
-                                                 cadenModal += objetoJson.respuesta.valAbonos[1].cadena[i];
-                                                 cadenModal += "<br>"
-                                             }
-                                         }
+                                            for (var i = 0; i < objetoJson.respuesta.valAbonos[1].cadena.length; i++) {
+                                                cadenModal += objetoJson.respuesta.valAbonos[1].cadena[i];
+                                                cadenModal += "<br>"
+                                            }
+                                        }
 
-                                         cadenModal += "</div>";
+                                        cadenModal += "</div>";
                                     }
                                     if (objetoJson.respuesta.mamen.length > 0) {
-                                       
+
                                         for (var i = 0; i < objetoJson.respuesta.mamen.length; i++) {
-                                            cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>" + objetoJson.respuesta.mamen[i]+" </h4></div>";
+                                            cadenModal += "<div style='    max-height: 200px;overflow: auto; '><h4>" + objetoJson.respuesta.mamen[i] + " </h4></div>";
                                             cadenModal += "<br>"
                                         }
                                     }
@@ -818,21 +818,40 @@ function cargarArchivo(objetoInputFile) {
                                 }
                             } catch (e) {
                                 _jsonDatosExcel = null;
-                                $('#modalGuardarParam').find(".txtModal").html("").html("<div>El archivo no tiene el formato requerido. Favor de revisarlo</div>");
-                                $('#modalGuardarParam').modal({
-                                    focus: true,
-                                    persist: true,
-                                });
+                                if (objetoJson.respuesta.mensaje == "Existen productos repetidos dentro de la misma tasa.") {
+                                    var cadenaRepetidos = "<div style='    max-height: 200px;overflow: auto; '><h4>Existen SKU repetidos.</h4>";
+                                    objetoJson.respuesta.datosRepetidos.forEach((element, index) => {
+                                        cadenaRepetidos +=   "<h4> PESTAÑA: " + element.valPestaña + ", SKU:" + element.valRepetido + ", Numero: " + element.vecRepetido+"</h4>"
+                                        console.log(JSON.stringify(element));
+                                    });
+                                    cadenaRepetidos += "</div>";
+                                    $('#modalGuardarParam').find(".txtModal").html("").html(cadenaRepetidos);
+                                    $('#modalGuardarParam').modal({
+                                        focus: true,
+                                        persist: true,
+                                    });
+                                
+                                    // cadenaRepetidos += objetoJson.respuesta.valAbonos[0].cadena[i];
+                                    //cadenaRepetidos += "<br>"
+
+                                } else {
+                                    $('#modalGuardarParam').find(".txtModal").html("").html("<div>El archivo no tiene el formato requerido. Favor de revisarlo</div>");
+                                    $('#modalGuardarParam').modal({
+                                        focus: true,
+                                        persist: true,
+                                    });
+                                }
+
                             }
 
 
-                            
+
                         });
                         break;
                     default:
                         respuesta.text().then(objetoJson => {
                             _jsonDatosExcel = null;
-                            $('#modalGuardarParam').find(".txtModal").html("").html('<div>Estatus error:'+ error.status+ ' ' +error.statusText + ' Recurso no encontrado: '+ error.url +'</div>');
+                            $('#modalGuardarParam').find(".txtModal").html("").html('<div>Estatus error:' + error.status + ' ' + error.statusText + ' Recurso no encontrado: ' + error.url + '</div>');
                             $('#modalGuardarParam').modal({
                                 focus: true,
                                 persist: true,
@@ -923,16 +942,16 @@ function pintarTabla(objetoJson, verValidacion) {
         let tbody = document.createElement('tbody');
         let trCabecera = document.createElement('tr');
         thead.appendChild(trCabecera);
-        
+
         let plazos;
         plazos = element.variablesCabeceras.map((value, index, array) => {
             let thVariables = document.createElement('th');
             let textoTdVariables = document.createTextNode(value.cDescripcion);
-         
+
             thVariables.appendChild(textoTdVariables);
             trCabecera.appendChild(thVariables);
 
-     
+
             return value.variablesV.map((value, index, array) => value.valor);
         });
         table.appendChild(tbody);
@@ -940,22 +959,36 @@ function pintarTabla(objetoJson, verValidacion) {
         plazosNoRepetidos = new Set(plazos);
         var valorInial = element.variablesCabeceras.length;
         var valorFinal = element.variablesCabeceras[0].variablesV.length;
-
+        var contador = 0;
         for (var a1 = 0; a1 < valorFinal; a1++) {
             let trPlazo = document.createElement('tr');
+            contador = 0;
             element.variablesCabeceras.forEach((value, index, array) => {
                 let tdVariable = document.createElement('td');
                 if (value.variablesV[a1].valor == 0) {
                     tdVariable.style.background = "red";
                 }
-                let textTdVariable = document.createTextNode(value.variablesV[a1].valor);
+                if (contador > 1) {
+                    var tassss = value.variablesV[a1].valor.toString();
+                    for (var a = tassss.length; a < 8; a++) {
+                        tassss = tassss.concat("0");
+                    }
+                    console.log("Tasa => ", tassss);
+                    let textTdVariable = document.createTextNode(tassss);
                     tdVariable.appendChild(textTdVariable);
                     trPlazo.appendChild(tdVariable);
+                } else {
+                    let textTdVariable = document.createTextNode(value.variablesV[a1].valor);
+                    tdVariable.appendChild(textTdVariable);
+                    trPlazo.appendChild(tdVariable);
+                }
+                contador++;
+               
             });
             tbody.append(trPlazo);
 
         }
-       
+
 
 
         divTabScroll.appendChild(table);
@@ -1035,14 +1068,14 @@ function guardarEvento() {
     else {
         let uriVariablesId = "";
         var metodo = "guardaEvento";
-            uriVariablesId = `${urlEventosP}/${metodo}`;
+        uriVariablesId = `${urlEventosP}/${metodo}`;
         var _jsonPeticion =
         {
             idPais: parseInt(_strIdPaises),
             TipoTasaM: JSON.stringify(_jsonDatosExcel),
             listasSuc: (_strIdListaSuc == "") ? _strIdListaSuc1 : _strIdListaSuc,
             idTEvento: 0,
-            idUsuario: idUsrLogin,
+            idUsuario: idEmpleadoLogin,
             NomEvento: _strTitulo,
             FInicio: _strFechaInicio,
             FFin: _strFechaFin,

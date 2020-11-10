@@ -38,12 +38,12 @@
         <!-- Contenido -->
         <div class="contSecc">
             <div class="titV">Autorizador de eventos Prestamos</div>
-            <div class="texto"><strong>Autoriza, rechaza</strong> y visualiza el <strong>detalle</strong> de todos los eventos pendientes de autorización </div><br>
+            <div class="texto"><strong>Autoriza, cancela</strong> y visualiza el <strong>detalle</strong> de todos los eventos </div><br>
             <div class="divGrow filtroAuto">
                 <div class="divCol wmS20">
                     <div class="col3">
                         <strong>Buscar Eventos :</strong><br>
-                        <select id="idCompStatus"></select>
+                        <select id="idCompStatus" onchange="todosEventos()"></select>
                     </div>
                     <div class="col3">
                         <strong>Ordenar por :</strong><br>
@@ -51,11 +51,11 @@
                     </div>
                     <div class="col3" id="idTipoEvento">
                         <strong>Tipo Evento:</strong><br>
-                        <select id="idCompTipoEven"></select>
+                        <select id="idCompTipoEven" onchange="consultaEventosTipo()"></select>
                     </div>
                     <div class="col3" id="idUsuarios">
                         <strong>Usuarios:</strong><br>
-                        <select id="idCompUsuario"></select>
+                        <select id="idCompUsuario" onchange="consultaEventosUsr()"></select>
                     </div>
                     <div class="col3" id="idRango">
 
@@ -64,8 +64,8 @@
                     </div>
                 </div>
             </div>
-            <div class="texto">Eventos pendientes de autorización</div>
-            <div class="divacordion">
+            <div class="texto" id="statusEvento"><strong> Eventos pendientes de autorización</strong></div>
+            <div class="divacordion" style=" max-height: 800px; overflow:auto;">
                 <dl class="accordion">
                 </dl>
             </div>

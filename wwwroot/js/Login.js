@@ -77,15 +77,15 @@ $(document).ready(function () {
         validaMenu();
         $('.simplemodal-close.btnCerrar').hide();
         $('.tblModal').append(
-            '<tr><td class="txtModal"> Cargando Firmas Pendientes... <br><br></tr>' +
+            '<tr><td class="txtModal"> Cargando eventos... <br><br></tr>' +
             '<tr><td class="txtModal"><img src="/SimuladorAbonos/img/cargando.gif"><br><br></tr>'
 
         );
-
+/*
         modalFirmasPendientes = $('#modalAutorizado').modal({
             focus: true,
             persist: true,
-        });
+        });*/
 
         Principal();
 

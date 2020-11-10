@@ -17,12 +17,14 @@ var FechaInicio;
 var FechaFin;
 var Solicitud;
 var urlCadena;
-let JSONFirmasPendientes = [];
+let JSONEventosP= [];
 var respuestaCorreo;
 var fiSimulacionIdGlobal;
 var valorMotvio;
 let contenidoSucursal;
 var ModalAutorizar;
+var statusEvento = 0;
+var odanmiento = 0;
 $("#filter-date").datetimepicker({
     timepicker: false
 });
@@ -36,65 +38,25 @@ $("#filter-date1").on('change', function () {
 function Principal() {
     var object = JSON.parse(localStorage.getItem('objectUsr'));
     datos = JSON.parse(object);
+
     obtStatusEven();
     obtOdenamiento();
 
     $('#idTipoEvento').hide();
     $('#idUsuarios').hide();
     $('#idRango').hide(); 
-    consultaServicioAE(urlAutorizacion + "getFirmasPendientes?piUsuarioId=" + idUsrLogin, null, "GET", true, "application/json")
-        .then(objJsonP => {
-            switch (objJsonP.status) {
-                case 200:
-                    objJsonP.json().then(objFP => {
-                        if (objFP.respuesta.lstRespuestaLeeFirmas.length > 0) {
-                            printFrontFP(objFP.respuesta.lstRespuestaLeeFirmas);
-                            modalFirmasPendientes.close();
-                        }
-                        else {
-                            $('.tblModal > tbody tr').remove();
-                            $('.simplemodal-close.btnCerrar').show();
 
-                            $('.tblModal').append(
-                                '<tr><td class="txtModal"> No Cuenta con Firmas Pendientes... <br><br></tr>'
-                            );
-                        }
 
-                    })
-                    break;
-                default:
-                    break;
-            }
-        }).catch(error => {
-            error.text()
-                .then(objeto => {
-                    if (objeto.length > 0) {
-                        let jsonObjeto = JSON.parse(objeto);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Mensaje: ${jsonObjeto.errorMessage}`
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Texto estatus: ${error.statusText},
-                                Recurso no encontrado o no disponible: ${error.url}`
-                        });
-                    }
-                });
-        });
+    todosEventos();
+    
 }
 
 function printFrontFP(objFP) {
-    let dl = document.getElementsByClassName('accordion');
-    console.log(objFP);
+    
+    //console.log(objFP);
     objFP.forEach((element, index) => {
-        JSONFirmasPendientes = objFP;
-
+        JSONEventosP = objFP;
+        let dl = document.getElementsByClassName('accordion');
 
         let dt = document.createElement('dt');
         dl[0].appendChild(dt);
@@ -105,14 +67,15 @@ function printFrontFP(objFP) {
         divEmpty.className = 'infoSimulacion';
         divAutorizador.appendChild(divEmpty);
         let divfcDescripcion = document.createElement('div');
-        let contenidoDescripcion = document.createTextNode(element.fcDescripcion);
+        let contenidoDescripcion = document.createTextNode(element.fcDescEvento);
         divfcDescripcion.appendChild(contenidoDescripcion);
         divEmpty.appendChild(divfcDescripcion);
         let divfiSimulacion = document.createElement('div');
         divfiSimulacion.className = 'folioSimulacion';
-        let contenidodivfiSimulacion = document.createTextNode(element.fiSimulacion);
+        let contenidodivfiSimulacion = document.createTextNode(element.ficonsec);
         divfiSimulacion.appendChild(contenidodivfiSimulacion);
         divEmpty.appendChild(divfiSimulacion);
+        if (element.fcdesstatus == "Solicitado") {
         let divLigaBtnAutorizar = document.createElement('div');
         divLigaBtnAutorizar.className = 'ligaA modalAutorizado_view';
         divLigaBtnAutorizar.id = "indiceBtnAutorizar" + index;
@@ -120,9 +83,10 @@ function printFrontFP(objFP) {
         divAutorizador.appendChild(divLigaBtnAutorizar);
         let divLigaBtnRechazar = document.createElement('div');
         divLigaBtnRechazar.className = 'ligaR modalRechazo_view';
-        divLigaBtnRechazar.innerText = 'Rechazar';
+        divLigaBtnRechazar.innerText = 'Cancelar';
         divLigaBtnRechazar.id = "indiceBtnRechazar" + index;
         divAutorizador.appendChild(divLigaBtnRechazar);
+        }
 
         let dd = document.createElement('dd');
         dl[0].appendChild(dd);
@@ -136,20 +100,44 @@ function printFrontFP(objFP) {
         divCol.className = 'divCol';
         divW65.appendChild(divCol);
         let divCol1 = document.createElement('div');
-        divCol1.className = 'col1';
+        divCol1.className = 'col2';
         divCol.appendChild(divCol1);
         let strongEmpty = document.createElement('strong');
-        strongEmpty.innerText = 'Justificación:';
+        strongEmpty.innerText = 'Nombre de Evento:';
         divCol1.appendChild(strongEmpty);
         let brEmpty = document.createElement('br');
         divCol1.appendChild(brEmpty);
 
-        let contenidoJustificacion = document.createTextNode(element.infoSimulaciones.fcJustificacion);
+        let contenidoJustificacion = document.createTextNode(element.fcDescEvento);
+        
+        //let contenidoJustificacion = document.createTextNode(element.infoSimulaciones.fcJustificacion);
         let divrespuesta = document.createElement('div');
         divrespuesta.className = 'respuesta';
         //divrespuesta.innerText = 'Ejemplo de una justificación medianamente larga'; 
         divrespuesta.appendChild(contenidoJustificacion);
         divCol1.appendChild(divrespuesta);
+
+
+
+        let divCol1u = document.createElement('div');
+        divCol1u.className = 'col2';
+        divCol.appendChild(divCol1u);
+        let strongEmptyu = document.createElement('strong');
+        strongEmptyu.innerText = 'Usuario:';
+        divCol1u.appendChild(strongEmptyu);
+        let brEmptyu = document.createElement('br');
+        divCol1u.appendChild(brEmptyu);
+
+        let contenidoUsuario = document.createTextNode(element.fcNombre);
+
+        //let contenidoJustificacion = document.createTextNode(element.infoSimulaciones.fcJustificacion);
+        let divrespuestaU = document.createElement('div');
+        divrespuestaU.className = 'respuesta';
+        //divrespuesta.innerText = 'Ejemplo de una justificación medianamente larga'; 
+        divrespuestaU.appendChild(contenidoUsuario);
+        divCol1u.appendChild(divrespuestaU);
+
+
         let divCol3 = document.createElement('div');
         divCol3.className = 'col3';
         divCol.appendChild(divCol3);
@@ -159,7 +147,7 @@ function printFrontFP(objFP) {
         let brEmpty1 = document.createElement('br');
         divCol3.appendChild(brEmpty1);
         //
-        let contenidoFechaInicio = document.createTextNode(element.infoSimulaciones.fdFechaIni);
+        let contenidoFechaInicio = document.createTextNode(element.fdfecInicio);
         let divrespuesta1 = document.createElement('div');
         divrespuesta1.className = 'respuesta';
         divrespuesta1.appendChild(contenidoFechaInicio);
@@ -173,7 +161,7 @@ function printFrontFP(objFP) {
         let brEmpty2 = document.createElement('br');
         divCol4.appendChild(brEmpty2);
         //
-        let contenidoFechaFin = document.createTextNode(element.infoSimulaciones.fdFechaFin);
+        let contenidoFechaFin = document.createTextNode(element.fdfecFin);
         let divrespuesta2 = document.createElement('div');
         divrespuesta2.className = 'respuesta';
         divrespuesta2.appendChild(contenidoFechaFin);
@@ -187,7 +175,7 @@ function printFrontFP(objFP) {
         let brEmpty3 = document.createElement('br');
         divCol5.appendChild(brEmpty3);
         //
-        let contenidoTipoEnvio = document.createTextNode(element.infoSimulaciones.fcTipoEnvio);
+        let contenidoTipoEnvio = document.createTextNode(element.fcDecEvenTipo);
         let divrespuesta3 = document.createElement('div');
         divrespuesta3.className = 'respuesta';
         divrespuesta3.appendChild(contenidoTipoEnvio);
@@ -203,7 +191,7 @@ function printFrontFP(objFP) {
         divCol8.className = 'col1';
         divCol7.appendChild(divCol8);
         let strongEmpty5 = document.createElement('strong');
-        strongEmpty5.innerText = 'Archivos de justificación:';
+        strongEmpty5.innerText = 'Pais:';
         divCol8.appendChild(strongEmpty5);
         let brEmpty5 = document.createElement('br');
         divCol8.appendChild(brEmpty5);
@@ -213,21 +201,33 @@ function printFrontFP(objFP) {
 
         let divCol10 = document.createElement('div');
         divCol9.appendChild(divCol10);
+
+        let contenidoPais = document.createTextNode(element.fcdeslarga);
+        let divrespuestaP = document.createElement('div');
+        divrespuestaP.className = 'respuesta';
+        divrespuestaP.appendChild(contenidoPais);
+        divCol9.appendChild(divrespuestaP);
+/*
         let img = document.createElement('img');
         img.src = '/SimuladorAbonos/img/icoAdjuntar1.svg';
         img.className = 'icoAdjuntar';
-        divCol10.appendChild(img);
+        */
+
+      //  divCol10.appendChild(divrespuestaP);
         //
 
-        let anclaAnexo = document.createElement('a');
-        anclaAnexo.target = "_blank";
-        anclaAnexo.href = element.infoSimulaciones.fcArchivo;
+       // let anclaAnexo = document.createElement('a');
+        //anclaAnexo.target = "_blank";
+
+        //anclaAnexo.href = element.infoSimulaciones.fcArchivo;
+        //Temporal null
+        //anclaAnexo.href = "";
         //anclaAnexo.href = 'data:image/png;base64,' + element.infoSimulaciones.fcArchivo;
         //anclaAnexo.download = 'Anexo.png';
-        anclaAnexo.innerText = 'Anexo';  
-        let divCol11 = document.createElement('div');
-        divCol11.appendChild(anclaAnexo);
-        divCol9.appendChild(divCol11);
+        //anclaAnexo.innerText = 'Anexo';  
+        ///let divCol11 = document.createElement('div');
+        ///divCol11.appendChild(anclaAnexo);
+        //divCol9.appendChild(divCol11);
 
 
         let divCol13 = document.createElement('div');
@@ -247,19 +247,22 @@ function printFrontFP(objFP) {
         let inputSuc = document.createElement('div');
         inputSuc.id = 'idSucursales' + index;
         inputSuc.hidden = true;
-        let contenidoSuc = document.createTextNode(element.infoSimulaciones.fiSucursalId)
+
+        //let contenidoSuc = document.createTextNode(element.infoSimulaciones.fiSucursalId)
+        //Se agregar pais temporar pero tiene que ir sucursales 
+        let contenidoSuc = document.createTextNode("")
         inputSuc.appendChild(contenidoSuc);
         divCol13.appendChild(inputSuc);
-
-
-        contenidoSucursal = document.createTextNode(element.infoSimulaciones.fiSucursalId);
+        //contenidoSucursal = document.createTextNode(element.infoSimulaciones.fiSucursalId);
+         //Se agregar pais temporar pero tiene que ir sucursales 
+        contenidoSucursal = document.createTextNode("");
         let ancla = document.createElement('a');
         ancla.href = '#';
         ancla.className = 'sucursal';
         ancla.id = index;
         ancla.innerText = 'Detalle Sucursales';
 
-        console.log('Sucursales:' + $('#idSucursales').text());
+        //console.log('Sucursales:' + $('#idSucursales').text());
 
         divCol13.appendChild(ancla);
 
@@ -439,7 +442,7 @@ function EnvioCorreo(ObjAutoRecha) {
 function evtRechazarEvento() {
   //  $("#btnCancelar").attr("href", pathProyecto);
     var Accion = 4
-    var simluacion = JSONFirmasPendientes.find(simulacion => {
+    var simluacion = JSONEventosP.find(simulacion => {
         return simulacion.fiSimulacion == fiSimulacionIdGlobal;
     });
 
@@ -486,22 +489,22 @@ function evtbtnAutorizar() {
 
     var Accion = 3;
 
-    let fiSimulacionId = $(this).siblings('.infoSimulacion').children('.folioSimulacion').text();
-    var simluacion = JSONFirmasPendientes.find(simulacion => {
-        return simulacion.fiSimulacion == fiSimulacionId;
+    let fiEventoId = parseInt( $(this).siblings('.infoSimulacion').children('.folioSimulacion').text());
+    var eventoSele = JSONEventosP.find(evento => {
+        return evento.ficonsec == fiEventoId;
     });
-
+    /*
     ObjCorreo = {
-        Usuario: simluacion.fiEmpleado,
-        Folio: simluacion.fiSimulacion.toString(),
-        TipoEnvio: simluacion.infoSimulaciones.fcTipoEnvio,
-        FechaInicio: simluacion.infoSimulaciones.fdFechaIni,
-        FechaFin: simluacion.infoSimulaciones.fdFechaFin,
-        Solicitud: simluacion.fiSolicitud,
+        Usuario: eventoSele.fiEmpleado,
+        Folio: eventoSele.fiSimulacion.toString(),
+        TipoEnvio: eventoSele.infoSimulaciones.fcTipoEnvio,
+        FechaInicio: eventoSele.infoSimulaciones.fdFechaIni,
+        FechaFin: eventoSele.infoSimulaciones.fdFechaFin,
+        Solicitud: eventoSele.fiSolicitud,
     }
 
     GeneraCadena(ObjCorreo, simluacion, Accion);
-
+    */
 
     ModalAutorizar = $('#modalAutorizado').modal();
     $(this).parent().parent().addClass("autorizado");
@@ -602,7 +605,6 @@ function consultaServicioAE(url, data, metodo, isJson, valorContentType) {
                     console.log(data);
                 } else {
                     resolve(data);
-                    console.log(data);
                 }
             })
             .catch(error => {
@@ -812,12 +814,14 @@ function obtOdenamiento() {
 
 
 function tipoOrdenamiento(even) {
+    console.log("Tipo de ordenamiento");
     var _tipoOrdena = $('#idCompTipoOrdena').val();
     switch (_tipoOrdena) {
         case "0":
             $('#idUsuarios').hide();
             $('#idTipoEvento').hide(); 
             $('#idRango').hide(); 
+            todosEventos();
             break;
         
         case "2":
@@ -830,6 +834,7 @@ function tipoOrdenamiento(even) {
             $('#idTipoEvento').hide();
             $('#idRango').hide(); 
             obtUsuariosEven();
+            consultaEventosUsr();
             break;
         case "4":
             $('#idTipoEvento').show();
@@ -841,10 +846,37 @@ function tipoOrdenamiento(even) {
 }
 
 
-function evtbtnBuscar () {
+function evtbtnBuscar() {
     var valFechaInicio = $('#filter-date').val();
     var valFechaFin = $('#filter-date1').val();
-    console.log("Sevicio por fecha: ", valFechaInicio, " Final : ", valFechaFin)
+    console.log("Sevicio por fecha: ", valFechaInicio, " Final : ", valFechaFin);
+    if (valFechaInicio == "" || valFechaFin == "") {
+        mostrarModalMensaje(1, "La fecha inicio y fecha Fin son necesarias");
+    } else {
+        var valFechaInicio = $('#filter-date').val();
+        var valFechaFin = $('#filter-date1').val();
+
+        var fechI = valFechaInicio.split("/");
+        var diaI = fechI[2].split(" ");
+        var fechF = valFechaFin.split("/");
+        var diaF = fechF[2].split(" ");
+        fechI.push(diaI[0]);
+        fechF.push(diaF[0]);
+        var fechaInicio = fechI[1] + "/" + fechI[3] + "/" + fechI[0];
+        var fechaFin = fechF[1] + "/" + fechF[3] + "/" + fechF[0];
+        var _jsonEntrada = {
+            "statusEvento": (($("#idCompStatus").val() == null) ? 0 : parseInt($("#idCompStatus").val())),
+            "fechaInicio": fechaInicio,
+            "fechaFin": fechaFin,
+            "proceso": 4
+        }
+        console.log("_jsonEntrada Fecha: ", _jsonEntrada);
+        consultaEventos(_jsonEntrada);
+
+    }
+
+        
+    
     return false;
 }
 
@@ -943,3 +975,146 @@ function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complem
             break;
     }
 }
+
+function filtrosBusqueda() {
+   
+
+}
+function consultaEventosUsr() {
+
+    console.log("Eventos por usuarios ");
+    var usuarioId = (($("#idCompUsuario").val() == null) ? 0 : parseInt($("#idCompUsuario").val()));
+    if (usuarioId != 0) {
+        var _jsonEntrada = {
+
+            "statusEvento": (($("#idCompStatus").val() == null) ? 0 : parseInt($("#idCompStatus").val())),
+            "idUsuarios": usuarioId,
+            "proceso": 3
+        }
+        console.log("_jsonEntrada: ", _jsonEntrada);
+        consultaEventos(_jsonEntrada);
+    }
+ 
+
+}
+function consultaEventosTipo() {
+
+    console.log("Eventos por Tipo de evento ");
+    var eventoId = (($("#idCompTipoEven").val() == null) ? 3 : parseInt($("#idCompTipoEven").val()));
+    if (eventoId != 3) {
+        var _jsonEntrada = {
+
+            "statusEvento": (($("#idCompStatus").val() == null) ? 0 : parseInt($("#idCompStatus").val())),
+            "idTipoEnvio": eventoId,
+            "proceso": 2
+        }
+        console.log("_jsonEntrada: ", _jsonEntrada);
+        consultaEventos(_jsonEntrada);
+    }
+
+
+}
+function todosEventos() {
+    $('#idUsuarios').hide();
+    $('#idTipoEvento').hide();
+    $('#idRango').hide(); 
+    var _jsonEntrada = {
+
+        "statusEvento": (($("#idCompStatus").val() == null) ? 0 : parseInt($("#idCompStatus").val())),
+        "proceso": 1
+    }
+    console.log("_jsonEntrada: ", _jsonEntrada);
+    consultaEventos(_jsonEntrada);
+}
+function consultaEventos(_jsonEntrada) {
+   
+
+    modalFirmasPendientes = $('#modalAutorizado').modal({
+        focus: true,
+        persist: true
+    });
+
+    var metodo = "AutorizaEvento/api/getFoliosEvento";
+    var cadenaSpl = urlEventosP.split("GeneraEvento/api");
+
+
+    let uriVariablesId = "";
+
+    uriVariablesId = `${cadenaSpl[0]}${metodo}`;
+    console.log("Values: ",$("#idCompStatus").val())
+   
+    console.log("_jsonEntrada: ", _jsonEntrada)
+    let dl1 = document.getElementsByClassName('accordion');
+    dl1[0].innerText = "";
+
+    var texto = document.getElementById("statusEvento");
+    switch ((($("#idCompStatus").val() == null) ? 0 : parseInt($("#idCompStatus").val()))) {
+        case 0:
+            texto.innerHTML = "Eventos Solicitados".bold().toUpperCase();
+            break;
+        case 1:
+            texto.innerHTML = "Eventos Cancelados".bold().toUpperCase();
+            break;
+        case 2:
+            texto.innerHTML = "Eventos Autorizados".bold().toUpperCase();
+            break;
+        case 3:
+            texto.innerHTML = "Eventos Enviados".bold().toUpperCase();
+            break;
+        case 5:
+            texto.innerHTML = "Eventos Procesandos".bold().toUpperCase();
+            break;
+        case 6:
+            texto.innerHTML = "Eventos Por Autorizar".bold().toUpperCase();
+            break;
+    }
+  
+
+    consultaServicioAE(uriVariablesId, JSON.stringify(_jsonEntrada), POST, true, "application/json")
+        .then(objJsonP => {
+            switch (objJsonP.status) {
+                case 200:
+                    objJsonP.json().then(objFP => {
+                        if (objFP.respuesta.eventosStatus.length > 0) {
+                            printFrontFP(objFP.respuesta.eventosStatus);
+                            modalFirmasPendientes.close();
+                        }
+                        else {
+                            modalFirmasPendientes.close();
+                           // $('.tblModal > tbody tr').remove();
+                            //$('.simplemodal-close.btnCerrar').show();
+
+                            /*$('.tblModal').append(
+                                '<tr><td class="txtModal"> No se encontraron eventos... <br><br></tr>'
+                            );*/
+                        }
+
+                    })
+                    break;
+                default:
+                    break;
+            }
+        }).catch(error => {
+            error.text()
+                .then(objeto => {
+                    if (objeto.length > 0) {
+                        let jsonObjeto = JSON.parse(objeto);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sistema de mercadeo de tasas',
+                            text: `Estatus error: ${error.status},
+                                Mensaje: ${jsonObjeto.errorMessage}`
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Sistema de mercadeo de tasas',
+                            text: `Estatus error: ${error.status},
+                                Texto estatus: ${error.statusText},
+                                Recurso no encontrado o no disponible: ${error.url}`
+                        });
+                    }
+                });
+        });
+}
+

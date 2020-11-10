@@ -434,6 +434,7 @@ a.menuH img {
     height: 29px;
     width: 100%;
     border: 1px solid #bfbfbf;
+    overflow:auto;
 }
 
 /*Usiarios*/
