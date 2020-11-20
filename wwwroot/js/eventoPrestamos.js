@@ -329,6 +329,8 @@ function eventoPrestPrincipal() {
         $('#idCargaMSucursales').val(_nCadenaSuc)
 
         _strIdListaSuc1 = _nCadenaSuc;
+        var jsonEntrada = { listasucursales: _strIdListaSuc1, pais: parseInt($('#idCompPaises option:selected').attr('value')) };
+        //console.log("Repsuesta => ", sucursalManual(jsonEntrada));
         if (_strTitulo == "")
             mostrarModalMensaje(1, "Es necesario ingresar Titulo");
         else if (_strFechaInicio == "")
@@ -337,13 +339,18 @@ function eventoPrestPrincipal() {
             mostrarModalMensaje(1, "Es necesario seleccionar una fecha final");
         else if (_strIdTipoEnvio == -1)
             mostrarModalMensaje(1, "Es necesario seleccionar un tipo de envio ");
-        else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined)) && _strIdTipoEnvio == 0)
+        else if (((_strIdListaSuc == "" && _strIdListaSuc1 == "") || (_strIdListaSuc == undefined && _strIdListaSuc1 == undefined)) && _strIdTipoEnvio == 0) {
             mostrarModalMensaje(1, "Es necesario ingresar sucursales");
-        else {
-            irAcordeon(7);
-            $('#archivoTasas').show();
-            //  $('#idGuardarEvent').show();
+        } else {
+            if (_strIdTipoEnvio == 0)
+                sucursalManual(jsonEntrada);
+            else {
+                irAcordeon(7);
+                $('#archivoTasas').show();
+            }
         }
+        
+       
 
 
 
@@ -571,6 +578,17 @@ function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complem
                 persist: true,
                 onClose: () => {
                     window.location.replace(hrefIndex);
+                }
+            });
+            break;
+        case 5:
+            $('.txtModal').html(mensaje);
+          
+            modalMsje = $('#modalGuardar').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    window.location.replace(hrefTasaP);
                 }
             });
             break;
@@ -1069,6 +1087,10 @@ function guardarEvento() {
         let uriVariablesId = "";
         var metodo = "guardaEvento";
         uriVariablesId = `${urlEventosP}/${metodo}`;
+        var dtiSI = _strFechaInicio.split(" ");
+        var dtiSI1 = dtiSI[0].split("/");
+        var dtiSF = _strFechaFin.split(" ");
+        var dtiSF1 = dtiSF[0].split("/");
         var _jsonPeticion =
         {
             idPais: parseInt(_strIdPaises),
@@ -1077,8 +1099,8 @@ function guardarEvento() {
             idTEvento: 0,
             idUsuario: idEmpleadoLogin,
             NomEvento: _strTitulo,
-            FInicio: _strFechaInicio,
-            FFin: _strFechaFin,
+            FInicio: dtiSI1[2] + "/" + dtiSI1[1] + "/" + dtiSI1[0],
+            FFin: dtiSF1[2] + "/" + dtiSF1[1] + "/" + dtiSF1[0],
             TCliente: _strIdTipoCliente,
             idPromocion: parseInt(_strIdPromocion),
             idPeriodo: parseInt(_strIdPeriodo),
@@ -1088,18 +1110,13 @@ function guardarEvento() {
         var data = servicesCallMethod(uriVariablesId, JSON.stringify(_jsonPeticion), POST, true).then(objJson => {
             objJson.json().then(objSM => {
 
-                LstProductos = objSM.respuesta;
-
-                if (LstProductos.length > 0) {
-
-                    console.log(JSON.stringify(LstProductos));
-                    generaTablaSku(LstProductos);
-
-                    $('#idSkus').val('');
-
+                var respuesta  = objSM.respuesta;
+                if (respuesta.codigo == 1 && respuesta.respuesta == "Datos guardados satisfactoriamente.") {
+                    mostrarModalMensaje(5, respuesta.respuesta);
                 } else {
-                    mostrarModalMensaje(1, "Los Skus proporcionados no son validos");
+                     mostrarModalMensaje(1, respuesta.respuesta);
                 }
+              
 
 
 
@@ -1109,6 +1126,40 @@ function guardarEvento() {
         console.log("Json Peticion => ", _jsonPeticion)
     }
 
+}
+function sucursalManual(_jsonPeticion) {
+    let uriVariablesId = "";
+    var metodo = "validarSucursales";
+        uriVariablesId = `${urlEventosP}/${metodo}`;
+       var data = servicesCallMethod(uriVariablesId, JSON.stringify(_jsonPeticion), POST, true).then(objJson => {
+            objJson.json().then(objSM => {
+
+                var respuesta = objSM.respuesta;
+
+                if (respuesta.resp == undefined) {
+                    respuesta.sucExiste = respuesta.sucExiste.replace("[", "").replace("]", "").replaceAll('"', "");
+                    respuesta.sucNoExis = respuesta.sucNoExis.replace("[", "").replace("]", "").replaceAll('"', "");
+                    if (respuesta.sucNoExis != null) {
+                        mostrarModalMensaje(1, "No se cargaran las sucursales:" + respuesta.sucNoExis);
+                    }
+                    if (respuesta.sucExiste.length > 0) {
+                        $('#idCargaMSucursales').val(respuesta.sucExiste);
+                        irAcordeon(7);
+                        $('#archivoTasas').show();
+                    } else {
+                        $('#idCargaMSucursales').val("");
+                    }
+
+                } else {
+                    irAcordeon(7);
+                    $('#archivoTasas').show();
+                }
+
+
+
+            });
+
+       });
 }
 
 function onlyUnique(value, index, self) {

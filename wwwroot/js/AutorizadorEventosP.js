@@ -147,7 +147,7 @@ function printFrontFP(objFP) {
         let brEmpty1 = document.createElement('br');
         divCol3.appendChild(brEmpty1);
         //
-        let contenidoFechaInicio = document.createTextNode(element.fdfecInicio);
+        let contenidoFechaInicio = document.createTextNode(element.fdfecInicio.replace("T00:00:00", ""));
         let divrespuesta1 = document.createElement('div');
         divrespuesta1.className = 'respuesta';
         divrespuesta1.appendChild(contenidoFechaInicio);
@@ -161,7 +161,7 @@ function printFrontFP(objFP) {
         let brEmpty2 = document.createElement('br');
         divCol4.appendChild(brEmpty2);
         //
-        let contenidoFechaFin = document.createTextNode(element.fdfecFin);
+        let contenidoFechaFin = document.createTextNode(element.fdfecFin.replace("T00:00:00", ""));
         let divrespuesta2 = document.createElement('div');
         divrespuesta2.className = 'respuesta';
         divrespuesta2.appendChild(contenidoFechaFin);
@@ -284,9 +284,9 @@ function printFrontFP(objFP) {
     $('.accordion > dd').hide();
     $('.modalAutorizado_view').on('click', evtbtnAutorizar);
     $('.modalBuscar_view').on('click', evtbtnBuscar);
-    $('.modalRechazo_view').on('click', evtbtnRechazarModal);
+    $('.modalRechazo_view').on('click', evtCancelarEvento);
     $('.accordion > dt').on('click', evtClickdt);
-    $('.btnA.simplemodal-close').on('click', evtRechazarEvento);
+    $('.btnA.simplemodal-close').on('click', evtCancelarEvento);
 
 }
 
@@ -439,24 +439,34 @@ function EnvioCorreo(ObjAutoRecha) {
 
 }
 
-function evtRechazarEvento() {
-  //  $("#btnCancelar").attr("href", pathProyecto);
-    var Accion = 4
-    var simluacion = JSONEventosP.find(simulacion => {
-        return simulacion.fiSimulacion == fiSimulacionIdGlobal;
+function evtCancelarEvento() {
+    $('.tblModal > tbody tr').remove();
+
+    let fiEventoId = parseInt($(this).siblings('.infoSimulacion').children('.folioSimulacion').text());
+    var eventoSele = JSONEventosP.find(evento => {
+        return evento.ficonsec == fiEventoId;
     });
+    ObjCancelar = {
+        ficonsec: eventoSele.ficonsec,
+        fcDescEvento: eventoSele.fcDescEvento,
+        fcdeslarga: eventoSele.fcdeslarga,
+        fipais: eventoSele.fipais,
+        fcdesstatus: eventoSele.fcdesstatus,
+        fcDecEvenTipo: eventoSele.fcDecEvenTipo,
+        fcNombre: eventoSele.fcNombre,
+        fcDecEven: eventoSele.fcDecEven,
+        variable: (eventoSele.variable == "") ? "1" : eventoSele.variable,
+        user: "107",
 
-
-    ObjCorreo = {
-        Usuario: simluacion.fiEmpleado,
-        Folio: simluacion.fiSimulacion.toString(),
-        TipoEnvio: simluacion.infoSimulaciones.fcTipoEnvio,
-        FechaInicio: simluacion.infoSimulaciones.fdFechaIni,
-        FechaFin: simluacion.infoSimulaciones.fdFechaFin,
-        Solicitud: simluacion.fiSolicitud,
     }
+    cancelarEventos(ObjCancelar)
+    console.log("ObjCorreo => ", ObjCancelar)
 
-    GeneraCadena(ObjCorreo, simluacion, Accion);
+
+    ModalAutorizar = $('#modalAutorizado').modal();
+    $(this).parent().parent().addClass("rechazado");
+    $('.verSubmenu').next().addClass('ver');
+    return false;
 
 }
 
@@ -485,26 +495,28 @@ function evtbtnRechazarModal() {
 
 function evtbtnAutorizar() {
 
-    $('.tblModal > tbody tr').remove();
-
-    var Accion = 3;
+   $('.tblModal > tbody tr').remove();
 
     let fiEventoId = parseInt( $(this).siblings('.infoSimulacion').children('.folioSimulacion').text());
     var eventoSele = JSONEventosP.find(evento => {
         return evento.ficonsec == fiEventoId;
     });
-    /*
     ObjCorreo = {
-        Usuario: eventoSele.fiEmpleado,
-        Folio: eventoSele.fiSimulacion.toString(),
-        TipoEnvio: eventoSele.infoSimulaciones.fcTipoEnvio,
-        FechaInicio: eventoSele.infoSimulaciones.fdFechaIni,
-        FechaFin: eventoSele.infoSimulaciones.fdFechaFin,
-        Solicitud: eventoSele.fiSolicitud,
-    }
+        ficonsec: eventoSele.ficonsec,
+        fcDescEvento: eventoSele.fcDescEvento,
+        fcdeslarga: eventoSele.fcdeslarga,
+        fipais: eventoSele.fipais,
+        fcdesstatus: eventoSele.fcdesstatus,
+        fcDecEvenTipo: eventoSele.fcDecEvenTipo,
+        fcNombre: eventoSele.fcNombre,
+        fcDecEven: eventoSele.fcDecEven,
+        variable: (eventoSele.variable == "") ?"1"  : eventoSele.variable,
+        user: "107",
 
-    GeneraCadena(ObjCorreo, simluacion, Accion);
-    */
+    }
+    autorizarEventos(ObjCorreo)
+    console.log("ObjCorreo => ", ObjCorreo)
+  
 
     ModalAutorizar = $('#modalAutorizado').modal();
     $(this).parent().parent().addClass("autorizado");
@@ -973,6 +985,17 @@ function mostrarModalMensaje(tipo, mensaje, complementoI, complementoII, complem
                 }
             });
             break;
+        case 5:
+            $('.txtModal').html(mensaje);
+
+            modalMsje = $('#modalGuardar').modal({
+                focus: true,
+                persist: true,
+                onClose: () => {
+                    window.location.replace(hrefAutorizaP);
+                }
+            });
+            break;
     }
 }
 
@@ -1026,6 +1049,107 @@ function todosEventos() {
     console.log("_jsonEntrada: ", _jsonEntrada);
     consultaEventos(_jsonEntrada);
 }
+
+function autorizarEventos(_jsonPeticion) {
+       $('.simplemodal-close.btnCerrar').hide();
+            $('.tblModal').append(
+                '<tr><td class="txtModal"> Evento Autorizado <br><br></tr>' +
+                '<tr><td class="txtModal"> Proceso Envio a Central de Descargas esto podría demorar algunos minutos: <br><br></tr>' +
+                '<tr><td class="txtModal"><img src="/SimuladorAbonos/img/cargando.gif"><br><br></tr>'
+            );
+    let uriVariablesId = "";
+    var metodo = "autorizaEvento";
+    var nuri = urlEventosP.replace("GeneraEvento", "AutorizaEvento")
+    uriVariablesId = `${nuri}/${metodo}`;
+    var data = servicesCallMethod(uriVariablesId, JSON.stringify(_jsonPeticion), POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+
+            var respuesta = objSM.respuesta;
+            if (respuesta.length > 0) {
+
+                ModalAutorizar.close();
+                $('.tblModal > tbody tr').remove();
+                $(".simplemodal-close").show();
+                $('.tblModal').append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> Evento Procesado y Enviado Correctamente. </strong> </tr>'
+                );
+                $('.tblModal').append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong>'+ respuesta[0]+'</strong></tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> '+respuesta[1]+'</strong> </tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta[2] + '</strong> </tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta[3] + '</strong> </tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta[4] + '</strong> </tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta[5] + '</strong> </tr>'
+                ).append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta[6] + '</strong> </tr>'
+                );
+
+
+                $('#modalAutorizado').modal({
+                    focus: true,
+                    persist: true,
+                    onClose: () => {
+                        window.location.replace(hrefAutorizaP);
+                    }
+                });
+              
+//                mostrarModalMensaje(5, "Evento Autorizado con exito \n" + respuesta[0]);
+            }
+
+
+
+        });
+
+    });
+}
+
+function cancelarEventos(_jsonPeticion) {
+    $('.simplemodal-close.btnCerrar').hide();
+    $('.tblModal').append(
+        '<tr><td class="txtModal"> Cancelando Evento. <br><br></tr>' +
+        '<tr><td class="txtModal"><img src="/SimuladorAbonos/img/cargando.gif"><br><br></tr>'
+    );
+    let uriVariablesId = "";
+    var metodo = "cancelaEvento";
+    var nuri = urlEventosP.replace("GeneraEvento", "AutorizaEvento")
+    uriVariablesId = `${nuri}/${metodo}`;
+    var data = servicesCallMethod(uriVariablesId, JSON.stringify(_jsonPeticion), POST, true).then(objJson => {
+        objJson.json().then(objSM => {
+
+            var respuesta = objSM.respuesta;
+            if (respuesta.length > 0) {
+
+                ModalAutorizar.close();
+                $('.tblModal > tbody tr').remove();
+                $(".simplemodal-close").show();
+                $('.tblModal').append(
+                    '<tr><td class="txtModal" style="color: #000000; font-size:16px;"> <strong> ' + respuesta+' </strong> </tr>'
+                );
+
+                $('#modalAutorizado').modal({
+                    focus: true,
+                    persist: true,
+                    onClose: () => {
+                        window.location.replace(hrefAutorizaP);
+                    }
+                });
+
+                //                mostrarModalMensaje(5, "Evento Autorizado con exito \n" + respuesta[0]);
+            }
+
+
+
+        });
+
+    });
+}
+
+
 function consultaEventos(_jsonEntrada) {
    
 
