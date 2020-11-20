@@ -5,7 +5,8 @@ var ObjOrdena = undefined;
 var ObjUsuarios = undefined;
 var ObjTipoEnvio = undefined;
 let intObjTemporalOnFocus;
-var ObjCorreo = {};
+var ObjAutoriza = {};
+var ObjCancelar = {};
 var ObjAutoRecha = {};
 var Usuario;
 var Folio;
@@ -311,133 +312,6 @@ function VentanaEmergente(sucursales) {
 
 }
 
-function GeneraCadena(ObjCorreo, simluacion, Accion) {
-
-    consultaServicioAE(urlEnvioCorreo +"ValidaCadenas/ValidaParametrosC", JSON.stringify(ObjCorreo), "POST", true, "application/json")
-        .then(objJsonP => {
-            switch (objJsonP.status) {
-                case 200:
-                    objJsonP.json().then(objFP => {
-                        if (objFP.cadena != null) {
-
-                            urlCadena = objFP.cadena;
-
-                            armaPeticionAutoRecha(simluacion, Accion);
-
-                        }
-
-                    })
-                    break;
-                default:
-                    break;
-            }
-        }).catch(error => {
-            error.text()
-                .then(objeto => {
-                    if (objeto.length > 0) {
-                        let jsonObjeto = JSON.parse(objeto);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Mensaje: ${jsonObjeto.errorMessage}`
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Texto estatus: ${error.statusText},
-                                Recurso no encontrado o no disponible: ${error.url}`
-                        });
-                    }
-                });
-        });
-}
-
-function EnvioCorreo(ObjAutoRecha) {
-
-    consultaServicioAE(urlEnvioCorreo +"AutoRecha/SeguimientoFolioFront", JSON.stringify(ObjAutoRecha), "POST", true, "application/json")
-        .then(objJsonP => {
-            switch (objJsonP.status) {
-                case 200:
-                    objJsonP.json().then(objFP => {
-                        if (objFP.mensaje != null) {
-
-                            respuestaCorreo = objFP.mensaje;
-                            console.log(respuestaCorreo);
-
-
-                            if (objFP.error == false) {
-
-                                if (ObjAutoRecha.Accion == 3) {
-
-                                    ModalAutorizar.close();
-
-                                    $('.tblModal').append(
-                                        ' <a href="#"  class="simplemodal-close btnCerrar"><img src="/SimuladorAbonos/img/icoCerrar.svg"></a>'+
-                                    '<tr><td class="txtModal" style="color: #000000; font-size:20px;"> <strong> Evento Procesado y Enviado Correctamente. </strong><br><br></tr>'
-                                );
-
-                                    $('#modalAutorizado').modal({
-                                        focus: true,
-                                        persist: true,
-                                        onClose: () => {
-                                            window.location.replace(hrefAutorizador);
-                                        }
-                                    });
-                                }
-                                else {
-                                    $('.tblModal > tbody tr').remove();
-                                    $('.tblModal').append(
-                                        '<tr><td class="txtModal"> Evento Cancelado Correctamente. <br><br></tr>'
-                                    );
-
-                                    $('#modalAutorizado').modal({
-                                        focus: true,
-                                        persist: true,
-                                        onClose: () => {
-                                            window.location.replace(hrefAutorizador);
-                                        }
-                                    });
-                                }
-
-                            }
-
-
-
-                        }
-
-                    })
-                    break;
-                default:
-                    break;
-            }
-        }).catch(error => {
-            error.text()
-                .then(objeto => {
-                    if (objeto.length > 0) {
-                        let jsonObjeto = JSON.parse(objeto);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Mensaje: ${jsonObjeto.errorMessage}`
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Sistema de mercadeo de tasas',
-                            text: `Estatus error: ${error.status},
-                                Texto estatus: ${error.statusText},
-                                Recurso no encontrado o no disponible: ${error.url}`
-                        });
-                    }
-                });
-        });
-
-
-}
 
 function evtCancelarEvento() {
     $('.tblModal > tbody tr').remove();
@@ -456,11 +330,11 @@ function evtCancelarEvento() {
         fcNombre: eventoSele.fcNombre,
         fcDecEven: eventoSele.fcDecEven,
         variable: (eventoSele.variable == "") ? "1" : eventoSele.variable,
-        user: "107",
+        user: idEmpleadoLogin.toString(),
 
     }
     cancelarEventos(ObjCancelar)
-    console.log("ObjCorreo => ", ObjCancelar)
+    console.log("ObjCancelar => ", ObjCancelar)
 
 
     ModalAutorizar = $('#modalAutorizado').modal();
@@ -501,7 +375,7 @@ function evtbtnAutorizar() {
     var eventoSele = JSONEventosP.find(evento => {
         return evento.ficonsec == fiEventoId;
     });
-    ObjCorreo = {
+    ObjAutoriza = {
         ficonsec: eventoSele.ficonsec,
         fcDescEvento: eventoSele.fcDescEvento,
         fcdeslarga: eventoSele.fcdeslarga,
@@ -511,11 +385,11 @@ function evtbtnAutorizar() {
         fcNombre: eventoSele.fcNombre,
         fcDecEven: eventoSele.fcDecEven,
         variable: (eventoSele.variable == "") ?"1"  : eventoSele.variable,
-        user: "107",
+        user: idEmpleadoLogin.toString(),
 
     }
-    autorizarEventos(ObjCorreo)
-    console.log("ObjCorreo => ", ObjCorreo)
+    autorizarEventos(ObjAutoriza)
+    console.log("ObjCorreo => ", ObjAutoriza)
   
 
     ModalAutorizar = $('#modalAutorizado').modal();
@@ -523,65 +397,6 @@ function evtbtnAutorizar() {
     return false;
 }
 
-function armaPeticionAutoRecha(simluacion, Accion) {
-
-    if (Accion == 3) {
-
-        ObjAutoRecha = {
-            Cadena: urlCadena,
-            Descripcion: simluacion.fcDescripcion,
-            SUCURSALES: simluacion.infoSimulaciones.fiSucursalId,
-            MotivoRechazo: "",
-            Accion: Accion,
-            Usuario: simluacion.fiusuarioId,
-        }
-        console.log(ObjAutoRecha);
-
-        if (perfil == 3) {                                        // USUARIO OPERACIONES (Solo Autoriza)
-            $('.simplemodal-close.btnCerrar').hide();
-            $('.tblModal').append(
-                '<tr><td class="txtModal"> Evento Autorizado <br><br></tr>' +
-                '<tr><td class="txtModal"> Proceso Envio a Central de Descargas esto podría demorar algunos minutos: <br><br></tr>' +
-                '<tr><td class="txtModal"><img src="/SimuladorAbonos/img/cargando.gif"><br><br></tr>'
-            );
-        }
-        else if (ObjAutoRecha.Accion == 3) {                                      //btnAutorizar                                               
-            $('.tblModal').append(
-                '<tr><td class="txtModal"> Evento Autorizado <br><br></tr>'
-            );
-
-        }
-
-        EnvioCorreo(ObjAutoRecha);
-
-
-    }
-    else {
-
-        PeticionJSON =
-            {
-                Cadena: urlCadena,
-                Descripcion: simluacion.fcDescripcion,
-                SUCURSALES: simluacion.infoSimulaciones.fiSucursalId,
-                MotivoRechazo: valorMotvio,
-                Accion: Accion,
-                Usuario: simluacion.fiusuarioId,
-            }
-
-
-        if (PeticionJSON.MotivoRechazo == "") {
-
-            alert('DEBES INGRESAR UN MOTIVO DEL RECHAZO');
-            return false;
-
-        }
-
-        console.log(PeticionJSON);
-        EnvioCorreo(PeticionJSON);
-
-
-    }
-}
 
 function consultaServicioAE(url, data, metodo, isJson, valorContentType) {
     return new Promise((resolve, reject) => {
