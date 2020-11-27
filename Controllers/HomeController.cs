@@ -18,7 +18,7 @@ namespace SimuladorAbonos.Controllers
         private IConfiguration Config { get; set; }
         readonly DatosUsario usuarioDao = new DatosUsario();
         readonly ValidaDatos validaDtos = new ValidaDatos();
-        private readonly BibliotecaSimulador.Logs.Logg _log;
+        private readonly Credito.Core.Log.Logger _log;
         const string SessionToken = "_token";
         const string SessionUsuario = "_Usuario";
         const string SessionEmpresa = "_Empresa";
@@ -29,7 +29,8 @@ namespace SimuladorAbonos.Controllers
 
         public HomeController([FromServices] IConfiguration config)
         {
-            this._log = new BibliotecaSimulador.Logs.Logg(config.GetValue<string>("Config:NombreLogUsr"));
+            this._log = new Credito.Core.Log.Logger(typeof(HomeController), config.GetValue<string>("Config:NombreLogUsr"));
+           // this._log = new BibliotecaSimulador.Logs.Logg(config.GetValue<string>("Config:NombreLogUsr"));
             this.Config = config;
             this.UrlRedirect = this.Config[$"{sectionName}:{enviromentName}:{paramName}"].ToString();
             
@@ -52,7 +53,8 @@ namespace SimuladorAbonos.Controllers
                   
                     HttpContext.Session.SetString(SessionToken, token);
                     dtoSesion = await usuarioDao.ValidaTokenAsync(token);
-                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("ObjUsr LlaveMaestra : " + JsonConvert.SerializeObject(dtoSesion), _log);
+                    this._log.WriteInfo("ObjUsr LlaveMaestra : " + JsonConvert.SerializeObject(dtoSesion));
+                    //BibliotecaSimulador.Logs.PintarLog.PintaInformacion("ObjUsr LlaveMaestra : " + JsonConvert.SerializeObject(dtoSesion), _log);
                     if (dtoSesion != null)
                     {
                         validaDatos = validaDtos.ValidaDatosUsuario(dtoSesion, this.Config);
@@ -72,7 +74,7 @@ namespace SimuladorAbonos.Controllers
                                     HttpContext.Session.SetString(SessionUsuario, Usuario);
                                     HttpContext.Session.SetString(SessionEmpresa, Empresa);
                                     string StrSessionToken = HttpContext.Session.GetString(SessionToken);
-                                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Token : " + StrSessionToken, _log);
+                                    this._log.WriteInfo("Token : " + StrSessionToken);
 
                                     if (Usuario != null && Empresa != null)
                                     {
@@ -101,7 +103,7 @@ namespace SimuladorAbonos.Controllers
                                     HttpContext.Session.SetString(SessionUsuario, Usuario);
                                     HttpContext.Session.SetString(SessionEmpresa, Empresa);
                                     string StrSessionToken = HttpContext.Session.GetString(SessionToken);
-                                    BibliotecaSimulador.Logs.PintarLog.PintaInformacion("Token : " + StrSessionToken, _log);
+                                    this._log.WriteInfo("Token : " + StrSessionToken);
 
                                     if (Usuario != null && Empresa != null)
                                     {
@@ -207,6 +209,9 @@ namespace SimuladorAbonos.Controllers
                                     break;
                                 case "urlEventosP":
                                     ViewData["urlEventosP"] = valor.Value;
+                                    break;
+                                case "urlEventosC":
+                                    ViewData["urlEventosC"] = valor.Value;
                                     break;
                                 case "urlAutorizaP":
                                     ViewData["urlAutorizaP"] = valor.Value;
@@ -499,6 +504,28 @@ namespace SimuladorAbonos.Controllers
             try
             {
                 this._log.WriteInfo("Método: TasaBaseP.");
+                if (dtoUsuario == null)
+                {
+                    return RedirectToAction("Logout");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (Exception e)
+            {
+                this._log.WriteError(e);
+                return RedirectToAction("Error");
+            }
+        }
+        public IActionResult TasaBasec()
+        {
+            var dtoUsuario = HttpContext.Session.GetString(SessionToken);
+
+            try
+            {
+                this._log.WriteInfo("Método: TasaBaseC.");
                 if (dtoUsuario == null)
                 {
                     return RedirectToAction("Logout");

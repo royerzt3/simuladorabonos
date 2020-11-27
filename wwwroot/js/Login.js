@@ -104,7 +104,13 @@ $(document).ready(function () {
         irAcordeon();
 
     }
+    if (window.location.pathname.includes("TasaBasec")) {
 
+        validaMenu();
+        cotizadorPrincipal();
+        irAcordeon();
+
+    }
 
 });
 

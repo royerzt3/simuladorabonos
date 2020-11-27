@@ -1,0 +1,430 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=edge" />
+
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <title>Inicio</title>
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="~/css/simulador.css">
+    <link rel=" stylesheet" type="text/css" href="~/css/select2.min.css" />
+    <link href="~/css/validaciones.css" rel="stylesheet" />
+    <link href="~/css/loader.css" rel="stylesheet" />
+    <style>
+        /* Hide page by default */
+        html {
+            display: none;
+        }
+    </style>
+</head>
+
+<body onload="handleBackButton()">
+    <form name="_mine">
+
+        <INPUT type=hidden id="_a1" name="_a1" value="1">
+
+    </form>
+    <div class="page">
+
+        <div class="clear"></div>
+
+        <div id="tituloVista" class="titulo Vista_1">
+            <div class="ruta">
+                <a href="~/Home/Index">Inicio</a> |
+                <a href="~/Home/Cotizador">Cotizador de Tasas</a>
+            </div>
+        </div>
+
+
+        <!-- Contenido -->
+        <div class="contSecc">
+            <div class="titV">Cotizador de Tasas</div>
+            <div class="texto">Busca y agrega por <strong>SKU o categorías</strong>. Puedes realizar tu <strong>cotización</strong> y solicitar su <strong>envío</strong> o consultar una <strong>cotización pasada.</strong></div>
+            <!--<div class="menuTabs1">
+              <div class="tabs active " tabs="1"><div>Generar cotización</div></div>
+              <div  class="tabs active " tabs="2"><div>Consultar cotización</div></div>
+            </div>-->
+
+            <div class="divacordion">
+                <form id="idCotizador">
+                    <dl class="accordion">
+                        <dt><div><span class="txtV"> <strong>1</strong></span> Buscar y agregar productos</div></dt>
+                        <dd>
+                            <div class="divGrow">
+                                <div class="divCol wS20">
+                                    <div class="col3">
+                                        <strong>Pais:</strong><br>
+                                        <select id="idCompPaises"></select>
+                                    </div>
+                                    <div class="col3">
+                                        <strong>Canal:</strong><br>
+                                        <select id="idCompCanales"></select>
+                                    </div>
+                                    <div class="col3 dkSlect">
+                                        <strong>Status:</strong><br>
+                                        <select id="idCompStatusCam" class="dkSlect"></select>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="divGrow">
+                                <div class="w25">
+                                    <!--<strong>Buscar producto por:</strong><br>
+                                            <div class="divRadio">
+                                                <div><input type="radio" name="grupo2" id="radioSKU" checked /><label for="radioSKU">SKU</label></div>
+                                                <div id="divRadioBtnCategoria"><input type="radio" name="grupo2" id="radioCategoria" /><label for="radioCategoria">Categoría</label></div>
+                                            </div>
+                                            -->
+                                </div>
+                                <div class="w75">
+                                    <div class="divCol " style=" float: right;">
+                                        <!--
+                                    <div class="col3 divCategoria">
+                                        <strong>Departamento:</strong><br>
+                                        <select>
+                                            <option>Selecciona una opción:</option>
+                                            <option>Opción 1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col3 divCategoria">
+                                        <strong>Subdepartamento:</strong><br>
+                                        <select>
+                                            <option>Selecciona una opción</option>
+                                            <option>Opción 1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col3 divCategoria">
+                                        <strong>Clase:</strong><br>
+                                        <select>
+                                            <option>Selecciona una opción:</option>
+                                            <option>Opción 1</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col21 divCategoria">
+                                        <strong>Subclase:</strong><br>
+                                        <select>
+                                            <option>Selecciona una opción:</option>
+                                            <option>Opción 1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col21"><strong>Escribe uno o varios SKU separados por comas:</strong><br><input type="text" id="idSkus" onkeydown="sendCallServiceSap(event)"></div>
+                                            -->
+                                        <div class="col02" style="width: 100%; margin: 0px 0% 0px 0%;">
+                                            <!-- &nbsp;<br>-->
+                                            <a class="buscar1" id="idBuscarCamp"><img src="~/img/lupa1.svg"></a>
+                                        </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="titSec">Resultado de la búsqueda</div>
+                        <div class="pane-hScroll-Skus">
+                            <table class="tblBusqueda" id="tblSkusTh">
+                                <thead>
+                                    <tr>
+                                        <th style="width:2%;"><input type="checkbox" name="grupo1" id="checktodos" class="alone" /><label for="checktodos">&nbsp;</label></th>
+                                        <th>Canal</th>
+                                        <th>Campaña</th>
+                                        <th>Status</th>
+                                        <th>Fecha Inicio</th>
+                                        <th>Fecha Fin</th>
+                                        <th><img src="~/img/iconoEditar.gif"></th>
+                                        <th><img src="~/img/detalle.gif"></th>
+                                        <th><img src="~/img/imgEnAtencionDefectos.gif"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="pane-vScroll-Skus">
+                                <table class="" id="tblSkus">
+                                    <tbody id="tBSkus">  </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="btnCenter">
+                            <a class="btnA btnB" onclick="irAcordeon(2)" id="idBtnAgregarSkus"><div></div>Agregar seleccionado</a>
+                        </div>
+                    </dd>
+                    <div class="clear"></div>
+                    <br>
+
+                    <dt class="dt2"><div><span class="txtV"> <strong>2</strong></span> Seleccionar las condiciones a cotizar</div></dt>
+                    <dd class="paso2">
+                        <div class="divCol w85">
+                            <div class="col3">
+                                <strong>Tipo de cliente</strong>:
+                                <select id="idComTipoClt" class="dkSelectClt" required></select>
+                            </div>
+                            <div class="col3">
+                                <strong>Periodicidad</strong>:
+                                <select id="idComPeriodicidad" required></select>
+                            </div>
+                            <div class="col3">
+                                <strong>Plazos</strong>:
+                                <select id="idPlazos" required multiple="multiple" style="width:unset; font-size:0.8rem;"></select>
+                            </div>
+                        </div>
+
+                        <div class="divCol w85">
+                            <div class="col3">
+                                <strong>Promociones</strong>:
+                                <select id="idPromociones"></select>
+                            </div>
+                            <div class="col3">
+                                <strong>Apoyo Elektra %:</strong><br><input type="text" class="alingText" id="IdApoyoEkt" value="0" onkeypress="return ValidaSoloNumeros(event)">
+                            </div>
+                            <div class="col3">
+                                <strong>Tipo de mercadeo</strong>:
+                                <select id="idTipoMercadeo"></select>
+                            </div>
+                        </div>
+                        <div class="btnCenter">
+                            <a href="#" class="btnA" onclick="irAcordeon(3)"><div></div>Generar cotización</a>
+                        </div>
+                    </dd>
+                    <div class="clear"></div>
+                    <br>
+                    <dt class="paso3 dt3"><div><span class="txtV"> <strong>3</strong></span> Cotizar</div></dt>
+                    <dd>
+                        <div class="titSec">Productos agregados</div>
+                        <div class="scroll pane-hScroll-SM">
+                            <table class="tblCotizador3">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Precio de</th>
+                                        <th>Precio a</th>
+                                        <th>Enganche %</th>
+                                        <th>Plazo</th>
+                                        <th>Abono puntual actual</th>
+                                        <th>Abono puntual propuesto</th>
+                                        <th>Abono normal</th>
+                                        <th>Último abono</th>
+                                        <th>Descuento tasa</th>
+                                        <th id="thTasaAct">Tasa puntual actual %</th>
+                                        <th class="thTasaProp">Tasa puntual %</th>
+                                        <th>TIR %</th>
+                                        <th>VPN</th>
+                                        <th><img src="~/img/delete.svg"></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="scroll pane-vScroll-SM">
+                                <table id="tblSM">
+                                    <tbody id="tBCotizar"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="btnCenter">
+                            <a href="#" class="btnA " onclick="irAcordeon(4)">Solicitar evento</a>
+                        </div>
+                    </dd>
+
+                    <div class="clear"></div>
+                    <br>
+                    <dt class="dt4"><div><span class="txtV"> <strong>4</strong></span> Enviar evento</div></dt>
+                    <dd>
+                        <div class="divCol">
+                            <div class="col3"><strong>Título:</strong><br><input type="text" id="idTituloEvent" name="nameTituloEvent" required autocomplete="off"></div>
+                            <div class="col3"><strong>Justificación:</strong><br><input type="text" id="idJistificacionEvent" autocomplete="off"></div>
+                            <div class="col3">
+                                <strong>Adjuntar archivo de justificación:</strong><br>
+                                <input type="file" id="carga01" class="inputfile carga " accept="image/*" />
+                                <label for="carga01" class="btnAgregaFoto lblImg"><span>Examinar</span></label>
+                            </div>
+                            <div class="col3">
+                                <label for="filter-date" class="lblText"><strong>Fecha de inicio:</strong></label>
+                                <input type="text" name="fechaInicio" id="filter-date" class="calendario1" required autocomplete="off" />
+                            </div>
+                            <div class="col3">
+                                <label for="filter-date" class="lblText"><strong>Fecha de finalización:</strong></label>
+                                <input type="text" name="fechaFin" id="filter-date1" class="calendario1" required autocomplete="off" />
+                            </div>
+                            <div class="col3">
+                                <strong>Tipo de envío:</strong><br>
+                                <select id="idTipoEnvio" required></select>
+                            </div>
+                            <div id="idOpcionesCargaSucursal" class="col6">
+                                <strong>Elige el método para cargar las sucursales para enviar el evento</strong><br>
+                                <div class="">
+                                    <div><input type="radio" name="grupo3" id="rdCargaArchivo" checked /><label for="rdCargaArchivo" class="lblText">Carga archivo</label></div>
+                                    <div><input type="radio" name="grupo3" id="rdSeleccionManual" /><label for="rdSeleccionManual" class="lblText">Selección manual</label></div>
+                                   @* <div><input type="radio" name="grupo3" id="rdSeleccionTerritorio" /><label for="rdSeleccionTerritorio" class="lblText">Selección por territorio</label></div>*@
+                                </div>
+                            </div>
+                            <div class="col4">
+                                <strong>Tipo Tienda:</strong><br>
+                                <select id="idTipoTiendas" required></select>
+                            </div>
+                            <div id="idDivCargaSucursales" class="col3">
+                                <strong>Adjuntar archivo con el número de sucursales</strong><br>
+                                <input type="file" id="carga02" class="inputfile carga" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                                <label for="carga02" class="btnAgregaArchivoSuc lblImg"><span id="fileLabel">Examinar </span></label>
+                            </div>
+                            <div id="idTextAreaViewSucursales" class="col6">
+                                <strong>Sucursales para enviar el evento en el archivo <span class="idNombreArchivo"></span></strong><br>
+                                <textarea id="idPreviewSucursales" rows="2" cols="50"></textarea>
+                            </div>
+                            <div id="idTextAreaCargaSucursales" class="col6">
+                                <strong>Escribe separados por coma las sucursales para enviar el evento</strong><br>
+                                <textarea id="idCargaMSucursales" rows="2" cols="50"></textarea>
+                            </div>
+                            <div id="idSelectTerritorio" class="col4">
+                                <strong>Selecciona el territorio(s):</strong><br>
+                                <select id="idTerritorio" required>
+                                </select>
+                            </div>
+                            <div id="idTextAreaViewTerritorioSucursales" class="col6">
+                                <strong>Sucursales para enviar el evento en el territorio <span class="idNombreTerritorio"></span> </strong><br>
+                                <textarea id="idCargaMSucursales" rows="2" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <div class="btnCenter">
+                            <a href="#" class="btnA btnB" id="idBtnSalir"><div></div>Cancelar</a>
+                            <a href="#" class="btnA " id="idGuardarEvent"><div></div>Guardar y enviar</a>
+                        </div>
+                    </dd>
+
+                </dl>
+            </form>
+        </div>
+
+    </div>	<!-- Fin conSecc  -->
+                                    </div><!-- Fin page -->
+    <div id="modalNotificaciones" class="modal" tabindex="0">
+        <div class="cuadro cuadroM1">
+            <a href="#" class="simplemodal-close btnCerrar"><img src="~/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <div class="modalAdvertencias">
+                <div>
+                    <br>
+                    <span class="txtMdNotificaciones"></span>
+                    <br>
+                    <span class="txtMsjeII"></span>
+                    <br>
+                    <span class="txtMsjeIII"></span>
+                    <br>
+                </div>
+            </div>
+            <div class="btnCenter1" style="justify-content:center;">
+                <button id="idMdAceptar" type="button" class="btnM simplemodal-close modalBtnAceptar" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+        <div class="clear"></div><br>
+    </div>
+    <div id="modalNotificacionTabla" class="modal">
+        <div class="cuadro cuadroM1">
+            <a href="#" class="simplemodal-close btnCerrar"><img src="~/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <div class="contModal">
+                <div>
+                    <br>
+                    <span class="txtMsjeTbl"></span>
+                    <br>
+                </div>
+                <div class="btnCenter1">
+                    <a href="#" id="idBtnCancelar" class="btnA btnB simplemodal-close">Cancelar</a>
+                    <a href="#" id="idConfimacionBorrar" class="btnA simplemodal-close modalBtnAceptar">Aceptar</a>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div><br>
+    </div>
+    <div id="modalNotificacionSucursales" class="modal">
+        <div class="cuadro cuadroM1">
+            <a href="#" class="simplemodal-close btnCerrar"><img src="~/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <div class="contModal">
+                <div>
+                    <br>
+                    <span class="txtMsjeSucI"></span>
+                    <br>
+                    <span class="txtMsjeSuc"></span>
+                    <br>
+                    <br>
+                </div>
+            </div>
+            <div class="btnCenter1" style="justify-content:center;">
+                <button id="idMdAceptar" type="button" class="btnM simplemodal-close modalBtnAceptar" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+        <div class="clear"></div><br>
+    </div>
+    <div id="modalGuardar" class="modal">
+        <div class="cuadro cuadroCh">
+            <a href="#" class="simplemodal-close btnCerrar"><img src="~/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <table class="tblModal" id="idTblModal">
+                <tr>
+                    <td>
+                        <span class="txtModal"> </span><span class="txtMd"><strong> </strong></span><span class="txtModalC"> </span><br>
+                        <br><span class="txtCh1 f15">  </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="clear"></div><br>
+    </div><!-- Fin page modalGuardar_view -->
+
+    <div id="modalErrorMenu" class="modal">
+        <div class="cuadro cuadroM1">
+            <a href="#" id="btnCerrarLogout" class="simplemodal-close btnCerrar"><img src="/SimuladorAbonos/img/icoCerrar.svg"></a>
+            <div class="titModal">Aviso</div>
+            <br />
+            <div>
+                <br>
+                <span style="font-size:18px; text-align:center!important"> No tiene permiso para ver este menú </span>
+                <br><br>
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div class="load" id="cargando" style="z-index: 1060; display: none;">
+        <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        if (self == top) {
+            // Everything checks out, show the page.
+            document.documentElement.style.display = 'block';
+        } else {
+            top.location =localStorage.getItem('urlR');
+        }
+    </script>
+</body>
+</html>
+
+<script type="text/javascript" src="~/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="~/js/jquery.validate.js"></script>
+<script type="text/javascript" src="~/js/jquery.dropkick.js"></script>
+<script type="text/javascript" src="~/js/content_height.js"></script>
+<script type="text/javascript" src="~/js/jquery-ui.js"></script>
+<script type="text/javascript" src="~/js/jquery.simplemodal.js"></script>
+<script type="text/javascript" src="~/js/custom-file-input.js"></script>
+<script src="~/js/owl.carousel.js"></script>
+<script type="text/javascript" src="~/js/jquery.datetimepicker.full.js"></script>
+<script type="text/javascript" src="~/js/servicesCall.js"></script>
+<script type="text/javascript" src="~/js/select2.min.js"></script>
+<script type="text/javascript" src="~/js/es.js"></script>
+<script type="text/javascript" src="~/js/eventosConsumoServicios.js"></script>
+<script type="text/javascript" src="~/js/eventosConsumo.js"></script>
